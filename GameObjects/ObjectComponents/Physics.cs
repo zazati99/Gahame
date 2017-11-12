@@ -47,6 +47,18 @@ namespace Gahame.GameObjects.ObjectComponents
         {
             if (Solid)
             {
+
+                // Cool gravity memes
+                if (GravityEnabled)
+                {
+                    if (!gameObject.PlaceMeeting<WallObject>(gameObject.Position.X, gameObject.Position.Y + 1))
+                    {
+                        Grounded = false;
+                        Velocity.Y += Gravity;
+                    }
+                    else Grounded = true;
+                }
+
                 // Horizontal collision
                 if (gameObject.PlaceMeeting<WallObject>(gameObject.Position.X + Velocity.X, gameObject.Position.Y))
                 {
@@ -56,7 +68,8 @@ namespace Gahame.GameObjects.ObjectComponents
                         gameObject.Position.X += signum(Velocity.X);
                     }
                     Velocity.X = 0;
-                } gameObject.Position.X += Velocity.X; // Updates x position
+                }
+                gameObject.Position.X += Velocity.X; // Updates x position
 
                 // Vertical collision
                 if (gameObject.PlaceMeeting<WallObject>(gameObject.Position.X, gameObject.Position.Y + Velocity.Y))
@@ -68,19 +81,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     }
                     Velocity.Y = 0;
                 }
-
-                // Cool gravity memes
-                if (GravityEnabled)
-                {
-                    if (!gameObject.PlaceMeeting<WallObject>(gameObject.Position.X, gameObject.Position.Y + 1))
-                    {
-                        Grounded = false;
-                        Velocity.Y += Gravity;
-                    }
-                    else Grounded = true; 
-                }
-                // Update Y position
-                gameObject.Position.Y += Velocity.Y;
+                gameObject.Position.Y += Velocity.Y; // Update Y position
 
             } else
             {
