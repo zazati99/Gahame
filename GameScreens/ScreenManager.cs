@@ -44,6 +44,7 @@ namespace Gahame.GameScreens
         public void switchFullscreen()
         {
             Graphics.IsFullScreen = !Graphics.IsFullScreen;
+            Graphics.ApplyChanges();
             if (Graphics.IsFullScreen)
             {
                 int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -56,7 +57,6 @@ namespace Gahame.GameScreens
                 DefaultViewPort();
                 Game1.cam.Zoom = 2;
             }
-            Graphics.ApplyChanges();
         }
         // HÄR SLUTAR SCREEN VARIABLE KAOSET
 
