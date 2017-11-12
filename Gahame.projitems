@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f5b694dc-fcd0-41de-81e3-3307dba84f39</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>projectName</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Game1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\CameraController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\EmptyObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\GameObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\PlayerObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\WallObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\HitBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\ObjectComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\Physics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\Sprite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\Colliders\BoxCollider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\Colliders\Collider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameScreens\GameCamera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameScreens\GameScreen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameScreens\GenericGameScreen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameScreens\ScreenManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameUtils\GameControlls.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameUtils\GameFileMaganer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" Condition=" '$(OS)' != 'Unix' " />
+    <None Include="$(MSBuildThisFileDirectory)Content\Sprite.png" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Test.png" />
+    <None Include="$(MSBuildThisFileDirectory)Content\meme.png" />
+    <None Include="$(MSBuildThisFileDirectory)Content\plessWork.level" />
+    <None Include="$(MSBuildThisFileDirectory)Content\plessWork2.level" />
+    <None Include="$(MSBuildThisFileDirectory)Content\sprite2.png" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\Sprite.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\Test.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\meme.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\sprite2.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\Sprite.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\Test.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\meme.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\sprite2.mgcontent" />
+  </ItemGroup>
+</Project>
