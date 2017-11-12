@@ -49,7 +49,7 @@ namespace Gahame.GameScreens
             {
                 int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                 ChangeViewPort(screenWidth, screenWidth * 9/16);
-                float newZoom = screenWidth / 640f;
+                float newZoom = screenWidth / (DefaultViewportX / 2f);
                 Game1.cam.Zoom = newZoom;
             }
             else
