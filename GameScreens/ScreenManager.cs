@@ -47,11 +47,14 @@ namespace Gahame.GameScreens
             Graphics.ApplyChanges();
             if (Graphics.IsFullScreen)
             {
-                float newZoom = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 2 / ViewportY;
+                int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                ChangeViewPort(screenWidth, screenWidth * 9/16);
+                float newZoom = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 4 / ViewportX;
                 Game1.cam.Zoom = newZoom;
             }
             else
             {
+                DefaultViewPort();
                 Game1.cam.Zoom = 2;
             }
         }
