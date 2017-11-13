@@ -25,7 +25,7 @@ namespace Gahame.GameUtils
         public static bool Enter { get; private set; }
         public static bool F5 { get; private set; }
 
-        // Checks all of the controlls () should happen in Game class
+        // Checks all of the controlls (should happen in Game class) 
         public static void Update() 
         {
             KeyboardState state = Keyboard.GetState();
