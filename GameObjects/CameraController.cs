@@ -51,7 +51,7 @@ namespace Gahame.GameObjects
                 if (target != null)
                 {
                     //SetPosition(Vector2.Add(target.Position, new Vector2(-320, -180)));
-                    SetPosition(Vector2.Lerp(Game1.cam.Pos, Vector2.Add(target.Position, new Vector2(-ScreenManager.DefaultViewportX/4 + CamOffset.X, -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .1f));
+                    SetPosition(Vector2.Lerp(Game1.cam.Pos, Vector2.Add(target.Position, new Vector2(-ScreenManager.DefaultViewportX/4 + CamOffset.X, -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f));
                 }
             }
         }

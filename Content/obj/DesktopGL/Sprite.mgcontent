@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/Documents/Visual Studio 2015/Projects/Gahame/Gahame/Gahame/Content/Sprite.png</SourceFile>
-  <SourceTime>2017-11-13T19:18:13.03789+01:00</SourceTime>
-  <DestFile>E:/Documents/Visual Studio 2015/Projects/Gahame/Gahame/Gahame/Content/bin/DesktopGL/Sprite.xnb</DestFile>
-  <DestTime>2017-11-13T19:23:40.6539532+01:00</DestTime>
+  <SourceFile>E:/Documents/Visual Studio 2015/Projects/Gahame/Gahame/Gahame/Gahame/Content/Sprite.png</SourceFile>
+  <SourceTime>2017-11-13T21:08:25.4181169+01:00</SourceTime>
+  <DestFile>E:/Documents/Visual Studio 2015/Projects/Gahame/Gahame/Gahame/Gahame/Content/bin/DesktopGL/Sprite.xnb</DestFile>
+  <DestTime>2017-11-13T21:15:45.2166135+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

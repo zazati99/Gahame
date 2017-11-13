@@ -85,7 +85,7 @@ namespace Gahame.GameObjects
 
             if (GameControlls.Enter)
             {
-                ScreenManager.Instance.ChangeScreen(GameFileMaganer.LoadScreen("Gahame/Content/plessWork2.level"));
+                ScreenManager.Instance.ChangeScreen(GameFileMaganer.LoadScreen("Content/plessWork2.level"));
             }
 
             // Updates Components last

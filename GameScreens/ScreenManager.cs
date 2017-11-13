@@ -91,7 +91,7 @@ namespace Gahame.GameScreens
         public void LoadContent(ContentManager content)
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
-            currentScreen = GameFileMaganer.LoadScreen("Gahame/Content/plessWork.level");
+            currentScreen = GameFileMaganer.LoadScreen("Content/plessWork.level");
 
             // Load content below here
 
