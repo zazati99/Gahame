@@ -40,9 +40,9 @@ namespace Gahame.GameObjects
 
             // HitBox COmponent 
             hitBox = new HitBox(this);
-            hitBox.Colliders.Add(new BoxCollider(new Vector2(32, 64)));
+            hitBox.Colliders.Add(new BoxCollider(new Vector2(31, 64)));
             hitBox.Colliders[0].Offset.X = -16;
-            hitBox.Colliders[0].Offset.Y = -32;
+            hitBox.Colliders[0].Offset.Y = -33;
             Components.Add(hitBox);
 
             // Physics
