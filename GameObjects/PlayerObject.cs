@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
 using Gahame.GameUtils;
@@ -54,6 +53,7 @@ namespace Gahame.GameObjects
 
             // Camera
             screen.CamController.target = this;
+            screen.CamController.CamOffset.Y = -32;
         }
 
         // Update stufferino
@@ -81,7 +81,7 @@ namespace Gahame.GameObjects
             if (physics.Velocity.Y < 0 && !GameControlls.SpaceHeld)
                 physics.Velocity.Y = min(physics.Velocity.Y, -jumpHeight/2);
 
-            if (PlaceMeeting(Position, "testBoi")) physics.Velocity.Y = -2;
+            if (PlaceMeeting(Position, "testBoi")) physics.Velocity.Y -= .5f;
 
             if (GameControlls.Enter)
             {

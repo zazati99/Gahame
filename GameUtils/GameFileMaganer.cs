@@ -28,25 +28,26 @@ namespace Gahame.GameUtils
             o.Position = new Vector2(0, 0);
 
             string line;
+
             while ((line = reader.ReadLine()) != "---")
             {
-                switch (line)
+                switch (removeSpaces(line))
                 {
                     case "X":
-                        o.Position.X = float.Parse(reader.ReadLine());
+                        o.Position.X = float.Parse(removeSpaces(reader.ReadLine()));
                         break;
                     case "Y":
-                        o.Position.Y = float.Parse(reader.ReadLine());
+                        o.Position.Y = float.Parse(removeSpaces(reader.ReadLine()));
                         break;
                     case "Tag":
-                        o.Tag = reader.ReadLine();
+                        o.Tag = removeSpaces(reader.ReadLine());
                         break;
                     case "Sprite":
                         o.Components.Add(LoadSprite(reader, o));
                         break;
                     case "SpriteFile":
                         // Loads Sprite from file on next line
-                        StreamReader temp = new StreamReader(reader.ReadLine());
+                        StreamReader temp = new StreamReader(removeSpaces(reader.ReadLine()));
                         o.Components.Add(LoadSprite(temp, o));
                         temp.Close();
                         break;
@@ -217,6 +218,10 @@ namespace Gahame.GameUtils
             reader.Close();
             stream.Close();
             return screen;
+        }
+
+        static string removeSpaces(string str){
+            return str.Replace(" ", "");
         }
 
         // Streamreader that will decrypt File (does not work)

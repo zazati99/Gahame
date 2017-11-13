@@ -43,11 +43,14 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            if (rectangle == null)
+            /*if (rectangle == null)
             {
                 BoxCollider col = (BoxCollider)GetComponent<HitBox>().Colliders[0];
                 rectangle = CreateRect(spriteBatch, col.Size);
-            }
+            }*/
+
+            BoxCollider col = (BoxCollider)GetComponent<HitBox>().Colliders[0];
+            rectangle = CreateRect(spriteBatch, col.Size);
 
             spriteBatch.Draw(rectangle, Position);
 

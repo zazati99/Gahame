@@ -24,8 +24,8 @@ namespace Gahame
             graphics.HardwareModeSwitch = false;
             graphics.GraphicsProfile = GraphicsProfile.Reach;
 
-            ScreenManager.DefaultViewportX = 1280;
-            ScreenManager.DefaultViewportY = 720;
+            ScreenManager.DefaultViewportX = 640;
+            ScreenManager.DefaultViewportY = 360;
             ScreenManager.Instance.DefaultViewPort();
 
             cam = new GameCamera();

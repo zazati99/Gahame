@@ -19,11 +19,16 @@ namespace Gahame.GameObjects
         // Moving camer?
         public bool Static;
 
+        // offset
+        public Vector2 CamOffset;
+
         // Camera constructorino
         public CameraController(GameObject o)
         {
             this.target = o;
             Static = false;
+
+            CamOffset = new Vector2(0, 0);
         }
 
         // transform position
@@ -46,7 +51,7 @@ namespace Gahame.GameObjects
                 if (target != null)
                 {
                     //SetPosition(Vector2.Add(target.Position, new Vector2(-320, -180)));
-                    SetPosition(Vector2.Lerp(Game1.cam.Pos, Vector2.Add(target.Position, new Vector2(-ScreenManager.DefaultViewportX/4, -ScreenManager.DefaultViewportY / 4)), .1f));
+                    SetPosition(Vector2.Lerp(Game1.cam.Pos, Vector2.Add(target.Position, new Vector2(-ScreenManager.DefaultViewportX/4 + CamOffset.X, -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .1f));
                 }
             }
         }
