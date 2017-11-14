@@ -25,6 +25,8 @@ namespace Gahame.GameObjects
         // Jump height
         float jumpHeight;
 
+        Random r;
+
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
         {
@@ -53,7 +55,9 @@ namespace Gahame.GameObjects
 
             // Camera
             screen.CamController.target = this;
-            screen.CamController.CamOffset.Y = -32;
+            screen.CamController.CamOffset.Y = -16;
+
+            r = new Random();
         }
 
         // Update stufferino
