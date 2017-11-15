@@ -40,9 +40,9 @@ namespace Gahame.GameObjects
 
             // HitBox COmponent 
             hitBox = new HitBox(this);
-            hitBox.Colliders.Add(new BoxCollider(new Vector2(31, 64)));
+            hitBox.Colliders.Add(new BoxCollider(new Vector2(32, 62)));
             hitBox.Colliders[0].Offset.X = -16;
-            hitBox.Colliders[0].Offset.Y = -33;
+            hitBox.Colliders[0].Offset.Y = -31;
             Components.Add(hitBox);
 
             // Physics
@@ -62,12 +62,12 @@ namespace Gahame.GameObjects
         {
             if (GameControlls.Right && !GameControlls.Left)
             {
-                sprite.SpriteScale = Vector2.Lerp(sprite.SpriteScale, new Vector2(1, 1), .25f);
+                sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, 1, .25f);
                 physics.Velocity.X = approach(physics.Velocity.X, 2, .5f);
             }
             if (GameControlls.Left && !GameControlls.Right)
             {
-                sprite.SpriteScale = Vector2.Lerp(sprite.SpriteScale, new Vector2(-1,1), .25f);
+                sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, -1, .25f);
                 physics.Velocity.X = approach(physics.Velocity.X, -2, .5f);
             }
             if (!GameControlls.Right && !GameControlls.Left || GameControlls.Right && GameControlls.Left)
@@ -88,6 +88,8 @@ namespace Gahame.GameObjects
             {
                 ScreenManager.Instance.ChangeScreen(GameFileMaganer.LoadScreen("Content/plessWork2.level"));
             }
+
+            sprite.SpriteRotation = lerpFloat(sprite.SpriteRotation,(float)(Math.PI * signum(-signum(Physics.Gravity)+1)), .15f);
 
             // Updates Components last*/
             base.Update(gameTime);

@@ -151,6 +151,10 @@ namespace Gahame.GameObjects
             return 0;
         }
 
+        protected float lerpFloat(float value1, float value2, float amount){
+            return value1 + (value2 - value1) * amount;
+        }
+
         // Creates a rectangle and puts it in a texture (should only be used for debugging)
         protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)
         {

@@ -33,6 +33,9 @@ namespace Gahame.GameObjects.ObjectComponents
         // Sclae
         public Vector2 SpriteScale;
 
+        // Rotation
+        public float SpriteRotation;
+
         // depth
         public Single Depth;
 
@@ -47,6 +50,7 @@ namespace Gahame.GameObjects.ObjectComponents
             images = new List<Texture2D>();
             CurrentImage = 0;
             ImageSpeed = 0;
+            SpriteRotation = 0;
             Depth = .5f;
 
             SpriteOrigin = new Vector2(0, 0);
@@ -79,11 +83,12 @@ namespace Gahame.GameObjects.ObjectComponents
 
             // Draws the current image
             spriteBatch.Draw(images[(int)CurrentImage],
-                gameObject.Position,
-                origin: SpriteOrigin,
-                scale: absVec(SpriteScale),
-                layerDepth: Depth,
-                effects: (SpriteScale.X < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+                            gameObject.Position,
+                            origin: SpriteOrigin,
+                            scale: absVec(SpriteScale),
+                            layerDepth: Depth,
+                            rotation: SpriteRotation,
+                             effects: ((SpriteRotation > (float)(Math.PI/2) ? SpriteScale.X > 0 : SpriteScale.X < 0)) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
             
         }
 
