@@ -92,6 +92,14 @@ namespace Gahame.GameObjects
                 ScreenManager.Instance.ChangeScreen(GameFileMaganer.LoadScreen("Content/plessWork2.level"));
             }
 
+            if (GameControlls.SpaceHeld)
+            {
+                font.Spacing += 1;
+            } else
+            {
+                font.Spacing = 0;
+            }
+
             // Updates Components last
             base.Update(gameTime);
         }
@@ -100,7 +108,7 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(font, "MEEEEME", Position, Color.Black);
+            spriteBatch.DrawString(font, "REEEEEE", Position, Color.Black);
         }
 
     }
