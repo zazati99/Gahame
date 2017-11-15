@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GameScreens\ScreenManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameUtils\GameControlls.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameUtils\GameFileMaganer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameUtils\ShapeRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />

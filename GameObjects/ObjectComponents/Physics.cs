@@ -51,7 +51,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
-                    if (!gameObject.PlaceMeeting<WallObject>(gameObject.Position.X, gameObject.Position.Y + 1))
+                    if (!gameObject.PlaceMeeting<WallObject>(gameObject.Position.X, gameObject.Position.Y + signum(Gravity)))
                     {
                         Grounded = false;
                         Velocity.Y += Gravity;

@@ -61,10 +61,3 @@
 /processorParam:TextureFormat=Color
 /build:Test.png
 
-#begin FontTest.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:FontTest.spritefont
-

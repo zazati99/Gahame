@@ -84,6 +84,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 scale: absVec(SpriteScale),
                 layerDepth: Depth,
                 effects: (SpriteScale.X < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+            
         }
 
         // Add image to array of images

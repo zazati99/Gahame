@@ -145,6 +145,12 @@ namespace Gahame.GameObjects
             return value;
         }
 
+        protected int signum(float n){
+            if (n < 0) return -1;
+            if (n > 0) return 1;
+            return 0;
+        }
+
         // Creates a rectangle and puts it in a texture (should only be used for debugging)
         protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)
         {

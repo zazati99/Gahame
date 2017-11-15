@@ -25,8 +25,6 @@ namespace Gahame.GameObjects
         // Jump height
         float jumpHeight;
 
-        SpriteFont font;
-
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
         {
@@ -57,7 +55,6 @@ namespace Gahame.GameObjects
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
 
-            font = screen.content.Load<SpriteFont>("FontTest");
         }
 
         // Update stufferino
@@ -80,27 +77,19 @@ namespace Gahame.GameObjects
             
             if (physics.Grounded)
             {
-                if (GameControlls.Space) physics.Velocity.Y = -jumpHeight;
+                if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * signum(Physics.Gravity);
             }
-            if (physics.Velocity.Y < 0 && !GameControlls.SpaceHeld)
-                physics.Velocity.Y = min(physics.Velocity.Y, -jumpHeight/2);
+            if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
+                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -jumpHeight/2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -jumpHeight / 2 * signum(Physics.Gravity));
 
-            if (PlaceMeeting(Position, "testBoi")) physics.Velocity.Y -= .5f;
+            if (PlaceMeeting(Position, "testBoi") && physics.Grounded) Physics.Gravity *= -1;
 
             if (GameControlls.Enter)
             {
                 ScreenManager.Instance.ChangeScreen(GameFileMaganer.LoadScreen("Content/plessWork2.level"));
             }
 
-            if (GameControlls.SpaceHeld)
-            {
-                font.Spacing += 1;
-            } else
-            {
-                font.Spacing = 0;
-            }
-
-            // Updates Components last
+            // Updates Components last*/
             base.Update(gameTime);
         }
 
@@ -108,7 +97,6 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(font, "REEEEEE", Position, Color.Black);
         }
 
     }
