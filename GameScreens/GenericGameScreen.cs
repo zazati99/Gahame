@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
 using Gahame.GameObjects;
+using Gahame.GameUtils;
 
 namespace Gahame.GameScreens
 {

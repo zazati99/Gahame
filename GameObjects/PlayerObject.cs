@@ -25,8 +25,6 @@ namespace Gahame.GameObjects
         // Jump height
         float jumpHeight;
 
-        SpriteFont font;
-
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
         {
@@ -56,8 +54,6 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
-
-            font = screen.content.Load<SpriteFont>("Font");
 
         }
 
@@ -104,7 +100,6 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(font, this.ToString(), Vector2.Zero, Color.Black);
         }
 
     }

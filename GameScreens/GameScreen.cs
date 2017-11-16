@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
 using Gahame.GameObjects;
@@ -25,9 +24,14 @@ namespace Gahame.GameScreens
         // List of Gameobjects in the screen
         public List<GameObject> GameObjects;
 
+        // Screen size size
+        public Vector2 ScreenSize;
+
         // Constructor
         public GameScreen()
         {
+            ScreenSize = new Vector2(3000, 3000);
+
             // Cam controller creation
             CamController = new CameraController(null);
 
@@ -69,7 +73,6 @@ namespace Gahame.GameScreens
                 GameObjects[i].Draw(spriteBatch);
             }
         }
-
 
     }
 }

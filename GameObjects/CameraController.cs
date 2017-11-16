@@ -55,6 +55,25 @@ namespace Gahame.GameObjects
                                              Vector2.Add(target.Position,
                                              new Vector2(-ScreenManager.DefaultViewportX/4 + CamOffset.X,
                                              -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f));
+
+                    if (Game1.cam.Pos.X < 0)
+                    {
+                        SetPosition(new Vector2(0, Game1.cam.Pos.Y));
+                    }
+                    if (Game1.cam.Pos.X > target.screen.ScreenSize.X - ScreenManager.ViewportX)
+                    {
+                        SetPosition(new Vector2(target.screen.ScreenSize.X - ScreenManager.ViewportX, Game1.cam.Pos.Y));
+                    }
+
+                    if (Game1.cam.Pos.Y < 0)
+                    {
+                        SetPosition(new Vector2(Game1.cam.Pos.X, 0));
+                    }
+                    if (Game1.cam.Pos.Y > target.screen.ScreenSize.Y - ScreenManager.ViewportY)
+                    {
+                        SetPosition(new Vector2(Game1.cam.Pos.X, target.screen.ScreenSize.Y - ScreenManager.ViewportY));
+                    }
+
                 }
             }
         }
