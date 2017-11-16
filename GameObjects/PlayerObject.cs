@@ -82,7 +82,7 @@ namespace Gahame.GameObjects
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
                 physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -jumpHeight/2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -jumpHeight / 2 * signum(Physics.Gravity));
 
-            if (PlaceMeeting(Position, "testBoi") && physics.Grounded) Physics.Gravity *= -1;
+            if (GameControlls.E) Physics.Gravity *= -1;
 
             if (GameControlls.Enter)
             {

@@ -17,7 +17,7 @@ namespace Gahame.GameObjects.ObjectComponents
         public static float Gravity = 0.25f;
 
         // Gravity enabled
-        public bool GravityEnabled;
+        public bool GravityEnabled; 
 
         // Check if object will colide with wall
         public bool Solid;

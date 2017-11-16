@@ -19,6 +19,7 @@ namespace Gahame.GameUtils
         public static bool Left { get; private set; }
         public static bool Up { get; private set; }
         public static bool Down { get; private set; }
+        public static bool E { get; private set; }
         public static bool Space { get; private set; }
         public static bool SpaceHeld { get; private set; }
         public static bool Esc { get; private set; }
@@ -37,6 +38,7 @@ namespace Gahame.GameUtils
 
             SpaceHeld = state.IsKeyDown(Keys.Space);
 
+            E = state.IsKeyDown(Keys.E) && !previousState.IsKeyDown(Keys.E);
             Space = state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space);
             Esc = state.IsKeyDown(Keys.Escape) && !previousState.IsKeyDown(Keys.Escape);
             Enter = state.IsKeyDown(Keys.Enter) && !previousState.IsKeyDown(Keys.Enter);
