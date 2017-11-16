@@ -25,6 +25,8 @@ namespace Gahame.GameObjects
         // Jump height
         float jumpHeight;
 
+        SpriteFont font;
+
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
         {
@@ -55,6 +57,8 @@ namespace Gahame.GameObjects
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
 
+            font = screen.content.Load<SpriteFont>("Font");
+
         }
 
         // Update stufferino
@@ -74,6 +78,7 @@ namespace Gahame.GameObjects
             {
                 physics.Velocity.X = approach(physics.Velocity.X, 0, .25f);
             }
+            if (GameControlls.Right && GameControlls.Left) sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, 0, .25f);
             
             if (physics.Grounded)
             {
@@ -99,6 +104,7 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            spriteBatch.DrawString(font, this.ToString(), Vector2.Zero, Color.Black);
         }
 
     }
