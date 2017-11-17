@@ -108,6 +108,16 @@ namespace Gahame.GameObjects
             HitBox hb = GetComponent<HitBox>();
             return hb != null && hb.PlaceMeeting(p, tag);
         }
+        public bool PlaceMeeting(Vector2 p, Type type)
+        {
+            HitBox hb = GetComponent<HitBox>();
+            return hb != null && hb.PlaceMeeting(p, type);
+        }
+        public bool PlaceMeeting(float x, float y, Type type)
+        {
+            HitBox hb = GetComponent<HitBox>();
+            return hb != null && hb.PlaceMeeting(new Vector2(x, y), type);
+        }
 
         // Destroy a GameObject
         protected void destroyObject(GameObject o)

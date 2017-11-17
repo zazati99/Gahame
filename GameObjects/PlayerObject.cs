@@ -49,6 +49,7 @@ namespace Gahame.GameObjects
             physics = new Physics(this);
             physics.Solid = true;
             physics.GravityEnabled = true;
+            physics.colType = typeof(EmptyObject);
             Components.Add(physics);
 
             // Camera
