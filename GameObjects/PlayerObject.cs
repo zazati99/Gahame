@@ -49,7 +49,6 @@ namespace Gahame.GameObjects
             physics = new Physics(this);
             physics.Solid = true;
             physics.GravityEnabled = true;
-            physics.colType = typeof(EmptyObject);
             Components.Add(physics);
 
             // Camera
@@ -82,7 +81,7 @@ namespace Gahame.GameObjects
                 if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * signum(Physics.Gravity);
             }
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
-                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -jumpHeight/2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -jumpHeight / 2 * signum(Physics.Gravity));
+                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/5)*2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 5) * 2 * signum(Physics.Gravity));
 
             if (GameControlls.E) Physics.Gravity *= -1;
 
