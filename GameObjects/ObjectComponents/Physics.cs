@@ -25,6 +25,7 @@ namespace Gahame.GameObjects.ObjectComponents
         // Velocity vector
         public Vector2 Velocity;
 
+        // Grounded
         public bool Grounded;
 
         // Constructor
