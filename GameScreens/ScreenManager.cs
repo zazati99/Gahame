@@ -92,7 +92,7 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
-            currentScreen = GameFileMaganer.LoadScreen("Content/plessWork2.level");
+            currentScreen = GameFileMaganer.LoadScreen("Content/Debug.level");
 #else
             currentScreen = GameFileMaganer.LoadScreen("Content/plessWork.level");
 #endif

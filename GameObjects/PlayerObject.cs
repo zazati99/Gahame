@@ -85,11 +85,6 @@ namespace Gahame.GameObjects
 
             if (GameControlls.E) Physics.Gravity *= -1;
 
-            if (GameControlls.Enter)
-            {
-                ScreenManager.Instance.ChangeScreen(GameFileMaganer.LoadScreen("Content/plessWork2.level"));
-            }
-
             sprite.SpriteRotation = lerpFloat(sprite.SpriteRotation,(float)(Math.PI * signum(-signum(Physics.Gravity)+1)), .15f);
 
             // Updates Components last*/
