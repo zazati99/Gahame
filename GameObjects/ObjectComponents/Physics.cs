@@ -69,7 +69,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Horizontal collision
                 if (gameObject.PlaceMeeting(gameObject.Position.X + Velocity.X, gameObject.Position.Y, colType))
                 {
-                    gameObject.Position.X = (int)(gameObject.Position.X - Velocity.X);
+                    gameObject.Position.X = (Velocity.X > 0) ? (int)gameObject.Position.X : (int)gameObject.Position.X + 1; 
                     while (!gameObject.PlaceMeeting(gameObject.Position.X + signum(Velocity.X), gameObject.Position.Y, colType))
                     {
                         gameObject.Position.X += signum(Velocity.X);
@@ -81,7 +81,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Vertical collision
                 if (gameObject.PlaceMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y, colType))
                 {
-                    gameObject.Position.Y = (int)(gameObject.Position.Y - Velocity.Y);
+                    gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : gameObject.Position.Y + 1;
                     while (!gameObject.PlaceMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Velocity.Y), colType))
                     {
                         gameObject.Position.Y += signum(Velocity.Y);

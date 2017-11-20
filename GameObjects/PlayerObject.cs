@@ -54,7 +54,6 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
-
         }
 
         // Update stufferino

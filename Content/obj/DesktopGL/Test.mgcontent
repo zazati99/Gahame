@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/Documents/Visual Studio 2015/Projects/Gahame/Gahame/Gahame/Gahame/Content/Test.png</SourceFile>
-  <SourceTime>2017-11-13T21:08:25.4186182+01:00</SourceTime>
-  <DestFile>E:/Documents/Visual Studio 2015/Projects/Gahame/Gahame/Gahame/Gahame/Content/bin/DesktopGL/Test.xnb</DestFile>
-  <DestTime>2017-11-16T23:07:06.4790504+01:00</DestTime>
+  <SourceFile>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/Test.png</SourceFile>
+  <SourceTime>2017-11-11T18:38:20+01:00</SourceTime>
+  <DestFile>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/bin/DesktopGL/Test.xnb</DestFile>
+  <DestTime>2017-11-20T12:05:48+01:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
+  <ImporterTime>2016-03-30T08:36:22+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
+  <ProcessorTime>2016-03-30T08:36:22+02:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
