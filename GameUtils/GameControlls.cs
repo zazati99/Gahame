@@ -25,6 +25,7 @@ namespace Gahame.GameUtils
         public static bool Esc { get; private set; }
         public static bool Enter { get; private set; }
         public static bool F5 { get; private set; }
+        public static bool F6 { get; private set; }
 
         // Checks all of the controlls (should happen in Game class) 
         public static void Update() 
@@ -43,6 +44,7 @@ namespace Gahame.GameUtils
             Esc = state.IsKeyDown(Keys.Escape) && !previousState.IsKeyDown(Keys.Escape);
             Enter = state.IsKeyDown(Keys.Enter) && !previousState.IsKeyDown(Keys.Enter);
             F5 = state.IsKeyDown(Keys.F5) && !previousState.IsKeyDown(Keys.F5);
+            F6 = state.IsKeyDown(Keys.F6) && !previousState.IsKeyDown(Keys.F6);
 
             previousState = state;
         }

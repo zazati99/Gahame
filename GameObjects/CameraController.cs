@@ -43,6 +43,12 @@ namespace Gahame.GameObjects
             Game1.cam.Pos = pos;
         }
 
+        // Get position of le camera
+        public Vector2 GetPosition()
+        {
+            return Game1.cam.Pos;
+        }
+
         // Updates the camera
         public void Update()
         {
@@ -60,18 +66,18 @@ namespace Gahame.GameObjects
                     {
                         SetPosition(new Vector2(0, Game1.cam.Pos.Y));
                     }
-                    if (Game1.cam.Pos.X > target.screen.ScreenSize.X - ScreenManager.ViewportX)
+                    if (Game1.cam.Pos.X > target.screen.ScreenSize.X - (ScreenManager.ViewportX/Game1.cam.Zoom))
                     {
-                        SetPosition(new Vector2(target.screen.ScreenSize.X - ScreenManager.ViewportX, Game1.cam.Pos.Y));
+                        SetPosition(new Vector2(target.screen.ScreenSize.X - (ScreenManager.ViewportX / Game1.cam.Zoom), Game1.cam.Pos.Y));
                     }
 
                     if (Game1.cam.Pos.Y < 0)
                     {
                         SetPosition(new Vector2(Game1.cam.Pos.X, 0));
                     }
-                    if (Game1.cam.Pos.Y > target.screen.ScreenSize.Y - ScreenManager.ViewportY)
+                    if (Game1.cam.Pos.Y > target.screen.ScreenSize.Y - (ScreenManager.ViewportY/Game1.cam.Zoom))
                     {
-                        SetPosition(new Vector2(Game1.cam.Pos.X, target.screen.ScreenSize.Y - ScreenManager.ViewportY));
+                        SetPosition(new Vector2(Game1.cam.Pos.X, target.screen.ScreenSize.Y - (ScreenManager.ViewportY / Game1.cam.Zoom)));
                     }
 
                 }

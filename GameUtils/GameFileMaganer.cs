@@ -166,6 +166,12 @@ namespace Gahame.GameUtils
             {
                 switch (line)
                 {
+                    case "Width":
+                        screen.ScreenSize.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Height":
+                        screen.ScreenSize.Y = float.Parse(reader.ReadLine());
+                        break;
                     case "GameObject":
                         screen.GameObjects.Add(LoadGameObject(reader, screen));
                         break;

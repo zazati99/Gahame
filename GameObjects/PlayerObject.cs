@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
+using Gahame.GameObjects.ObjectComponents.Dialogue;
 using Gahame.GameObjects.ObjectComponents.Colliders;
 
 namespace Gahame.GameObjects
@@ -25,7 +26,8 @@ namespace Gahame.GameObjects
         // Jump height
         float jumpHeight;
 
-        // FOnt? 
+        // Test Dialogue (delet dis)
+        Dialogue dialogue;
         SpriteFont font;
 
         // Constructor stufferoo for playerino
@@ -58,7 +60,26 @@ namespace Gahame.GameObjects
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
 
-            font = screen.content.Load<SpriteFont>("Font");
+            // Test Box (Delet dis)
+            dialogue = new Dialogue(this);
+            font = screen.content.Load<SpriteFont>("BitMapFont");
+
+            DialogueBox b1 = new DialogueBox();
+            b1.Text = "Hehe Haha?";
+            b1.Font = font;
+            dialogue.Boxes.Add(b1);
+
+            DialogueBox b2 = new DialogueBox();
+            b2.Text = "Pless work ha?";
+            b2.Font = font;
+            dialogue.Boxes.Add(b2);
+
+            DialogueBox b3 = new DialogueBox();
+            b3.Text = "Please?";
+            b3.Font = font;
+            dialogue.Boxes.Add(b3);
+
+            Components.Add(dialogue);
         }
 
         // Update stufferino
@@ -88,6 +109,7 @@ namespace Gahame.GameObjects
                 physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/5)*2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 5) * 2 * signum(Physics.Gravity));
 
             if (GameControlls.E) Physics.Gravity *= -1;
+            if (GameControlls.F6) dialogue.StartDialogue();
 
             sprite.SpriteRotation = lerpFloat(sprite.SpriteRotation,(float)(Math.PI * signum(-signum(Physics.Gravity)+1)), .15f);
 
@@ -99,7 +121,6 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(font, "HAha", Position, Color.Black);
         }
 
     }

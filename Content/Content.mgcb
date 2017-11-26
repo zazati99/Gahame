@@ -61,10 +61,11 @@
 /processorParam:TextureFormat=Color
 /build:Test.png
 
-#begin Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
+#begin BitMapFont.bmp
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
 /processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Font.spritefont
+/processorParam:TextureFormat=Color
+/build:BitMapFont.bmp
 
