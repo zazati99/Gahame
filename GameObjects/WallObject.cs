@@ -17,7 +17,7 @@ namespace Gahame.GameObjects
     {
 
         // Debug rectangle
-        Texture2D rectangle;
+        Sprite rectangle;
 
         // Used when loaded form file
         public WallObject() : base()
@@ -46,15 +46,17 @@ namespace Gahame.GameObjects
         // Draws components(Should not have any byt could be used for debugging)
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
             if (rectangle == null)
             {
                 BoxCollider col = (BoxCollider)GetComponent<HitBox>().Colliders[0];
-                rectangle = CreateRect(spriteBatch, col.Size);
+                Texture2D tex = CreateRect(spriteBatch, col.Size);
+                rectangle = new Sprite(this);
+                rectangle.AddImage(tex);
+                rectangle.Depth = 1;
+
+                Components.Add(rectangle);
             }
-
-            spriteBatch.Draw(rectangle, Position);
-
+            base.Draw(spriteBatch);
         }
 
     }

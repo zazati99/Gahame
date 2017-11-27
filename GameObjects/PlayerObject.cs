@@ -28,7 +28,6 @@ namespace Gahame.GameObjects
 
         // Test Dialogue (delet dis)
         Dialogue dialogue;
-        SpriteFont font;
 
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
@@ -62,27 +61,26 @@ namespace Gahame.GameObjects
 
             // Test Box (Delet dis)
             dialogue = new Dialogue(this);
-            font = screen.content.Load<SpriteFont>("BitMapFont");
 
             DialogueBox b1 = new DialogueBox();
             b1.Text = "Hehe Haha?";
-            b1.Font = font;
+            b1.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b1);
 
             DialogueBox b2 = new DialogueBox();
             b2.Text = "Pless work ha?";
-            b2.Font = font;
+            b2.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b2);
 
             DialogueBox b3 = new DialogueBox();
             b3.Text = "Please?";
-            b3.Font = font;
+            b3.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b3);
 
             DialogueBox b4 = new DialogueBox();
             b4.Text = "Sick Meme...\n"+
                 "Ma boi!";
-            b4.Font = font;
+            b4.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b4);
 
             Components.Add(dialogue);
