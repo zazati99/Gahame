@@ -22,15 +22,19 @@ namespace Gahame.GameObjects
         // Used when loaded form file
         public WallObject() : base()
         {
-            Components.Add(new HitBox(this));
+            HitBox hb = new HitBox(this);
+            hb.Solid = true;
+            Components.Add(hb);
         }
         // Used when loaded form file
         public WallObject(Vector2 position, Vector2 Size, GameScreen screen) : base(screen)
         {
-            Components.Add(new HitBox(this));
-            Position = position;
+            HitBox hb = new HitBox(this);
+            hb.Colliders.Add(new BoxCollider(Size));
+            hb.Solid = true;
+            Components.Add(hb);
 
-            GetComponent<HitBox>().Colliders.Add(new BoxCollider(Size));
+            Position = position;
         }
 
         // Update components (should not have any)

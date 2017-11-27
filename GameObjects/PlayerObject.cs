@@ -79,6 +79,12 @@ namespace Gahame.GameObjects
             b3.Font = font;
             dialogue.Boxes.Add(b3);
 
+            DialogueBox b4 = new DialogueBox();
+            b4.Text = "Sick Meme...\n"+
+                "Ma boi!";
+            b4.Font = font;
+            dialogue.Boxes.Add(b4);
+
             Components.Add(dialogue);
         }
 
@@ -106,7 +112,7 @@ namespace Gahame.GameObjects
                 if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * signum(Physics.Gravity);
             }
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
-                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/5)*2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 5) * 2 * signum(Physics.Gravity));
+                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/2) * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 2) * signum(Physics.Gravity));
 
             if (GameControlls.E) Physics.Gravity *= -1;
             if (GameControlls.F6) dialogue.StartDialogue();
