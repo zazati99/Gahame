@@ -35,13 +35,19 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
             // Change box or stop dialogue
             if (GameControlls.Enter)
             {
-                // stop dialogue
-                if (CurrentBox == Boxes.Count - 1)
+                // Checks if all text is there 
+                if (Boxes[CurrentBox].CharIndex == Boxes[CurrentBox].Text.Length)
                 {
-                    StopDialogue();
+                    // stop dialogue
+                    if (CurrentBox == Boxes.Count - 1)
+                    {
+                        StopDialogue();
+                    }
+                    // Or go to next box
+                    else CurrentBox++;
                 }
-                // Or go to next box
-                else CurrentBox++;
+                // Fixes all of the text meme
+                else Boxes[CurrentBox].CharIndex = Boxes[CurrentBox].Text.Length;
             }
 
             // Does the rest of the drawing if it's drawable

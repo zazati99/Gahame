@@ -117,6 +117,32 @@ namespace Gahame.GameObjects.ObjectComponents
             }
             return false;
         }
+        // Check if 2 hitboxes at a given position is colliding (By solid)
+        public bool SolidMeeting(float x, float y)
+        {
+            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
+            {
+                GameObject o = gameObject.screen.GameObjects[i];
+                if (o == gameObject) continue;
+
+                HitBox temp = o.GetComponent<HitBox>();
+                if (temp != null)
+                {
+                    if (temp.Solid)
+                    {
+                        for (int j = 0; j < Colliders.Count; j++)
+                        {
+                            for (int k = 0; k < temp.Colliders.Count; k++)
+                            {
+                                if (Colliders[j].IsColliding(temp.Colliders[k], new Vector2(x, y), o.Position))
+                                    return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
 
     }
 }

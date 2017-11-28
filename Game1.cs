@@ -45,6 +45,10 @@ namespace Gahame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Load spriteFonts here
+            GameFonts.LoadFonts(Content);
+
             // Load all fo that sweet sweet content right here
             ScreenManager.Instance.LoadContent(Content);
         }

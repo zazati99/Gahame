@@ -28,9 +28,6 @@ namespace Gahame.GameObjects.ObjectComponents
         // Grounded
         public bool Grounded;
 
-        // Type that collision checks will be against
-        public Type colType;
-
         // Constructor
         public Physics(GameObject gameObject) : base(gameObject)
         {
@@ -44,21 +41,19 @@ namespace Gahame.GameObjects.ObjectComponents
             GravityEnabled = false;
             Velocity = new Vector2(0, 0);
             Grounded = false;
-
-            // Type
-            colType = typeof(WallObject);
         }
 
         // Updates physics
         public override void Update(GameTime gameTime)
         {
-            if (Solid)
+            HitBox hb = gameObject.GetComponent<HitBox>();
+            if (Solid && hb != null)
             {
 
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
-                    if (!gameObject.PlaceMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Gravity), colType))
+                    if (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Gravity)))
                     {
                         Grounded = false;
                         Velocity.Y += Gravity;
@@ -67,10 +62,10 @@ namespace Gahame.GameObjects.ObjectComponents
                 }
 
                 // Horizontal collision
-                if (gameObject.PlaceMeeting(gameObject.Position.X + Velocity.X, gameObject.Position.Y, colType))
+                if (hb.SolidMeeting(gameObject.Position.X + Velocity.X, gameObject.Position.Y))
                 {
                     gameObject.Position.X = (Velocity.X > 0) ? (int)gameObject.Position.X : (int)gameObject.Position.X + 1; 
-                    while (!gameObject.PlaceMeeting(gameObject.Position.X + signum(Velocity.X), gameObject.Position.Y, colType))
+                    while (!hb.SolidMeeting(gameObject.Position.X + signum(Velocity.X), gameObject.Position.Y))
                     {
                         gameObject.Position.X += signum(Velocity.X);
                     }
@@ -79,10 +74,10 @@ namespace Gahame.GameObjects.ObjectComponents
                 gameObject.Position.X += Velocity.X; // Updates x position
 
                 // Vertical collision
-                if (gameObject.PlaceMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y, colType))
+                if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y))
                 {
-                    gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : gameObject.Position.Y + 1;
-                    while (!gameObject.PlaceMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Velocity.Y), colType))
+                    gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : (int)gameObject.Position.Y + 1;
+                    while (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Velocity.Y)))
                     {
                         gameObject.Position.Y += signum(Velocity.Y);
                     }

@@ -17,20 +17,24 @@ namespace Gahame.GameObjects
     {
 
         // Debug rectangle
-        Texture2D rectangle;
+        Sprite rectangle;
 
         // Used when loaded form file
         public WallObject() : base()
         {
-            Components.Add(new HitBox(this));
+            HitBox hb = new HitBox(this);
+            hb.Solid = true;
+            Components.Add(hb);
         }
         // Used when loaded form file
         public WallObject(Vector2 position, Vector2 Size, GameScreen screen) : base(screen)
         {
-            Components.Add(new HitBox(this));
-            Position = position;
+            HitBox hb = new HitBox(this);
+            hb.Colliders.Add(new BoxCollider(Size));
+            hb.Solid = true;
+            Components.Add(hb);
 
-            GetComponent<HitBox>().Colliders.Add(new BoxCollider(Size));
+            Position = position;
         }
 
         // Update components (should not have any)
@@ -42,15 +46,17 @@ namespace Gahame.GameObjects
         // Draws components(Should not have any byt could be used for debugging)
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
             if (rectangle == null)
             {
                 BoxCollider col = (BoxCollider)GetComponent<HitBox>().Colliders[0];
-                rectangle = CreateRect(spriteBatch, col.Size);
+                Texture2D tex = CreateRect(spriteBatch, col.Size);
+                rectangle = new Sprite(this);
+                rectangle.AddImage(tex);
+                rectangle.Depth = 1;
+
+                Components.Add(rectangle);
             }
-
-            spriteBatch.Draw(rectangle, Position);
-
+            base.Draw(spriteBatch);
         }
 
     }

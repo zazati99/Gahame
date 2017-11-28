@@ -28,7 +28,6 @@ namespace Gahame.GameObjects
 
         // Test Dialogue (delet dis)
         Dialogue dialogue;
-        SpriteFont font;
 
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
@@ -62,22 +61,26 @@ namespace Gahame.GameObjects
 
             // Test Box (Delet dis)
             dialogue = new Dialogue(this);
-            font = screen.content.Load<SpriteFont>("BitMapFont");
 
             DialogueBox b1 = new DialogueBox();
             b1.Text = "Hehe Haha?";
-            b1.Font = font;
+            b1.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b1);
 
             DialogueBox b2 = new DialogueBox();
             b2.Text = "Pless work ha?";
-            b2.Font = font;
+            b2.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b2);
 
             DialogueBox b3 = new DialogueBox();
-            b3.Text = "Yo boi you be THICC as FUUUck \nNibba";
-            b3.Font = font;
+            b3.Text = "What have I become?";
+            b3.Font = GameFonts.Arial;
             dialogue.Boxes.Add(b3);
+
+            DialogueBox b4 = new DialogueBox();
+            b4.Text = "Sick Meme...\n" + "hehe";
+            b4.Font = GameFonts.Arial;
+            dialogue.Boxes.Add(b4);
 
             Components.Add(dialogue);
         }
@@ -106,7 +109,7 @@ namespace Gahame.GameObjects
                 if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * signum(Physics.Gravity);
             }
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
-                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/5)*2 * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 5) * 2 * signum(Physics.Gravity));
+                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/2) * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 2) * signum(Physics.Gravity));
 
             if (GameControlls.E) Physics.Gravity *= -1;
             if (GameControlls.F6) dialogue.StartDialogue();
