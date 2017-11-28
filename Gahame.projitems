@@ -28,6 +28,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)GameUtils\GameControlls.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameUtils\GameFileMaganer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameUtils\ShapeRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\Dialogue\Dialogue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\ObjectComponents\Dialogue\DialogueBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />

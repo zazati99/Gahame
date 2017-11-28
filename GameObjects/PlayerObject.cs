@@ -75,7 +75,7 @@ namespace Gahame.GameObjects
             dialogue.Boxes.Add(b2);
 
             DialogueBox b3 = new DialogueBox();
-            b3.Text = "Please?";
+            b3.Text = "Yo boi you be THICC as FUUUck \nNibba";
             b3.Font = font;
             dialogue.Boxes.Add(b3);
 
