@@ -144,5 +144,36 @@ namespace Gahame.GameObjects.ObjectComponents
             return false;
         }
 
+        // Get Instance at place (by tag)
+        public GameObject InstanceMeeting(Vector2 pos, string tag){
+            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++){
+                
+                GameObject o = gameObject.screen.GameObjects[i];
+                if (o == gameObject) continue;
+
+                if (o.Tag == tag){
+
+                    HitBox temp = o.GetComponent<HitBox>();
+                    if (temp != null)
+                    {
+                        if (temp.Solid)
+                        {
+                            for (int j = 0; j < Colliders.Count; j++)
+                            {
+                                for (int k = 0; k < temp.Colliders.Count; k++)
+                                {
+                                    if (Colliders[j].IsColliding(temp.Colliders[k], pos, o.Position))
+                                        return o;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            return null;
+        }
+
     }
 }

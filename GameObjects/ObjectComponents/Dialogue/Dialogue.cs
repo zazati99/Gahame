@@ -36,7 +36,7 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
             if (GameControlls.Enter)
             {
                 // Checks if all text is there 
-                if (Boxes[CurrentBox].CharIndex == Boxes[CurrentBox].Text.Length)
+                if ((int)Boxes[CurrentBox].CharIndex == Boxes[CurrentBox].Text.Length)
                 {
                     // stop dialogue
                     if (CurrentBox == Boxes.Count - 1)

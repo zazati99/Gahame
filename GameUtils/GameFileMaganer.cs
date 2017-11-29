@@ -10,6 +10,7 @@ using Gahame.GameScreens;
 using Gahame.GameObjects;
 using Gahame.GameObjects.ObjectComponents;
 using Gahame.GameObjects.ObjectComponents.Colliders;
+using Gahame.GameObjects.ObjectComponents.Dialogue;
 
 using System.IO;
 
@@ -55,6 +56,9 @@ namespace Gahame.GameUtils
                     case "Physics":
                         o.Components.Add(LoadPhysics(reader, o));
                         break;
+                    case "Dialogue":
+                        o.Components.Add(LoadDialogue(reader, o));
+                        break;
                 }
             }
             o.Initialize();
@@ -88,6 +92,42 @@ namespace Gahame.GameUtils
                 
             }
             return hb;
+        }
+
+        // Load dialogue mee
+        public static Dialogue LoadDialogue(StreamReader reader, GameObject o){
+
+            Dialogue d = new Dialogue(o);
+
+            string line;
+            while((line = reader.ReadLine()) != "---"){
+                switch(line){
+                    case "DialogueBox":
+                        d.Boxes.Add(LoadDialogueBox(reader));
+                        break;
+                }   
+            }
+
+            return d;
+        }
+
+        // Load a Dialogue box
+        public static DialogueBox LoadDialogueBox(StreamReader reader){
+            DialogueBox box = new DialogueBox();
+
+            string line;
+            while ((line = reader.ReadLine()) != "---"){
+                switch(line){
+                    case "Text":
+                        box.Text = reader.ReadLine();
+                        break;
+                    case "TextSpeed":
+                        box.UpdateSpeed = float.Parse(reader.ReadLine());
+                        break;
+                }
+            }
+
+            return box;
         }
 
         // Load Physics

@@ -114,6 +114,13 @@ namespace Gahame.GameObjects
             if (GameControlls.E) Physics.Gravity *= -1;
             if (GameControlls.F6) dialogue.StartDialogue();
 
+            if (GameControlls.Enter){
+                if (PlaceMeeting(Position, "Inspectable")){
+                    GameObject ins = hitBox.InstanceMeeting(Position, "inspectable");
+                    ins.GetComponent<Dialogue>().StartDialogue();
+                }
+            }
+
             sprite.SpriteRotation = lerpFloat(sprite.SpriteRotation,(float)(Math.PI * signum(-signum(Physics.Gravity)+1)), .15f);
 
             // Updates Components last*/

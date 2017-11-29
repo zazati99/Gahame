@@ -30,7 +30,7 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
         public DialogueBox()
         {
             CharIndex = 0;
-            UpdateSpeed = .25f;
+            UpdateSpeed = .01f;
         }
 
         // Draw tha box
