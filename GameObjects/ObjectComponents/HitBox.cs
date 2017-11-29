@@ -102,15 +102,18 @@ namespace Gahame.GameObjects.ObjectComponents
                 GameObject o = gameObject.screen.GameObjects[i];
                 if (o == gameObject) continue;
 
-                HitBox temp = o.GetComponent<HitBox>();
-                if (o.Tag == tag && temp != null)
+                if (o.Tag == tag)
                 {
-                    for (int j = 0; j < Colliders.Count; j++)
+                    HitBox otherHb = o.GetComponent<HitBox>();
+                    if (otherHb != null)
                     {
-                        for (int k = 0; k < temp.Colliders.Count; k++)
+                        for (int j = 0; j < Colliders.Count; j++)
                         {
-                            if (Colliders[j].IsColliding(temp.Colliders[k], p, o.Position))
-                                return true;
+                            for (int k = 0; k < otherHb.Colliders.Count; k++)
+                            {
+                                if (Colliders[j].IsColliding(otherHb.Colliders[k], p, o.Position))
+                                    return true;
+                            }
                         }
                     }
                 }
@@ -144,34 +147,31 @@ namespace Gahame.GameObjects.ObjectComponents
             return false;
         }
 
-        // Get Instance at place (by tag)
-        public GameObject InstanceMeeting(Vector2 pos, string tag){
-            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++){
-                
-                GameObject o = gameObject.screen.GameObjects[i];
-                if (o == gameObject) continue;
+        public GameObject InstancePlace(Vector2 pos, string tag)
+        {
+            GameObject obj;
 
-                if (o.Tag == tag){
+            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
+            {
+                obj = gameObject.screen.GameObjects[i];
+                if (obj == gameObject) continue;
 
-                    HitBox temp = o.GetComponent<HitBox>();
-                    if (temp != null)
-                    {
-                        if (temp.Solid)
+                if (obj.Tag == tag)
+                {
+                    HitBox otherHb = obj.GetComponent<HitBox>();
+                    if (otherHb != null) {
+                        for (int j = 0; j < Colliders.Count; j++)
                         {
-                            for (int j = 0; j < Colliders.Count; j++)
+                            for (int k = 0; k < otherHb.Colliders.Count; k++)
                             {
-                                for (int k = 0; k < temp.Colliders.Count; k++)
-                                {
-                                    if (Colliders[j].IsColliding(temp.Colliders[k], pos, o.Position))
-                                        return o;
-                                }
+                                if (Colliders[j].IsColliding(otherHb.Colliders[k], pos, obj.Position))
+                                    return obj;
                             }
                         }
                     }
-
                 }
-
             }
+
             return null;
         }
 

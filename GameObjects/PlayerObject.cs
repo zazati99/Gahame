@@ -116,8 +116,9 @@ namespace Gahame.GameObjects
 
             if (GameControlls.Enter){
                 if (PlaceMeeting(Position, "Inspectable")){
-                    GameObject ins = hitBox.InstanceMeeting(Position, "inspectable");
-                    ins.GetComponent<Dialogue>().StartDialogue();
+                    GameObject ins = hitBox.InstancePlace(Position, "inspectable");
+                    Dialogue d = ins.GetComponent<Dialogue>();
+                    if (d != null) d.StartDialogue();
                 }
             }
 
