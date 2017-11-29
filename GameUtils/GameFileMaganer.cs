@@ -124,6 +124,9 @@ namespace Gahame.GameUtils
                     case "TextSpeed":
                         box.UpdateSpeed = float.Parse(reader.ReadLine());
                         break;
+                    case "NonSkippable":
+                        box.Skippable = false;
+                        break;
                 }
             }
 

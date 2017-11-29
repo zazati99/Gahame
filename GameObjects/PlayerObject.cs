@@ -115,10 +115,11 @@ namespace Gahame.GameObjects
             if (GameControlls.F6) dialogue.StartDialogue();
 
             if (GameControlls.Enter){
-                if (PlaceMeeting(Position, "Inspectable")){
-                    GameObject ins = hitBox.InstancePlace(Position, "inspectable");
-                    Dialogue d = ins.GetComponent<Dialogue>();
-                    if (d != null) d.StartDialogue();
+                GameObject ins = hitBox.InstancePlace(Position, "Inspectable");
+                if (ins != null)
+                {
+                    Dialogue dialogue = ins.GetComponent<Dialogue>();
+                    if (dialogue != null) dialogue.StartDialogue();
                 }
             }
 
@@ -128,7 +129,7 @@ namespace Gahame.GameObjects
             base.Update(gameTime);
         }
 
-        // Drawerino
+        // dDrawerino
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);

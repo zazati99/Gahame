@@ -146,7 +146,9 @@ namespace Gahame.GameObjects.ObjectComponents
             }
             return false;
         }
+        // Check if colliding with object that has dialogue 
 
+        // Gets the object that is colliding at a specific place
         public GameObject InstancePlace(Vector2 pos, string tag)
         {
             GameObject obj;

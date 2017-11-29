@@ -17,6 +17,9 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
         public List<DialogueBox> Boxes;
         public int CurrentBox;
 
+        // Accesible?
+        public bool Accesible;
+
         // Dialogue constructor
         public Dialogue(GameObject o) : base(o)
         {
@@ -27,13 +30,16 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
             // Important component variables
             Drawable = false; // becomes true when active
             Updatable = false;
+
+            // Accesible Meme 
+            Accesible = true;
         }
 
         // Draw all of the stuffs
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Change box or stop dialogue
-            if (GameControlls.Enter)
+            if (GameControlls.Enter && !Accesible)
             {
                 // Checks if all text is there 
                 if ((int)Boxes[CurrentBox].CharIndex == Boxes[CurrentBox].Text.Length)
@@ -47,8 +53,9 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
                     else CurrentBox++;
                 }
                 // Fixes all of the text meme
-                else Boxes[CurrentBox].CharIndex = Boxes[CurrentBox].Text.Length;
+                else if(Boxes[CurrentBox].Skippable) Boxes[CurrentBox].CharIndex = Boxes[CurrentBox].Text.Length;
             }
+            else Accesible = false;
 
             // Does the rest of the drawing if it's drawable
             if (Drawable)
@@ -67,6 +74,7 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
         // Stops the dialogue
         public void StopDialogue()
         {
+            Accesible = true;
             Drawable = false;
             CurrentBox = 0;
 

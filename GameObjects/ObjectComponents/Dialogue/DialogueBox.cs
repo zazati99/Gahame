@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
+using Gahame.GameUtils;
+
 namespace Gahame.GameObjects.ObjectComponents.Dialogue
 {
     public class DialogueBox
@@ -26,11 +28,19 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
         // Update speed
         public float UpdateSpeed;
 
+        // Skipable?
+        public bool Skippable;
+
         // Constructor with default settings
         public DialogueBox()
         {
+            // Le importante  variables
             CharIndex = 0;
-            UpdateSpeed = .01f;
+            UpdateSpeed = .25f;
+            Skippable = true;
+
+            // Default font
+            Font = GameFonts.Arial;
         }
 
         // Draw tha box
