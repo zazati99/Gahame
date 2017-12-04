@@ -14,11 +14,11 @@ using Gahame.GameUtils;
 
 namespace Gahame.GameScreens
 {
-    public class GenericGameScreen : GameScreen 
+    public class BattleScreen : GameScreen 
     {
 
         // Constructor
-        public GenericGameScreen() : base(){
+        public BattleScreen() : base(){
             // Load content directly after being called
             LoadContent();
         }

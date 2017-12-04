@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Gahame.GameUtils;
 
-namespace Gahame.GameObjects.ObjectComponents.Dialogue
+namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 {
     public class Dialogue : ObjectComponent
     {
@@ -39,7 +39,7 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Change box or stop dialogue
-            if (GameControlls.Enter && !Accesible)
+            if (GameControlls.E && !Accesible)
             {
                 // Checks if all text is there 
                 if ((int)Boxes[CurrentBox].CharIndex == Boxes[CurrentBox].Text.Length)
@@ -60,7 +60,6 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
             // Does the rest of the drawing if it's drawable
             if (Drawable)
             {
-                Boxes[CurrentBox].Position = gameObject.screen.CamController.GetPosition();
                 Boxes[CurrentBox].Draw(spriteBatch);
             }
         }

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
-using Gahame.GameObjects.ObjectComponents.Dialogue;
+using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 using Gahame.GameObjects.ObjectComponents.Colliders;
 
 namespace Gahame.GameObjects
@@ -25,9 +25,6 @@ namespace Gahame.GameObjects
 
         // Jump height
         float jumpHeight;
-
-        // Test Dialogue (delet dis)
-        Dialogue dialogue;
 
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
@@ -58,72 +55,38 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
-
-            // Test Box (Delet dis)
-            dialogue = new Dialogue(this);
-
-            DialogueBox b1 = new DialogueBox();
-            b1.Text = "Hehe Haha?";
-            b1.Font = GameFonts.Arial;
-            dialogue.Boxes.Add(b1);
-
-            DialogueBox b2 = new DialogueBox();
-            b2.Text = "Pless work ha?";
-            b2.Font = GameFonts.Arial;
-            dialogue.Boxes.Add(b2);
-
-            DialogueBox b3 = new DialogueBox();
-            b3.Text = "What have I become?";
-            b3.Font = GameFonts.Arial;
-            dialogue.Boxes.Add(b3);
-
-            DialogueBox b4 = new DialogueBox();
-            b4.Text = "Sick Meme...\n" + "hehe";
-            b4.Font = GameFonts.Arial;
-            dialogue.Boxes.Add(b4);
-
-            Components.Add(dialogue);
+            screen.CamController.Static = true;
+            screen.CamController.SetPosition(new Vector2(330, 100));
         }
 
         // Update stufferino
         public override void Update(GameTime gameTime)
         {
-            if (GameControlls.Right && !GameControlls.Left)
+
+            // Walking left and right
+            if (GameControlls.Right || GameControlls.Left)
             {
-                sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, 1, .25f);
-                physics.Velocity.X = approach(physics.Velocity.X, 2, .5f);
+                sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, (GameControlls.Right ? 1 : 0) - (GameControlls.Left ? 1 : 0), .25f);
+                physics.Velocity.X = approach(physics.Velocity.X, 2 * ((GameControlls.Right ? 1 : 0) - (GameControlls.Left ? 1 : 0)), .5f);
             }
-            if (GameControlls.Left && !GameControlls.Right)
-            {
-                sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, -1, .25f);
-                physics.Velocity.X = approach(physics.Velocity.X, -2, .5f);
-            }
+            // Stopping
             if (!GameControlls.Right && !GameControlls.Left || GameControlls.Right && GameControlls.Left)
-            {
                 physics.Velocity.X = approach(physics.Velocity.X, 0, .25f);
-            }
-            if (GameControlls.Right && GameControlls.Left) sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, 0, .25f);
             
+            // Jumping
             if (physics.Grounded)
             {
                 if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * signum(Physics.Gravity);
             }
+            // Stopping if space is not held
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
                 physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/2) * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 2) * signum(Physics.Gravity));
 
-            if (GameControlls.E) Physics.Gravity *= -1;
-            if (GameControlls.F6) dialogue.StartDialogue();
-
-            if (GameControlls.Enter){
-                GameObject ins = hitBox.InstancePlace(Position, "Inspectable");
-                if (ins != null)
-                {
-                    Dialogue dialogue = ins.GetComponent<Dialogue>();
-                    if (dialogue != null) dialogue.StartDialogue();
-                }
+            // Interact with object
+            if (GameControlls.E){
+                Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
+                if (d != null) d.StartDialogue();
             }
-
-            sprite.SpriteRotation = lerpFloat(sprite.SpriteRotation,(float)(Math.PI * signum(-signum(Physics.Gravity)+1)), .15f);
 
             // Updates Components last*/
             base.Update(gameTime);

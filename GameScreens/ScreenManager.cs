@@ -94,9 +94,9 @@ namespace Gahame.GameScreens
 #if DEBUG
             currentScreen = GameFileMaganer.LoadScreen("Content/Debug.level");
 #else
-            currentScreen = GameFileMaganer.LoadScreen("Content/plessWork.level");
+            currentScreen = GameFileMaganer.LoadScreen("Content/TestLevel.sml");
 #endif
-
+            //GameFileMaganer.EncryptFile("Content/Encrypted.sml", "Content/testeroni.sml");
             // Load content below here
 
         }
@@ -106,7 +106,7 @@ namespace Gahame.GameScreens
         {
             Content.Unload();
         }
-
+        
         // Update all of the logicz here
         public void Update(GameTime gameTime)
         {

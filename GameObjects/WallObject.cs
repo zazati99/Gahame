@@ -19,10 +19,13 @@ namespace Gahame.GameObjects
         // Debug rectangle
         Sprite rectangle;
 
+        // HitBox
+        HitBox hb;
+
         // Used when loaded form file
         public WallObject() : base()
         {
-            HitBox hb = new HitBox(this);
+            hb = new HitBox(this);
             hb.Solid = true;
             Components.Add(hb);
         }

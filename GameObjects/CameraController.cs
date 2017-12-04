@@ -13,6 +13,24 @@ namespace Gahame.GameObjects
     public class CameraController
     {
 
+        // STATIC stuff
+
+        // Gets position on screen
+        public static Vector2 PositionOnScreen(Vector2 vec)
+        {
+            //return Vector2.Divide(Vector2.Add(Game1.cam.Pos, vec), Game1.cam.Zoom);
+            //return Vector2.Add(Game1.cam.Pos, Vector2.Divide(vec, Game1.cam.Zoom));
+            return Vector2.Add(Game1.cam.Pos, vec);
+        }
+
+        // Gets width of view accounting for zoom
+        public static float ViewWidth()
+        {
+            return ScreenManager.ViewportX / Game1.cam.Zoom;
+        }
+        
+        // End of static stuff
+
         // target that camera will be following my dude
         public GameObject target;
 

@@ -8,8 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 using Gahame.GameUtils;
+using Gahame.GameScreens;
 
-namespace Gahame.GameObjects.ObjectComponents.Dialogue
+namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 {
     public class DialogueBox
     {
@@ -21,6 +22,8 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
 
         // Position of the Box
         public Vector2 Position;
+        Vector2 origin;
+        Vector2 size;
 
         // Char index
         public float CharIndex;
@@ -41,6 +44,14 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
 
             // Default font
             Font = GameFonts.Arial;
+
+            // Position stuff
+            origin = new Vector2();
+            size = new Vector2(200 , 50);
+            Position = new Vector2(CameraController.ViewWidth()/2 - 100,120);
+
+            Font.LineSpacing = 17;
+            Font.LineSpacing = (int)(size.Y / 2)-8;
         }
 
         // Draw tha box
@@ -52,15 +63,31 @@ namespace Gahame.GameObjects.ObjectComponents.Dialogue
                 CharIndex += UpdateSpeed;
             }
 
-            spriteBatch.DrawString(Font,
+            // Draws the box
+            ShapeRenderer.FillRectangle(
+                spriteBatch,
+                CameraController.PositionOnScreen(Position + new Vector2(-1, 0)),
+                size,
+                0.01f,
+                Color.Black);
+
+            // Draws the text
+            spriteBatch.DrawString(
+                Font,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
-                Position,
+                CameraController.PositionOnScreen(Position),
                 Color.White,
                 0,
-                Vector2.Zero,
+                origin,
                 1,
                 SpriteEffects.None,
                 0);
+        }
+
+        // Add text
+        public void AddText(string Text)
+        {
+            this.Text = Text;
         }
 
     }

@@ -173,6 +173,18 @@ namespace Gahame.GameUtils
             FillRectangle(spriteBatch, location, size, color, 0.0f);
         }
 
+        /// <summary>
+        /// Draws a filled rectangle
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="location">Where to draw</param>
+        /// <param name="size">The size of the rectangle</param>
+        /// <param name="color">The color to draw the rectangle in</param>
+        public static void FillRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, float depth, Color color)
+        {
+            FillRectangle(spriteBatch, location, size, color, 0.0f, depth);
+        }
+
 
         /// <summary>
         /// Draws a filled rectangle
@@ -199,6 +211,34 @@ namespace Gahame.GameUtils
                              size,
                              SpriteEffects.None,
                              0);
+        }
+
+        /// <summary>
+        /// Draws a filled rectangle
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="location">Where to draw</param>
+        /// <param name="size">The size of the rectangle</param>
+        /// <param name="angle">The angle in radians to draw the rectangle at</param>
+        ///<param name="depth">What layer depth to draw stuff in</param>
+        /// <param name="color">The color to draw the rectangle in</param>
+        public static void FillRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color, float angle, float depth)
+        {
+            if (pixel == null)
+            {
+                CreateThePixel(spriteBatch);
+            }
+
+            // stretch the pixel between the two vectors
+            spriteBatch.Draw(pixel,
+                             location,
+                             null,
+                             color,
+                             angle,
+                             Vector2.Zero,
+                             size,
+                             SpriteEffects.None,
+                             depth);
         }
 
 
@@ -230,6 +270,22 @@ namespace Gahame.GameUtils
         public static void FillRectangle(this SpriteBatch spriteBatch, float x, float y, float w, float h, Color color, float angle)
         {
             FillRectangle(spriteBatch, new Vector2(x, y), new Vector2(w, h), color, angle);
+        }
+
+        /// <summary>
+        /// Draws a filled rectangle
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="x">The X coord of the left side</param>
+        /// <param name="y">The Y coord of the upper side</param>
+        /// <param name="w">Width</param>
+        /// <param name="h">Height</param>
+        /// <param name="color">The color to draw the rectangle in</param>
+        /// <param name="angle">The angle of the rectangle in radians</param>
+        /// <param name="depth">What layerdepth to draw in</param>
+        public static void FillRectangle(this SpriteBatch spriteBatch, float x, float y, float w, float h, Color color, float angle, float depth)
+        {
+            FillRectangle(spriteBatch, new Vector2(x, y), new Vector2(w, h), color, angle, depth);
         }
 
         #endregion

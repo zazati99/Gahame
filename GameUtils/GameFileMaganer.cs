@@ -10,9 +10,11 @@ using Gahame.GameScreens;
 using Gahame.GameObjects;
 using Gahame.GameObjects.ObjectComponents;
 using Gahame.GameObjects.ObjectComponents.Colliders;
-using Gahame.GameObjects.ObjectComponents.Dialogue;
+using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 
 using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Gahame.GameUtils
 {
@@ -73,25 +75,46 @@ namespace Gahame.GameUtils
             string line;
             while((line = reader.ReadLine()) != "---")
             {
-                if(line == "BoxCollider")
+                switch (line)
                 {
-                    BoxCollider b = new BoxCollider();
-                    while((line = reader.ReadLine()) != "---")
-                    {
-                        if (line == "Width") b.Size.X = float.Parse(reader.ReadLine());
-                        if (line == "Height") b.Size.Y = float.Parse(reader.ReadLine());
-                        if (line == "OffsetX") b.Offset.X = float.Parse(reader.ReadLine());
-                        if (line == "OffsetY") b.Offset.Y = float.Parse(reader.ReadLine());
-                    }
-                    hb.Colliders.Add(b);
-                }
-                if (line == "Solid")
-                {
-                    hb.Solid = true;
-                }
-                
+                    case "BoxCollider":
+                        hb.Colliders.Add(LoadBoxCollider(reader));
+                        break;
+                    case "Solid":
+                        hb.Solid = true;
+                        break;
+                }  
             }
+
             return hb;
+        }
+
+        // Load BoxCollider
+        public static BoxCollider LoadBoxCollider(StreamReader reader)
+        {
+            BoxCollider col = new BoxCollider();
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "Width":
+                        col.Size.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Height":
+                        col.Size.Y = float.Parse(reader.ReadLine());
+                        break;
+                    case "OffsetX":
+                        col.Offset.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "OffsetY":
+                        col.Offset.Y = float.Parse(reader.ReadLine());
+                        break;
+                }
+            }
+
+            return col;
         }
 
         // Load dialogue mee
@@ -119,7 +142,7 @@ namespace Gahame.GameUtils
             while ((line = reader.ReadLine()) != "---"){
                 switch(line){
                     case "Text":
-                        box.Text = reader.ReadLine();
+                        box.Text = reader.ReadLine().Replace("|", "\n");
                         break;
                     case "TextSpeed":
                         box.UpdateSpeed = float.Parse(reader.ReadLine());
@@ -141,8 +164,15 @@ namespace Gahame.GameUtils
             string line;
             while ((line = reader.ReadLine()) != "---")
             {
-                if (line == "GravityEnabled") p.GravityEnabled = true;
-                if (line == "Solid") p.Solid = true;
+                switch (line)
+                {
+                    case "GravityEnabled":
+                        p.GravityEnabled = true;
+                        break;
+                    case "Solid":
+                        p.Solid = true;
+                        break;
+                }
             }
             return p;
         }
@@ -155,8 +185,15 @@ namespace Gahame.GameUtils
             string line;
             while((line = reader.ReadLine()) != "---")
             {
-                if (line == "X") p.Position.X = float.Parse(reader.ReadLine());
-                if (line == "Y") p.Position.Y = float.Parse(reader.ReadLine());
+                switch (line)
+                {
+                    case "X":
+                        p.Position.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Y":
+                        p.Position.Y = float.Parse(reader.ReadLine());
+                        break;
+                }
             }
             return p;
         }
@@ -172,10 +209,22 @@ namespace Gahame.GameUtils
             string line;
             while ((line = reader.ReadLine()) != "---")
             {
-                if (line == "X") wall.Position.X = float.Parse(reader.ReadLine());
-                if (line == "Y") wall.Position.Y = float.Parse(reader.ReadLine());
-                if (line == "Width") col.Size.X = float.Parse(reader.ReadLine());
-                if (line == "Height") col.Size.Y = float.Parse(reader.ReadLine());
+                switch (line)
+                {
+                    case "X":
+                        wall.Position.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Y":
+                        wall.Position.Y = float.Parse(reader.ReadLine());
+                        break;
+                    case "Width":
+                        col.Size.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Height":
+                        col.Size.Y = float.Parse(reader.ReadLine());
+                        break;
+                }
+
             }
 
             wall.GetComponent<HitBox>().Colliders.Add(col);
@@ -190,22 +239,30 @@ namespace Gahame.GameUtils
             string line;
             while ((line = reader.ReadLine()) != "---")
             {
-                if (line == "Path") s.AddImage(reader.ReadLine());
-                if (line == "ImageSpeed") s.ImageSpeed = float.Parse(reader.ReadLine());
-                if (line == "Depth") s.Depth = float.Parse(reader.ReadLine());
+                switch (line)
+                {
+                    case "Path":
+                        s.AddImage(reader.ReadLine());
+                        break;
+                    case "ImageSpeed":
+                        s.ImageSpeed = float.Parse(reader.ReadLine());
+                        break;
+                    case "Depth":
+                        s.Depth = float.Parse(reader.ReadLine());
+                        break;
+                }
             }
 
             return s;
         }
 
-        // Load GameScreen
-        public static GenericGameScreen LoadScreen(string path)
+        // Load GameScreen witth a Streamreader
+        public static BattleScreen LoadBattleScreen(StreamReader reader)
         {
-            GenericGameScreen screen = new GenericGameScreen();
-            StreamReader reader = new StreamReader(path);
+            BattleScreen screen = new BattleScreen();
 
             string line;
-            while((line = reader.ReadLine()) != null)
+            while ((line = reader.ReadLine()) != null)
             {
                 switch (line)
                 {
@@ -236,52 +293,70 @@ namespace Gahame.GameUtils
             return screen;
         }
 
-        // Load Encrypted GameScreen
-        public static GenericGameScreen LoadScreenEncrypted(string path)
+        // Load Embedded screen
+        public static GameScreen LoadScreenEmbedded(string path)
         {
-            GenericGameScreen screen = new GenericGameScreen();
+            GameScreen screen = null;
 
+            try
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Debug.Write("Executing assembly is null: " + (assembly == null));
+
+                StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(path));
+
+                switch (reader.ReadLine())
+                {
+                    case "BattleScreen":
+                        screen = LoadBattleScreen(reader);
+                        break;
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                //Write exception to server event log
+            }
+
+            return screen;
+        }
+
+        // Load GameScreen from a path
+        public static GameScreen LoadScreen(string path)
+        {
+            GameScreen screen = null;
+            StreamReader reader = new StreamReader(path);
+
+            switch (reader.ReadLine())
+            {
+                case "BattleScreen":
+                    screen = LoadBattleScreen(reader);
+                    break;
+            }
+
+            reader.Close();
+            return screen;
+        }
+
+        // Load encrypted screen
+        public static BattleScreen LoadBattleScreenEncrypted(string path)
+        {
             byte[] bytes = File.ReadAllBytes(path);
             for (int i = 0; i < bytes.Length; i++) bytes[i] ^= 0x7b;
+
             Stream stream = new MemoryStream(bytes);
             StreamReader reader = new StreamReader(stream);
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                switch (line)
-                {
-                    case "GameObject":
-                        screen.GameObjects.Add(LoadGameObject(reader, screen));
-                        break;
-                    case "GameObjectFile":
-                        StreamReader temp = new StreamReader(reader.ReadLine());
-                        screen.GameObjects.Add(LoadGameObject(temp, screen));
-                        temp.Close();
-                        break;
-                }
-            }
+            BattleScreen screen;
+            screen = LoadBattleScreen(reader);
 
             reader.Close();
             stream.Close();
             return screen;
         }
 
-        // Streamreader that will decrypt File (does not work)
-        static StreamReader Decrypt(string path)
-        {
-            byte[] bytes = File.ReadAllBytes(path);
-            for (int i = 0; i < bytes.Length; i++) bytes[i] ^= 0x7b;
-
-            Stream stream = new MemoryStream(bytes);
-            StreamReader reader = new StreamReader(stream);
-            stream.Close();
-
-            return reader;
-        }
-
         // Encrypt a file (probablt wont need this)
-        public void EncryptFile(string path, string newPath)
+        public static void EncryptFile(string path, string newPath)
         {
             byte[] bytes = File.ReadAllBytes(path);
             for (int i = 0; i < bytes.Length; i++) bytes[i] ^= 0x7b;
