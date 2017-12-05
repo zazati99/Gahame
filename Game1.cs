@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using System.Runtime.InteropServices;
+
 using Gahame.GameScreens;
 using Gahame.GameUtils;
 

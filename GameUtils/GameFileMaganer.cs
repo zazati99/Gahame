@@ -15,6 +15,7 @@ using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Gahame.GameUtils
 {
@@ -145,7 +146,7 @@ namespace Gahame.GameUtils
                         box.Text = reader.ReadLine().Replace("|", "\n");
                         break;
                     case "TextSpeed":
-                        box.UpdateSpeed = float.Parse(reader.ReadLine());
+                        box.UpdateSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
                         break;
                     case "NonSkippable":
                         box.Skippable = false;
@@ -248,7 +249,7 @@ namespace Gahame.GameUtils
                         s.ImageSpeed = float.Parse(reader.ReadLine());
                         break;
                     case "Depth":
-                        s.Depth = float.Parse(reader.ReadLine());
+                        s.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
                         break;
                 }
             }
