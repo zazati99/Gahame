@@ -41,11 +41,11 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             // Change box or stop dialogue
             if (GameControlls.E && !Accesible)
             {
-                // Checks if all text is there 
-                if ((int)Boxes[CurrentBox].CharIndex == Boxes[CurrentBox].Text.Length)
+                // Checks if all text is there
+                if ((int)Boxes[CurrentBox].CharIndex >= Boxes[CurrentBox].Text.Length)
                 {
                     // stop dialogue
-                    if (CurrentBox == Boxes.Count - 1)
+                    if (CurrentBox == Boxes.Count-1)
                     {
                         StopDialogue();
                     }
