@@ -304,6 +304,8 @@ namespace Gahame.GameUtils
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 Debug.Write("Executing assembly is null: " + (assembly == null));
 
+                SaveLog(assembly.GetManifestResourceNames());
+
                 StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(path));
 
                 switch (reader.ReadLine())
@@ -354,6 +356,17 @@ namespace Gahame.GameUtils
             reader.Close();
             stream.Close();
             return screen;
+        }
+
+        // Write to log file
+        public static void SaveLog(string[] log)
+        {
+            StreamWriter writer = new StreamWriter("log.txt");
+            for (int i = 0; i < log.Length; i++)
+            {
+                writer.WriteLine(log[i]);
+            }
+            writer.Close();
         }
 
         // Encrypt a file (probablt wont need this)
