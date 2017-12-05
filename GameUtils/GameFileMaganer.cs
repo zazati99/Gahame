@@ -299,8 +299,8 @@ namespace Gahame.GameUtils
         {
             GameScreen screen = null;
 
-            try
-            {
+            //try
+            //{
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 Debug.Write("Executing assembly is null: " + (assembly == null));
 
@@ -313,11 +313,11 @@ namespace Gahame.GameUtils
                         break;
                 }
                 reader.Close();
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
                 //Write exception to server event log
-            }
+            //}
 
             return screen;
         }
