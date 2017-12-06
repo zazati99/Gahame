@@ -64,7 +64,6 @@ Text
 HeheHAaha? DansGame|SickMemes|Dans Maddafaka Games
 TextSpeed
 0.5
-NonSkippable
 ---
 ---
 ---
