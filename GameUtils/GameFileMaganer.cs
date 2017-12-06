@@ -302,8 +302,6 @@ namespace Gahame.GameUtils
             //try
             //{
                 Assembly assembly = Assembly.GetExecutingAssembly();
-                Debug.Write("Executing assembly is null: " + (assembly == null));
-
                 SaveLog(assembly.GetManifestResourceNames());
 
                 StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(path));
