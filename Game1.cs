@@ -30,6 +30,7 @@ namespace Gahame
             ScreenManager.Instance.DefaultViewPort();
 
             //IsFixedTimeStep = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
 
             cam = new GameCamera();
             cam.Pos = Vector2.Zero;
@@ -81,11 +82,12 @@ namespace Gahame
 
             // Draw stuff between these bad boys
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null,null,null, cam.get_transformation(graphics.GraphicsDevice));
+
             ScreenManager.Instance.Draw(spriteBatch);
 
             float fps = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
             string fpsString = string.Format("{0:N3}", fps);
-            spriteBatch.DrawString(GameUtils.GameFonts.Arial, fpsString , GameObjects.CameraController.PositionOnScreen(new Vector2(50, 50)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameUtils.GameFonts.Arial, fpsString , GameObjects.CameraController.PositionOnScreen(new Vector2(25, 25)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             spriteBatch.End();
 

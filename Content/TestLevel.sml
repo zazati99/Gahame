@@ -61,9 +61,15 @@ HeheHAaha?
 ---
 DialogueBox
 Text
-HeheHAaha? DansGame|SickMemes|Dans Maddafaka Games
+heh|Hah|Hih
 TextSpeed
-0.5
+0.1
+---
+DialogueBox
+Text
+heheh|Hahah|Hihih
+TextSpeed
+0.001
 ---
 ---
 ---
