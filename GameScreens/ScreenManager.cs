@@ -48,7 +48,8 @@ namespace Gahame.GameScreens
             if (Graphics.IsFullScreen)
             {
                 int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                ChangeViewPort(screenWidth, screenWidth * 9/16);
+                int screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                ChangeViewPort(screenWidth, screenHeight);
                 float newZoom = screenWidth / (DefaultViewportX / 2f);
                 Game1.cam.Zoom = newZoom;
             }
@@ -93,7 +94,7 @@ namespace Gahame.GameScreens
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
             //currentScreen = GameFileMaganer.LoadScreen("Content/Debug.level");
-            currentScreen = GameFileMaganer.LoadScreenEmbedded(Program.ENBEDDEDCONTENT+"TestLevel.sml");
+            currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
 #else
             //currentScreen = GameFileMaganer.LoadScreen("Content/TestLevel.sml");
             currentScreen = GameFileMaganer.LoadScreenEmbedded("Gahame.Gahame.Content.TestLevel.sml");

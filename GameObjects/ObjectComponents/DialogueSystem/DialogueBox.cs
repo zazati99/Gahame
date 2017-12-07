@@ -47,8 +47,8 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
             // Position stuff
             origin = new Vector2();
-            size = new Vector2(200 , 50);
-            Position = new Vector2(CameraController.ViewWidth()/2 - 100,120);
+            size = new Vector2(201 , 50);
+            Position = new Vector2(CameraController.ViewWidth()/2 - 100, CameraController.ViewHeight() - 60);
 
             Font.LineSpacing = 17;
             Font.LineSpacing = (int)(size.Y / 2)-8;

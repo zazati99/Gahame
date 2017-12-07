@@ -28,7 +28,12 @@ namespace Gahame.GameObjects
         {
             return ScreenManager.ViewportX / Game1.cam.Zoom;
         }
-        
+        // Gets Height of view accounting for zoom
+        public static float ViewHeight()
+        {
+            return ScreenManager.ViewportY / Game1.cam.Zoom;
+        }
+
         // End of static stuff
 
         // target that camera will be following my dude

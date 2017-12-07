@@ -299,26 +299,19 @@ namespace Gahame.GameUtils
         {
             GameScreen screen = null;
 
-            //try
-            //{
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                SaveLog(assembly.GetManifestResourceNames());
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            SaveLog(assembly.GetManifestResourceNames());
 
-                StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(path));
+            StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + path));
 
-                switch (reader.ReadLine())
-                {
-                    case "BattleScreen":
-                        screen = LoadBattleScreen(reader);
-                        break;
-                }
-                reader.Close();
-            //}
-            //catch (Exception ex)
-            //{
-                //Write exception to server event log
-            //}
+            switch (reader.ReadLine())
+            {
+                case "BattleScreen":
+                    screen = LoadBattleScreen(reader);
+                    break;
+            }
 
+            reader.Close();
             return screen;
         }
 
