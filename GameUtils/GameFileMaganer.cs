@@ -332,23 +332,6 @@ namespace Gahame.GameUtils
             return screen;
         }
 
-        // Load encrypted screen
-        public static BattleScreen LoadBattleScreenEncrypted(string path)
-        {
-            byte[] bytes = File.ReadAllBytes(path);
-            for (int i = 0; i < bytes.Length; i++) bytes[i] ^= 0x7b;
-
-            Stream stream = new MemoryStream(bytes);
-            StreamReader reader = new StreamReader(stream);
-
-            BattleScreen screen;
-            screen = LoadBattleScreen(reader);
-
-            reader.Close();
-            stream.Close();
-            return screen;
-        }
-
         // Write to log file
         public static void SaveLog(string[] log)
         {

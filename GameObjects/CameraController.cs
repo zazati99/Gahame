@@ -75,7 +75,7 @@ namespace Gahame.GameObjects
         // Updates the camera
         public void Update()
         {
-            if (Static == false)
+            if (!Static)
             {
                 if (target != null)
                 {
