@@ -41,7 +41,7 @@ namespace Gahame.GameScreens
 
             Graphics.ApplyChanges();
         }
-        public void switchFullscreen()
+        public void SwitchFullscreen()
         {
             Graphics.IsFullScreen = !Graphics.IsFullScreen;
             Graphics.ApplyChanges();
@@ -112,7 +112,8 @@ namespace Gahame.GameScreens
         // Update all of the logicz here
         public void Update(GameTime gameTime)
         {
-            if (GameControlls.F5) switchFullscreen();
+            if (GameControlls.F5) SwitchFullscreen();
+            if (GameControlls.Enter) ChangeScreen(GameFileMaganer.LoadScreenEmbedded("TestLevel.sml"));
             // Updates the current Screen
             currentScreen.Update(gameTime);
         }
@@ -122,11 +123,6 @@ namespace Gahame.GameScreens
         {
             // Draws everything in ccurrent screen
             currentScreen.Draw(spriteBatch);
-
-            // DEbug trash
-            spriteBatch.DrawString(GameUtils.GameFonts.Arial, string.Format("{0:N3}", ViewportX), GameObjects.CameraController.PositionOnScreen(new Vector2(25, 35)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
-            spriteBatch.DrawString(GameUtils.GameFonts.Arial, string.Format("{0:N3}", ViewportY), GameObjects.CameraController.PositionOnScreen(new Vector2(25, 45)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
-
         }
 
         // GameScreen Functions
