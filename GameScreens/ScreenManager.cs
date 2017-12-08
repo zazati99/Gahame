@@ -97,7 +97,7 @@ namespace Gahame.GameScreens
             currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
 #else
             //currentScreen = GameFileMaganer.LoadScreen("Content/TestLevel.sml");
-            currentScreen = GameFileMaganer.LoadScreenEmbedded("Gahame.Gahame.Content.TestLevel.sml");
+            currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
 #endif
             //GameFileMaganer.EncryptFile("Content/Encrypted.sml", "Content/testeroni.sml");
             // Load content below here

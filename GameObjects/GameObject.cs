@@ -170,12 +170,12 @@ namespace Gahame.GameObjects
             Random r = new Random();
             Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, (int)size.X, (int)size.Y);
 
-            int variation = 2;
+            int variation = 5;
 
 
             Color[] data = new Color[(int)size.X * (int)size.Y];
 
-            Color mainColor = new Color(66, 134, 244);
+            Color mainColor = new Color(50, 5, 5);
             data[0] = mainColor;
 
             for (int i = 1; i < data.Length; i++)
