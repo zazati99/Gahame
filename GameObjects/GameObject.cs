@@ -157,7 +157,7 @@ namespace Gahame.GameObjects
 
         protected int signum(float n){
             if (n < 0) return -1;
-            if (n > 0) return 1;
+            else if (n > 0) return 1;
             return 0;
         }
 
@@ -165,18 +165,46 @@ namespace Gahame.GameObjects
             return value1 + (value2 - value1) * amount;
         }
 
-        // Creates a rectangle and puts it in a texture (should only be used for debugging)
         protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)
         {
             Random r = new Random();
-
             Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, (int)size.X, (int)size.Y);
+
+            int variation = 2;
+
+
             Color[] data = new Color[(int)size.X * (int)size.Y];
-            for (int i = 0; i < data.Length; i++) data[i] = new Color(r.Next()*255,r.Next()*255,r.Next()*255);
+
+            Color mainColor = new Color(66, 134, 244);
+            data[0] = mainColor;
+
+            for (int i = 1; i < data.Length; i++)
+            {
+
+                //Add variation
+                int newR = data[i - 1].R + r.Next() % 2 * variation + 1 - variation;
+                int newG = data[i - 1].G + r.Next() % 2 * variation + 1 - variation;
+                int newB = data[i - 1].B + r.Next() % 2 * variation + 1 - variation;
+
+                //Keep it from memeing too far, add "weight"
+                newR += (int)((mainColor.R - newR) / 20);
+                newR += (int)((mainColor.R - newR) / 20);
+                newR += (int)((mainColor.R - newR) / 20);
+
+                //Stop keep it in
+                newR = Math.Max(Math.Min(newR, 255), 0);
+                newG = Math.Max(Math.Min(newG, 255), 0);
+                newB = Math.Max(Math.Min(newB, 255), 0);
+                data[i] = new Color(newR, newG, newB);
+            }
+
             rect.SetData(data);
 
             return rect;
         }
+
+
+
 
     }
 }
