@@ -246,7 +246,7 @@ namespace Gahame.GameUtils
                         s.AddImage(reader.ReadLine());
                         break;
                     case "ImageSpeed":
-                        s.ImageSpeed = float.Parse(reader.ReadLine());
+                        s.ImageSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
                         break;
                     case "Depth":
                         s.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
@@ -300,8 +300,6 @@ namespace Gahame.GameUtils
             GameScreen screen = null;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
-            SaveLog(assembly.GetManifestResourceNames());
-
             StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + path));
 
             switch (reader.ReadLine())

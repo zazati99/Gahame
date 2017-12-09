@@ -69,7 +69,7 @@ DialogueBox
 Text
 heheh|Hahah|Hihih
 TextSpeed
-0.001
+0.5
 ---
 ---
 ---

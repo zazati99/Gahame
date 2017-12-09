@@ -125,52 +125,13 @@ namespace Gahame.GameObjects
             screen.GameObjects.Remove(o);
         }
 
-        // Approach a value
-        protected float approach(float value, float target, float speed)
-        {
-            if (value == target) return target;
-            
-            if (value < target)
-            {
-                value += speed;
-                if (value > target) return target;
-            }  else
-            {
-                value -= speed;
-                if (value < target) return target;
-            }
-            return value;
-        }
-
-        // Maxes out a value
-        protected float max(float value, float max)
-        {
-            if (value > max) return max;
-            return value;
-        }
-        // makes value small thing out of a value
-        protected float min(float value, float min)
-        {
-            if (value < min) return min;
-            return value;
-        }
-
-        protected int signum(float n){
-            if (n < 0) return -1;
-            else if (n > 0) return 1;
-            return 0;
-        }
-
-        protected float lerpFloat(float value1, float value2, float amount){
-            return value1 + (value2 - value1) * amount;
-        }
-
+        // Texture stuff
         protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)
         {
             Random r = new Random();
             Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, (int)size.X, (int)size.Y);
 
-            int variation = 5;
+            int variation = 2;
 
 
             Color[] data = new Color[(int)size.X * (int)size.Y];

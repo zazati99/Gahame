@@ -53,12 +53,12 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             Font.LineSpacing = (int)(size.Y / 2)-8;
         }
 
-        // Draw tha box
-        public virtual void Draw(SpriteBatch spriteBatch)
+        // Update the box
+        public virtual void Update()
         {
-
             // Position fix
-            if (Position.Y != CameraController.ViewWidth() - 60){
+            if (Position.Y != CameraController.ViewWidth() - 60)
+            {
                 Position.Y = CameraController.ViewHeight() - 60;
             }
 
@@ -67,7 +67,11 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             {
                 CharIndex += UpdateSpeed;
             }
+        }
 
+        // Draw tha box
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
             // Draws the box
             ShapeRenderer.FillRectangle(
                 spriteBatch,
