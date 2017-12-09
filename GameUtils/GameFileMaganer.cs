@@ -14,7 +14,6 @@ using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 
 using System.IO;
 using System.Reflection;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace Gahame.GameUtils
