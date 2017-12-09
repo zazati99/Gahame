@@ -29,15 +29,17 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
             // Important component variables
             Drawable = false; // becomes true when active
-            Updatable = false;
+            Updatable = false; // becomes true when active
 
             // Accesible Meme 
             Accesible = true;
         }
 
-        // Draw all of the stuffs
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Update(GameTime gameTime)
         {
+            // Update box
+            Boxes[CurrentBox].Update();
+
             // Change box or stop dialogue
             if (GameControlls.E && !Accesible)
             {
@@ -45,7 +47,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 if ((int)Boxes[CurrentBox].CharIndex >= Boxes[CurrentBox].Text.Length)
                 {
                     // stop dialogue
-                    if (CurrentBox == Boxes.Count-1)
+                    if (CurrentBox == Boxes.Count - 1)
                     {
                         StopDialogue();
                     }
@@ -53,28 +55,32 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                     else CurrentBox++;
                 }
                 // Fixes all of the text meme
-                else if(Boxes[CurrentBox].Skippable) Boxes[CurrentBox].CharIndex = Boxes[CurrentBox].Text.Length;
+                else if (Boxes[CurrentBox].Skippable) Boxes[CurrentBox].CharIndex = Boxes[CurrentBox].Text.Length;
             }
             else Accesible = false;
+        }
 
-            // Does the rest of the drawing if it's drawable
-            if (Drawable)
-            {
-                Boxes[CurrentBox].Draw(spriteBatch);
-            }
+        // Draw all of the stuffs
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Boxes[CurrentBox].Draw(spriteBatch);
         }
 
         // Starts the dialoguie
         public void StartDialogue()
         {
             Drawable = true;
+            Updatable = true;
         }
 
         // Stops the dialogue
         public void StopDialogue()
         {
             Accesible = true;
+
             Drawable = false;
+            Updatable = false;
+
             CurrentBox = 0;
 
             // Resets Boxes

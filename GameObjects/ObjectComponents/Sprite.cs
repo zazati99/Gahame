@@ -9,8 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-using Gahame.GameObjects;
-using Gahame.GameScreens;
+using Gahame.GameUtils;
 
 namespace Gahame.GameObjects.ObjectComponents
 {
@@ -44,7 +43,7 @@ namespace Gahame.GameObjects.ObjectComponents
         {
             // Fixes drawable and updatable thing
             Drawable = true;
-            Updatable = false;
+            Updatable = true;
 
             // Creates array of images
             images = new List<Texture2D>();
@@ -57,39 +56,48 @@ namespace Gahame.GameObjects.ObjectComponents
             SpriteScale = new Vector2(1, 1);
         }
 
+        // Update sprite
+        public override void Update(GameTime gameTime)
+        {
+            // Current imagespeed (accounting for gamespeed)
+            float currentImageSpeed = ImageSpeed * GahameController.GameSpeed;
+
+            // updates current image
+            if (currentImageSpeed > 0)
+            {
+                if (CurrentImage + currentImageSpeed < images.Count)
+                {
+                    CurrentImage += currentImageSpeed;
+                }
+                else
+                {
+                    CurrentImage = CurrentImage + currentImageSpeed - images.Count;
+                }
+            }
+            else if (currentImageSpeed < 0)
+            {
+                if (CurrentImage + currentImageSpeed >= 0)
+                {
+                    CurrentImage += currentImageSpeed;
+                }
+                else
+                {
+                    CurrentImage = images.Count + (CurrentImage + currentImageSpeed);
+                }
+            }
+        }
+
         // Draws the sprite
         public override void Draw(SpriteBatch spriteBatch)
         {
-            // updates current image
-            if (ImageSpeed > 0)
-            {
-                if (CurrentImage + ImageSpeed < images.Count)
-                {
-                    CurrentImage += ImageSpeed;
-                } else
-                {
-                    CurrentImage = CurrentImage + ImageSpeed - images.Count;
-                }
-            } else if (ImageSpeed < 0) 
-            {
-                if (CurrentImage + ImageSpeed >= 0)
-                {
-                    CurrentImage += ImageSpeed;
-                } else
-                {
-                    CurrentImage = images.Count + (CurrentImage + ImageSpeed); 
-                }
-            }
-
             // Draws the current image
             spriteBatch.Draw(images[(int)CurrentImage],
                             gameObject.Position,
                             origin: SpriteOrigin,
-                            scale: absVec(SpriteScale),
+                            scale: AbsVec(SpriteScale),
                             layerDepth: Depth,
                             rotation: SpriteRotation,
                              effects: ((SpriteRotation > (float)(Math.PI/2) ? SpriteScale.X > 0 : SpriteScale.X < 0)) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
-            
         }
 
         // Add image to array of images
@@ -105,7 +113,7 @@ namespace Gahame.GameObjects.ObjectComponents
             images.Add(texture);
         }
 
-        Vector2 absVec(Vector2 vec)
+        Vector2 AbsVec(Vector2 vec)
         {
             vec.X = Math.Abs(vec.X);
             vec.Y = Math.Abs(vec.Y);

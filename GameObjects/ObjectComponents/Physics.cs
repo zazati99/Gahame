@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-using Gahame.GameObjects;
+using Gahame.GameUtils;
 
 namespace Gahame.GameObjects.ObjectComponents
 {
@@ -53,51 +49,45 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
-                    if (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Gravity)))
+                    if (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Math.Sign(Gravity)))
                     {
                         Grounded = false;
-                        Velocity.Y += Gravity;
+                        Velocity.Y += Gravity * GahameController.GameSpeed;
                     }
                     else Grounded = true;
                 }
 
                 // Horizontal collision
-                if (hb.SolidMeeting(gameObject.Position.X + Velocity.X, gameObject.Position.Y))
+                if (hb.SolidMeeting(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y))
                 {
                     gameObject.Position.X = (Velocity.X > 0) ? (int)gameObject.Position.X : (int)gameObject.Position.X + 1; 
-                    while (!hb.SolidMeeting(gameObject.Position.X + signum(Velocity.X), gameObject.Position.Y))
+                    while (!hb.SolidMeeting(gameObject.Position.X + Math.Sign(Velocity.X), gameObject.Position.Y))
                     {
-                        gameObject.Position.X += signum(Velocity.X);
+                        gameObject.Position.X += Math.Sign(Velocity.X);
                     }
                     Velocity.X = 0;
                 }
-                gameObject.Position.X += Velocity.X; // Updates x position
+                gameObject.Position.X += Velocity.X * GahameController.GameSpeed; // Updates x position
 
                 // Vertical collision
-                if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y))
+                if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed))
                 {
                     gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : (int)gameObject.Position.Y + 1;
-                    while (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + signum(Velocity.Y)))
+                    while (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Math.Sign(Velocity.Y)))
                     {
-                        gameObject.Position.Y += signum(Velocity.Y);
+                        gameObject.Position.Y += Math.Sign(Velocity.Y);
                     }
                     Velocity.Y = 0;
                 }
-                gameObject.Position.Y += Velocity.Y; // Update Y position
+                gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed; // Update Y position
 
             } else
             {
                 if (GravityEnabled) Velocity.Y += Gravity;
-                gameObject.Position.X += Velocity.X;
-                gameObject.Position.Y += Velocity.Y;
+                gameObject.Position.X += Velocity.X * GahameController.GameSpeed;
+                gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed;
             }
 
         }
-
-        int signum(float value)
-        {
-            return (value == 0) ? 0 : (value > 0) ? 1 : -1;
-        }
-
     }
 }

@@ -66,27 +66,30 @@ namespace Gahame.GameObjects
             // Walking left and right
             if (GameControlls.Right || GameControlls.Left)
             {
-                sprite.SpriteScale.X = lerpFloat(sprite.SpriteScale.X, (GameControlls.Right ? 1 : 0) - (GameControlls.Left ? 1 : 0), .25f);
-                physics.Velocity.X = approach(physics.Velocity.X, 2 * ((GameControlls.Right ? 1 : 0) - (GameControlls.Left ? 1 : 0)), .5f);
+                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.Right ? 1 : 0) - (GameControlls.Left ? 1 : 0), .25f * GahameController.GameSpeed);
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 2 * ((GameControlls.Right ? 1 : 0) - (GameControlls.Left ? 1 : 0)), .5f * GahameController.GameSpeed);
             }
             // Stopping
             if (!GameControlls.Right && !GameControlls.Left || GameControlls.Right && GameControlls.Left)
-                physics.Velocity.X = approach(physics.Velocity.X, 0, .25f);
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, .25f * GahameController.GameSpeed);
             
             // Jumping
             if (physics.Grounded)
             {
-                if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * signum(Physics.Gravity);
+                if (GameControlls.Space) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
             }
             // Stopping if space is not held
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
-                physics.Velocity.Y = (Physics.Gravity > 0) ? min(physics.Velocity.Y, -(jumpHeight/2) * signum(Physics.Gravity)) : max(physics.Velocity.Y, -(jumpHeight / 2) * signum(Physics.Gravity));
+                physics.Velocity.Y = (Physics.Gravity > 0) ? Math.Max(physics.Velocity.Y, -(jumpHeight/2) * Math.Sign(Physics.Gravity)) : Math.Min(physics.Velocity.Y, -(jumpHeight / 2) * Math.Sign(Physics.Gravity));
 
             // Interact with object
             if (GameControlls.E){
                 Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
                 if (d != null) d.StartDialogue();
             }
+
+            // TEST gameSPeed SAK
+            if (GameControlls.Up || GameControlls.Down) GahameController.GameSpeed = MyMaths.Lerp(GahameController.GameSpeed, GameControlls.Up ? 1 : 0, .05f);
 
             // Updates Components last*/
             base.Update(gameTime);
