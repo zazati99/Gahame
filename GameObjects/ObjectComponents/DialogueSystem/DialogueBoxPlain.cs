@@ -24,7 +24,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         {
             // Position stuff
             origin = new Vector2();
-            size = new Vector2(201, 50);
+            size = new Vector2(202, 50);
             Position = new Vector2(CameraController.ViewWidth() / 2 - 100, CameraController.ViewHeight() - 60);
 
             Font.LineSpacing = (int)(size.Y / 2) - 8;
@@ -33,12 +33,6 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Updates Box
         public override void Update(GameTime gameTime)
         {
-            // Position fix
-            if (Position.Y != CameraController.ViewWidth() - 60)
-            {
-                Position.Y = CameraController.ViewHeight() - 60;
-            }
-
             // Updates text
             if (CharIndex < Text.Length)
             {
@@ -72,6 +66,8 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Draws box
         public override void Draw(SpriteBatch spriteBatch)
         {
+            Position.Y = CameraController.ViewHeight() - 60;
+
             // Draws the box
             ShapeRenderer.FillRectangle(
                 spriteBatch,

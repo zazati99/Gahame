@@ -7,7 +7,7 @@ Player
 X
 368
 Y
-224
+225
 ---
 Wall
 X

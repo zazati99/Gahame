@@ -26,15 +26,10 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
             // Position stuff
             origin = Vector2.Zero;
-            size = new Vector2(201, 50);
+            size = new Vector2(202, 50);
             Position = new Vector2(CameraController.ViewWidth() / 2 - 100, CameraController.ViewHeight() - 60);
 
             Font.LineSpacing = (int)(size.Y / 2) - 8;
-
-            /*Alternatives.Add(new Alternative());
-            Alternatives[0].Text = "VAAA";
-            Alternatives.Add(new Alternative());
-            Alternatives[1].Text = "work?!?!?";*/
         }
 
         // Updates stuff
@@ -63,6 +58,8 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            Position.Y = CameraController.ViewHeight() - 60;
+
             // Draws the box
             ShapeRenderer.FillRectangle(
                 spriteBatch,
