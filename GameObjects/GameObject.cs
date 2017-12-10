@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
 using Gahame;
+using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
 
@@ -128,11 +129,10 @@ namespace Gahame.GameObjects
         // Texture stuff
         protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)
         {
-            Random r = new Random();
+            Random r = new Random(GahameController.Seed);
             Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, (int)size.X, (int)size.Y);
 
             int variation = 16;
-
 
             Color[] data = new Color[(int)size.X * (int)size.Y];
 

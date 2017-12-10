@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Gahame.GameScreens;
 using Gahame.GameUtils;
+using System;
 
 namespace Gahame
 {
@@ -26,13 +27,16 @@ namespace Gahame
             ScreenManager.DefaultViewportY = 360;
             ScreenManager.Instance.DefaultViewPort();
 
+            Random r = new Random();
+            GahameController.Seed = r.Next();
+
             //IsFixedTimeStep = false;
             //graphics.SynchronizeWithVerticalRetrace = false;
 
             cam = new GameCamera
             {
-                Pos = Vector2.Zero,
-                Zoom = 2
+                 Pos = Vector2.Zero,
+                 Zoom = 2
             };
         }
 

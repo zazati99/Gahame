@@ -112,7 +112,12 @@ namespace Gahame.GameScreens
         public void Update(GameTime gameTime)
         {
             if (GameControlls.F5) SwitchFullscreen();
-            if (GameControlls.Enter) ChangeScreen(GameFileMaganer.LoadScreenEmbedded("TestLevel.sml"));
+            if (GameControlls.Enter)
+            {
+                Random r = new Random();
+                GahameController.Seed = r.Next();
+                ChangeScreen(GameFileMaganer.LoadScreenEmbedded("TestLevel.sml"));
+            }
             // Updates the current Screen
             currentScreen.Update(gameTime);
         }
