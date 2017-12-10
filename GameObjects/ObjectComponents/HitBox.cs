@@ -210,5 +210,34 @@ namespace Gahame.GameObjects.ObjectComponents
             return null;
         }
 
+        // Gets the object that is colliding at a specific place
+        public GameObject InstancePlace<T>(Vector2 pos)
+        {
+            GameObject obj;
+
+            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
+            {
+                obj = gameObject.screen.GameObjects[i];
+                if (obj == gameObject) continue;
+
+                if (obj.GetType() == typeof(T))
+                {
+                    HitBox otherHb = obj.GetComponent<HitBox>();
+                    if (otherHb != null)
+                    {
+                        for (int j = 0; j < Colliders.Count; j++)
+                        {
+                            for (int k = 0; k < otherHb.Colliders.Count; k++)
+                            {
+                                if (Colliders[j].IsColliding(otherHb.Colliders[k], pos, obj.Position))
+                                    return obj;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 }

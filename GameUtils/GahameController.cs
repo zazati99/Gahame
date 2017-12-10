@@ -3,6 +3,7 @@
     public class GahameController
     {
 
+        public static bool CutScene = false;
         public static float GameSpeed = 1;
 
     }

@@ -118,15 +118,16 @@ namespace Gahame.GameUtils
         }
 
         // Load dialogue mee
-        public static Dialogue LoadDialogue(StreamReader reader, GameObject o){
-
+        public static Dialogue LoadDialogue(StreamReader reader, GameObject o)
+        {
             Dialogue d = new Dialogue(o);
 
             string line;
             while((line = reader.ReadLine()) != "---"){
                 switch(line){
-                    case "DialogueBox":
-                        d.Boxes.Add(LoadDialogueBox(reader));
+                    case "DialogueBoxGroup":
+                        DialogueBoxGroup group = LoadDialogueBoxGroup(reader, d);
+                        d.BoxGroups.Add(group.Key, group);
                         break;
                 }   
             }
@@ -134,9 +135,32 @@ namespace Gahame.GameUtils
             return d;
         }
 
+        // Load Dialogue box group
+        public static DialogueBoxGroup LoadDialogueBoxGroup(StreamReader reader, Dialogue d)
+        {
+            DialogueBoxGroup group = new DialogueBoxGroup(d);
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "DialogueBoxPlain":
+                        group.Boxes.Add(LoadDialogueBoxPlain(reader, group));
+                        break;
+                    case "Key":
+                        group.Key = reader.ReadLine();
+                        break;
+                }
+            }
+
+            return group;
+        }
+
         // Load a Dialogue box
-        public static DialogueBox LoadDialogueBox(StreamReader reader){
-            DialogueBox box = new DialogueBox();
+        public static DialogueBoxPlain LoadDialogueBoxPlain(StreamReader reader, DialogueBoxGroup group)
+        {
+            DialogueBoxPlain box = new DialogueBoxPlain(group);
 
             string line;
             while ((line = reader.ReadLine()) != "---"){

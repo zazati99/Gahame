@@ -14,8 +14,10 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
     public class Dialogue : ObjectComponent
     {
         // My boxes
-        public List<DialogueBox> Boxes;
-        public int CurrentBox;
+        public Dictionary<string, DialogueBoxGroup> BoxGroups;
+
+        // Key to the box
+        public string Key;
 
         // Accesible?
         public bool Accesible;
@@ -24,12 +26,14 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         public Dialogue(GameObject o) : base(o)
         {
             // Box variables
-            Boxes = new List<DialogueBox>();
-            CurrentBox = 0;
+            BoxGroups = new Dictionary<string, DialogueBoxGroup>();
 
             // Important component variables
             Drawable = false; // becomes true when active
             Updatable = false; // becomes true when active
+
+            // Key starts with 0
+            Key = "";
 
             // Accesible Meme 
             Accesible = true;
@@ -37,33 +41,13 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
         public override void Update(GameTime gameTime)
         {
-            // Update box
-            Boxes[CurrentBox].Update();
-
-            // Change box or stop dialogue
-            if (GameControlls.E && !Accesible)
-            {
-                // Checks if all text is there
-                if ((int)Boxes[CurrentBox].CharIndex >= Boxes[CurrentBox].Text.Length)
-                {
-                    // stop dialogue
-                    if (CurrentBox == Boxes.Count - 1)
-                    {
-                        StopDialogue();
-                    }
-                    // Or go to next box
-                    else CurrentBox++;
-                }
-                // Fixes all of the text meme
-                else if (Boxes[CurrentBox].Skippable) Boxes[CurrentBox].CharIndex = Boxes[CurrentBox].Text.Length;
-            }
-            else Accesible = false;
+            BoxGroups[Key].Update(gameTime);
         }
 
         // Draw all of the stuffs
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Boxes[CurrentBox].Draw(spriteBatch);
+            BoxGroups[Key].Draw(spriteBatch);
         }
 
         // Starts the dialoguie
@@ -71,23 +55,18 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         {
             Drawable = true;
             Updatable = true;
+
+            GahameController.CutScene = true;
         }
 
         // Stops the dialogue
         public void StopDialogue()
         {
-            Accesible = true;
-
             Drawable = false;
             Updatable = false;
 
-            CurrentBox = 0;
-
-            // Resets Boxes
-            for (int i = 0; i < Boxes.Count; i++)
-            {
-                Boxes[i].CharIndex = 0;
-            }
+            GahameController.CutScene = false;
+            Key = "";
         }
 
     }

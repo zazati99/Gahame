@@ -18,7 +18,7 @@ namespace Gahame.GameObjects.ObjectComponents
     {
 
         // Array of images
-        List<Texture2D> images;
+        public List<Texture2D> Images;
 
         // Current Image
         public float CurrentImage;
@@ -46,7 +46,7 @@ namespace Gahame.GameObjects.ObjectComponents
             Updatable = true;
 
             // Creates array of images
-            images = new List<Texture2D>();
+            Images = new List<Texture2D>();
             CurrentImage = 0;
             ImageSpeed = 0;
             SpriteRotation = 0;
@@ -65,13 +65,13 @@ namespace Gahame.GameObjects.ObjectComponents
             // updates current image
             if (currentImageSpeed > 0)
             {
-                if (CurrentImage + currentImageSpeed < images.Count)
+                if (CurrentImage + currentImageSpeed < Images.Count)
                 {
                     CurrentImage += currentImageSpeed;
                 }
                 else
                 {
-                    CurrentImage = CurrentImage + currentImageSpeed - images.Count;
+                    CurrentImage = CurrentImage + currentImageSpeed - Images.Count;
                 }
             }
             else if (currentImageSpeed < 0)
@@ -82,7 +82,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 }
                 else
                 {
-                    CurrentImage = images.Count + (CurrentImage + currentImageSpeed);
+                    CurrentImage = Images.Count + (CurrentImage + currentImageSpeed);
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace Gahame.GameObjects.ObjectComponents
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Draws the current image
-            spriteBatch.Draw(images[(int)CurrentImage],
+            spriteBatch.Draw(Images[(int)CurrentImage],
                             gameObject.Position,
                             origin: SpriteOrigin,
                             scale: AbsVec(SpriteScale),
@@ -104,13 +104,13 @@ namespace Gahame.GameObjects.ObjectComponents
         public void AddImage(string path)
         {
             // Loads image from current screens contentmanager
-            images.Add(gameObject.screen.content.Load<Texture2D>(path));
+            Images.Add(gameObject.screen.content.Load<Texture2D>(path));
         }
         // Add Texture to array of images
         public void AddImage(Texture2D texture)
         {
             // Loads image from current screens contentmanager
-            images.Add(texture);
+            Images.Add(texture);
         }
 
         Vector2 AbsVec(Vector2 vec)

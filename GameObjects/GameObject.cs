@@ -131,26 +131,44 @@ namespace Gahame.GameObjects
             Random r = new Random();
             Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, (int)size.X, (int)size.Y);
 
-            int variation = 2;
+            int variation = 16;
 
 
             Color[] data = new Color[(int)size.X * (int)size.Y];
 
-            Color mainColor = new Color(50, 5, 5);
+            Color mainColor = new Color(r.Next()%255, r.Next()%255, r.Next()%255);
             data[0] = mainColor;
 
             for (int i = 1; i < data.Length; i++)
             {
 
+                int newR = 0;
+                int newG = 0;
+                int newB = 0;
+
                 //Add variation
-                int newR = data[i - 1].R + r.Next() % 2 * variation + 1 - variation;
-                int newG = data[i - 1].G + r.Next() % 2 * variation + 1 - variation;
-                int newB = data[i - 1].B + r.Next() % 2 * variation + 1 - variation;
+                if (i % size.X == 0)
+                {
+                    newR = data[i % (int)(size.X)].R + r.Next() % 2 * variation + 1 - variation;
+                    newG = data[i % (int)(size.X)].G + r.Next() % 2 * variation + 1 - variation;
+                    newB = data[i % (int)(size.X)].B + r.Next() % 2 * variation + 1 - variation;
+                }
+                else if (i > size.X)
+                {
+                    newR = (data[i - 1].R + data[i % (int)size.X].R) / 2 + r.Next() % 2 * variation + 1 - variation;
+                    newG = (data[i - 1].G + data[i % (int)size.X].G) / 2 + r.Next() % 2 * variation + 1 - variation;
+                    newB = (data[i - 1].B + data[i % (int)size.X].B) / 2 + r.Next() % 2 * variation + 1 - variation;
+                } else
+                {
+                    newR = data[i - 1].R + r.Next() % 2 * variation + 1 - variation;
+                    newG = data[i - 1].G + r.Next() % 2 * variation + 1 - variation;
+                    newB = data[i - 1].B + r.Next() % 2 * variation + 1 - variation;
+                }
 
                 //Keep it from memeing too far, add "weight"
-                newR += (int)((mainColor.R - newR) / 20);
-                newR += (int)((mainColor.R - newR) / 20);
-                newR += (int)((mainColor.R - newR) / 20);
+                newR += (int)((mainColor.R - newR)/8);
+                newG += (int)((mainColor.G - newG)/8);
+                newB += (int)((mainColor.B - newB)/8);
 
                 //Stop keep it in
                 newR = Math.Max(Math.Min(newR, 255), 0);
@@ -163,6 +181,87 @@ namespace Gahame.GameObjects
 
             return rect;
         }
+
+        /*protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)
+        {
+            Random r = new Random();
+            Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, (int)size.X, (int)size.Y);
+
+            int variation = 16;
+
+
+            Color[] data = new Color[(int)size.X * (int)size.Y];
+
+            Color mainColor = new Color(r.Next() % 255, r.Next() % 255, r.Next() % 255);
+            data[0] = mainColor;
+
+            for (int i = 1; i < data.Length; i++)
+            {
+
+                int newR = 0;
+                int newG = 0;
+                int newB = 0;
+
+                //Add variation
+                if (i % size.X == 0)
+                {
+                    newR = data[i % (int)(size.X)].R + r.Next() % 2 * variation + 1 - variation;
+                    newG = data[i % (int)(size.X)].G + r.Next() % 2 * variation + 1 - variation;
+                    newB = data[i % (int)(size.X)].B + r.Next() % 2 * variation + 1 - variation;
+                }
+                else if (i > size.X)
+                {
+                    newR = (data[i - 1].R + data[i % (int)size.X].R) / 2 + r.Next() % 2 * variation + 1 - variation;
+                    newG = (data[i - 1].G + data[i % (int)size.X].G) / 2 + r.Next() % 2 * variation + 1 - variation;
+                    newB = (data[i - 1].B + data[i % (int)size.X].B) / 2 + r.Next() % 2 * variation + 1 - variation;
+                }
+                else
+                {
+                    if (PlaceMeeting<PlayerObject>(Position+new Vector2(0, -1)))
+                    { 
+                        PlayerObject wb = (PlayerObject)GetComponent<HitBox>().InstancePlace<PlayerObject>(Position + new Vector2(0, -1));
+                        Texture2D spr = wb.GetComponent<Sprite>().Images[0];
+
+                        Color[] col = new Color[spr.Bounds.Width * spr.Bounds.Height];
+                        spr.GetData<Color>(0, null, col, 0, col.Length);
+
+                        if (wb.Position.X - Position.X - i <= spr.Bounds.Width)
+                        {
+                            newR = (data[i - 1].R + col[(int)((spr.Bounds.Width * spr.Bounds.Height) - spr.Bounds.Width+1) + (int)(wb.Position.X - Position.X)].R) / 2 + r.Next() % 2 * variation + 1 - variation;
+                            newR = (data[i - 1].G + col[(int)((spr.Bounds.Width * spr.Bounds.Height) - spr.Bounds.Width+1) + (int)(wb.Position.X - Position.X)].G) / 2 + r.Next() % 2 * variation + 1 - variation;
+                            newR = (data[i - 1].B + col[(int)((spr.Bounds.Width * spr.Bounds.Height) - spr.Bounds.Width+1) + (int)(wb.Position.X - Position.X)].B) / 2 + r.Next() % 2 * variation + 1 - variation;
+                        }
+                        else
+                        {
+                            newR = data[i - 1].R + r.Next() % 2 * variation + 1 - variation;
+                            newG = data[i - 1].G + r.Next() % 2 * variation + 1 - variation;
+                            newB = data[i - 1].B + r.Next() % 2 * variation + 1 - variation;
+                        }
+
+                    } else
+                    {
+                        newR = data[i - 1].R + r.Next() % 2 * variation + 1 - variation;
+                        newG = data[i - 1].G + r.Next() % 2 * variation + 1 - variation;
+                        newB = data[i - 1].B + r.Next() % 2 * variation + 1 - variation;
+                    }
+                }
+
+                //Keep it from memeing too far, add "weight"
+                newR += (int)((mainColor.R - newR) / 8);
+                newG += (int)((mainColor.G - newG) / 8);
+                newB += (int)((mainColor.B - newB) / 8);
+
+                //Stop keep it in
+                newR = Math.Max(Math.Min(newR, 255), 0);
+                newG = Math.Max(Math.Min(newG, 255), 0);
+                newB = Math.Max(Math.Min(newB, 255), 0);
+                data[i] = new Color(newR, newG, newB);
+            }
+
+            rect.SetData(data);
+
+            return rect;
+        }*/
 
 
 

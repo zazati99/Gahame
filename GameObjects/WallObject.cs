@@ -59,6 +59,7 @@ namespace Gahame.GameObjects
 
                 Components.Add(rectangle);
             }
+
             base.Draw(spriteBatch);
         }
 

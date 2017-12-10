@@ -13,21 +13,21 @@ Wall
 X
 336
 Y
-256
-Width
-304
-Height
-80
----
-Wall
-X
-336
-Y
 160
 Width
 16
 Height
 96
+---
+Wall
+X
+336
+Y
+256
+Width
+304
+Height
+80
 ---
 GameObject
 X
@@ -55,21 +55,42 @@ Physics
 Solid
 ---
 Dialogue
-DialogueBox
+DialogueBoxGroup
+DialogueBoxPlain
 Text
-HeheHAaha?
+Please|Please|PLEASE
 ---
-DialogueBox
+DialogueBoxPlain
 Text
-heh|Hah|Hih
+Hey Hey Hey|this should not be skipped|But it might be?
+---
+DialogueBoxPlain
+Text
+Oh...|Just kidding.|It works fine now :)
+---
+DialogueBoxPlain
+Text
+Just Gonna...|Test the...|Unskippable feature...
 TextSpeed
 0.1
+NonSkippable
 ---
-DialogueBox
+DialogueBoxPlain
 Text
-heheh|Hahah|Hihih
-TextSpeed
-0.5
+Aaaaaand it works fine!||:)
+---
+---
+DialogueBoxGroup
+Key
+meme
+DialogueBoxPlain
+Text
+Secret memes
+---
+DialogueBoxPlain
+Text
+Well...|If it works at least.
+---
 ---
 ---
 ---

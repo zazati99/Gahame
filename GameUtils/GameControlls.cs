@@ -19,6 +19,17 @@ namespace Gahame.GameUtils
         public static bool Left { get; private set; }
         public static bool Up { get; private set; }
         public static bool Down { get; private set; }
+
+        public static bool Activate { get; private set; }
+
+        public static bool RightCD { get; private set; }
+        public static bool LeftCD { get; private set; }
+        public static bool UpCD { get; private set; }
+        public static bool DownCD { get; private set; }
+
+        public static bool SpaceCD { get; private set; }
+        public static bool ActivateCD { get; private set; }
+
         public static bool E { get; private set; }
         public static bool Space { get; private set; }
         public static bool SpaceHeld { get; private set; }
@@ -45,6 +56,14 @@ namespace Gahame.GameUtils
             Enter = state.IsKeyDown(Keys.Enter) && !previousState.IsKeyDown(Keys.Enter);
             F5 = state.IsKeyDown(Keys.F5) && !previousState.IsKeyDown(Keys.F5);
             F6 = state.IsKeyDown(Keys.F6) && !previousState.IsKeyDown(Keys.F6);
+
+            RightCD = Right && !GahameController.CutScene;
+            LeftCD = Left && !GahameController.CutScene;
+            UpCD = Up && !GahameController.CutScene;
+            DownCD = Down && !GahameController.CutScene;
+
+            SpaceCD = Space && !GahameController.CutScene;
+            ActivateCD = E && !GahameController.CutScene;
 
             previousState = state;
         }

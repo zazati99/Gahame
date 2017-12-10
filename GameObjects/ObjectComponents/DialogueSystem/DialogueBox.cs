@@ -20,11 +20,6 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Font that will be used to draw tha text
         public SpriteFont Font;
 
-        // Position of the Box
-        public Vector2 Position;
-        Vector2 origin;
-        Vector2 size;
-
         // Char index
         public float CharIndex;
 
@@ -34,63 +29,32 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Skipable?
         public bool Skippable;
 
+        // The group that holds this box
+        protected DialogueBoxGroup group;
+
         // Constructor with default settings
-        public DialogueBox()
+        public DialogueBox(DialogueBoxGroup group)
         {
             // Le importante  variables
             CharIndex = 0;
             UpdateSpeed = .25f;
             Skippable = true;
+            this.group = group;
 
             // Default font
             Font = GameFonts.Arial;
-
-            // Position stuff
-            origin = new Vector2();
-            size = new Vector2(201 , 50);
-            Position = new Vector2(CameraController.ViewWidth()/2 - 100, CameraController.ViewHeight() - 60);
-
-            Font.LineSpacing = (int)(size.Y / 2)-8;
         }
 
         // Update the box
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
-            // Position fix
-            if (Position.Y != CameraController.ViewWidth() - 60)
-            {
-                Position.Y = CameraController.ViewHeight() - 60;
-            }
-
-            // Updates text
-            if (CharIndex < Text.Length)
-            {
-                CharIndex += UpdateSpeed;
-            }
+            
         }
 
         // Draw tha box
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            // Draws the box
-            ShapeRenderer.FillRectangle(
-                spriteBatch,
-                CameraController.PositionOnScreen(Position + new Vector2(-1, 0)),
-                size,
-                0.01f,
-                Color.Black);
-
-            // Draws the text
-            spriteBatch.DrawString(
-                Font,
-                (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
-                CameraController.PositionOnScreen(Position),
-                Color.White,
-                0,
-                origin,
-                1,
-                SpriteEffects.None,
-                0);
+            
         }
 
         // Add text

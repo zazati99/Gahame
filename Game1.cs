@@ -86,10 +86,10 @@ namespace Gahame
 
             float fps = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
             string fpsString = string.Format("{0:N3}", fps);
-            spriteBatch.DrawString(GameFonts.Arial, fpsString , GameObjects.CameraController.PositionOnScreen(new Vector2(20, 15)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, fpsString , GameObjects.CameraController.PositionOnScreen(new Vector2(15, 10)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             string gameSpeed = string.Format("{0:N3}", GahameController.GameSpeed);
-            spriteBatch.DrawString(GameFonts.Arial, gameSpeed, GameObjects.CameraController.PositionOnScreen(new Vector2(20, 25)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, gameSpeed, GameObjects.CameraController.PositionOnScreen(new Vector2(15, 21)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             spriteBatch.End();
 
