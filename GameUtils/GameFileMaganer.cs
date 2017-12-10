@@ -117,6 +117,7 @@ namespace Gahame.GameUtils
             return col;
         }
 
+        // YOU NOW ENTER DIALOGUE HELL
         // Load dialogue mee
         public static Dialogue LoadDialogue(StreamReader reader, GameObject o)
         {
@@ -148,12 +149,14 @@ namespace Gahame.GameUtils
                     case "DialogueBoxPlain":
                         group.Boxes.Add(LoadDialogueBoxPlain(reader, group));
                         break;
+                    case "DialogueBoxAlternativePlain":
+                        group.Boxes.Add(LoadDialogueBoxAlternativePlain(reader, group));
+                        break;
                     case "Key":
                         group.Key = reader.ReadLine();
                         break;
                 }
             }
-
             return group;
         }
 
@@ -163,7 +166,8 @@ namespace Gahame.GameUtils
             DialogueBoxPlain box = new DialogueBoxPlain(group);
 
             string line;
-            while ((line = reader.ReadLine()) != "---"){
+            while ((line = reader.ReadLine()) != "---")
+            {
                 switch(line){
                     case "Text":
                         box.Text = reader.ReadLine().Replace("|", "\n");
@@ -176,9 +180,48 @@ namespace Gahame.GameUtils
                         break;
                 }
             }
-
             return box;
         }
+
+        // Load a plain choice box
+        public static DialogueBoxAlternativePlain LoadDialogueBoxAlternativePlain(StreamReader reader, DialogueBoxGroup group)
+        {
+            DialogueBoxAlternativePlain box = new DialogueBoxAlternativePlain(group);
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "Alternative":
+                        box.Alternatives.Add(LoadAlternative(reader));
+                        break;
+                }
+            }
+            return box;
+        }
+
+        // Load the alternatives for a choice box
+        public static Alternative LoadAlternative(StreamReader reader)
+        {
+            Alternative alternative = new Alternative();
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "Text":
+                        alternative.Text = reader.ReadLine();
+                        break;
+                    case "Key":
+                        alternative.Key = reader.ReadLine();
+                        break;
+                }
+            }
+            return alternative;
+        }
+        // END OF ALL OF THE DIALOGUE MEMES HERE
 
         // Load Physics
         public static Physics LoadPhysics(StreamReader reader, GameObject o)

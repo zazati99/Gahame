@@ -58,38 +58,51 @@ Dialogue
 DialogueBoxGroup
 DialogueBoxPlain
 Text
-Please|Please|PLEASE
+hehe
 ---
-DialogueBoxPlain
+DialogueBoxAlternativePlain
+Alternative
 Text
-Hey Hey Hey|this should not be skipped|But it might be?
+hehe
+Key
+MemeGroup
 ---
-DialogueBoxPlain
+Alternative
 Text
-Oh...|Just kidding.|It works fine now :)
+Please no
+Key
+RealGroup
 ---
-DialogueBoxPlain
-Text
-Just Gonna...|Test the...|Unskippable feature...
-TextSpeed
-0.1
-NonSkippable
----
-DialogueBoxPlain
-Text
-Aaaaaand it works fine!||:)
 ---
 ---
 DialogueBoxGroup
 Key
-meme
+MemeGroup
 DialogueBoxPlain
 Text
-Secret memes
+hehehehee
 ---
 DialogueBoxPlain
 Text
-Well...|If it works at least.
+Y O U|M E M E D|Y O U R S E L F
+NonSkippable
+TextSpeed
+0.05
+---
+---
+DialogueBoxGroup
+Key
+RealGroup
+DialogueBoxPlain
+Text
+Okay
+---
+DialogueBoxPlain
+Text
+ieusfhiusehfuisehfusfuhirdgf|osiejfsoiefjseoifjoiijdfgrws|eiosfjosiejfoisejfoijgdrgwdgr
+NonSkippable
+TextSpeed
+1
 ---
 ---
 ---

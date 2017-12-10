@@ -20,6 +20,11 @@ namespace Gahame.GameUtils
         public static bool Up { get; private set; }
         public static bool Down { get; private set; }
 
+        public static bool RightPressed { get; private set; }
+        public static bool LeftPressed { get; private set; }
+        public static bool UpPressed { get; private set; }
+        public static bool DownPressed { get; private set; }
+
         public static bool Activate { get; private set; }
 
         public static bool RightCD { get; private set; }
@@ -47,6 +52,11 @@ namespace Gahame.GameUtils
             Left = state.IsKeyDown(Keys.A);
             Up = state.IsKeyDown(Keys.W);
             Down = state.IsKeyDown(Keys.S);
+
+            RightPressed = state.IsKeyDown(Keys.D) && !previousState.IsKeyDown(Keys.D);
+            LeftPressed = state.IsKeyDown(Keys.A) && !previousState.IsKeyDown(Keys.A);
+            UpPressed = state.IsKeyDown(Keys.W) && !previousState.IsKeyDown(Keys.W);
+            DownPressed = state.IsKeyDown(Keys.S) && !previousState.IsKeyDown(Keys.S);
 
             SpaceHeld = state.IsKeyDown(Keys.Space);
 

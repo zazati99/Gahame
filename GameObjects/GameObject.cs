@@ -136,7 +136,9 @@ namespace Gahame.GameObjects
 
             Color[] data = new Color[(int)size.X * (int)size.Y];
 
-            Color mainColor = new Color(r.Next()%255, r.Next()%255, r.Next()%255);
+            Color mainColor = new Color(r.Next() % 255, r.Next() % 255, r.Next() % 255);
+
+
             data[0] = mainColor;
 
             for (int i = 1; i < data.Length; i++)

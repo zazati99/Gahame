@@ -52,9 +52,11 @@ namespace Gahame.GameObjects
             if (rectangle == null)
             {
                 BoxCollider col = (BoxCollider)GetComponent<HitBox>().Colliders[0];
-                Texture2D tex = CreateRect(spriteBatch, col.Size);
                 rectangle = new Sprite(this);
+
+                Texture2D tex = CreateRect(spriteBatch, col.Size);
                 rectangle.AddImage(tex);
+
                 rectangle.Depth = 1;
 
                 Components.Add(rectangle);

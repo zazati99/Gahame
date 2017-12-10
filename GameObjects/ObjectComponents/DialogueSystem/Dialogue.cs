@@ -13,7 +13,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 {
     public class Dialogue : ObjectComponent
     {
-        // My boxes
+        // My boxes (needs secret key to be unlocked)
         public Dictionary<string, DialogueBoxGroup> BoxGroups;
 
         // Key to the box
@@ -32,7 +32,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             Drawable = false; // becomes true when active
             Updatable = false; // becomes true when active
 
-            // Key starts with 0
+            // Key starts with ""
             Key = "";
 
             // Accesible Meme 
