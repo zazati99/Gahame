@@ -5,9 +5,9 @@ Height
 1080
 Player
 X
-368
+400
 Y
-225
+200
 ---
 Wall
 X
@@ -36,7 +36,7 @@ Y
 128
 Sprite
 Path
-meme
+Sprites/Test
 ---
 HitBox
 Solid

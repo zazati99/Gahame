@@ -23,27 +23,30 @@ namespace Gahame.GameObjects
         HitBox hitBox;
         Physics physics;
 
-        // Jump height
+        // Controlls variablees
         float jumpHeight;
+        float minJumpHeight;
+        float maxSpeed;
+        float accelerationSpeed;
+        float airAccelerationSpeed;
+        float slowDownSpeed;
+        float airSlowDownSpeed;
 
         // Constructor stufferoo for playerino
         public PlayerObject(GameScreen screen) : base(screen)
         {
-            // Player specific stuff
-            jumpHeight = 5;
-
             // Cool sprite stuff
             sprite = new Sprite(this);
             sprite.Depth = .1f;
-            sprite.AddImage("Sprite");
-            sprite.SpriteOrigin = new Vector2(32, 32);
+            sprite.AddImage("Sprites/Player/playerBattleScreenStill");
+            sprite.SpriteOrigin = new Vector2(24, 24);
             Components.Add(sprite);
 
             // HitBox COmponent 
             hitBox = new HitBox(this);
-            hitBox.Colliders.Add(new BoxCollider(new Vector2(32, 62)));
-            hitBox.Colliders[0].Offset.X = -16;
-            hitBox.Colliders[0].Offset.Y = -31;
+            hitBox.Colliders.Add(new BoxCollider(new Vector2(14, 43)));
+            hitBox.Colliders[0].Offset.X = -7;
+            hitBox.Colliders[0].Offset.Y = -19;
             Components.Add(hitBox);
 
             // Physics
@@ -57,6 +60,17 @@ namespace Gahame.GameObjects
             screen.CamController.CamOffset.Y = -16;
             screen.CamController.Static = true;
             screen.CamController.SetPosition(new Vector2(330, 100));
+
+            // Controlls variables
+            maxSpeed = 2;
+            accelerationSpeed = .5f;
+            airAccelerationSpeed = accelerationSpeed * 0.75f;
+
+            slowDownSpeed = .25f;
+            airSlowDownSpeed = slowDownSpeed * 0.25f;
+
+            jumpHeight = 4.5f;
+            minJumpHeight = jumpHeight / 2;
         }
 
         // Update stufferino
@@ -67,20 +81,20 @@ namespace Gahame.GameObjects
             if (GameControlls.RightCD || GameControlls.LeftCD)
             {
                 sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 2 * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)), .5f * GahameController.GameSpeed);
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 2 * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
             }
             // Stopping
             if (!GameControlls.RightCD && !GameControlls.LeftCD || GameControlls.RightCD && GameControlls.LeftCD)
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, .25f * GahameController.GameSpeed);
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0,GahameController.GameSpeed * (physics.Grounded ? slowDownSpeed : airSlowDownSpeed));
             
             // Jumping
             if (physics.Grounded)
             {
-                if (GameControlls.SpaceCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
+                if (GameControlls.SpaceBufferCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
             }
             // Stopping if space is not held
             if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
-                physics.Velocity.Y = (Physics.Gravity > 0) ? Math.Max(physics.Velocity.Y, -(jumpHeight/2) * Math.Sign(Physics.Gravity)) : Math.Min(physics.Velocity.Y, -(jumpHeight / 2) * Math.Sign(Physics.Gravity));
+                physics.Velocity.Y = (Physics.Gravity > 0) ? Math.Max(physics.Velocity.Y, -minJumpHeight * Math.Sign(Physics.Gravity)) : Math.Min(physics.Velocity.Y, -(jumpHeight / 2) * Math.Sign(Physics.Gravity));
 
             // Interact with object
             if (GameControlls.ActivateCD){

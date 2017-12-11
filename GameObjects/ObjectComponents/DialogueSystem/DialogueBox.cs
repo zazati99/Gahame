@@ -29,6 +29,9 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Skipable?
         public bool Skippable;
 
+        // Font size
+        public int FontSize;
+
         // The group that holds this box
         protected DialogueBoxGroup group;
 
@@ -43,6 +46,9 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
             // Default font
             Font = GameFonts.Arial;
+
+            // Default fontsize
+            FontSize = 8;
         }
 
         // Update the box

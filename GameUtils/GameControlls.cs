@@ -43,6 +43,9 @@ namespace Gahame.GameUtils
         public static bool F5 { get; private set; }
         public static bool F6 { get; private set; }
 
+        public static bool SpaceBufferCD { get; private set; }
+        private static int spaceBuffer;
+
         // Checks all of the controlls (should happen in Game class) 
         public static void Update() 
         {
@@ -74,6 +77,12 @@ namespace Gahame.GameUtils
 
             SpaceCD = Space && !GahameController.CutScene;
             ActivateCD = E && !GahameController.CutScene;
+
+            // Space buffer for jumping
+            if (spaceBuffer > 0) spaceBuffer--;
+            if (SpaceCD) spaceBuffer = 3;
+            SpaceBufferCD = (spaceBuffer > 0);
+
 
             previousState = state;
         }
