@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using Gahame.GameUtils;
+using System;
 
 namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 {
@@ -78,7 +79,11 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 origin.X = Font.MeasureString(Alternatives[i].Text).X / 2;
                 origin.Y = Font.MeasureString(Alternatives[i].Text).Y / 2;
 
-                Vector2 offset = new Vector2(50 + i * 75, 25);
+                int rows = MyMaths.Round(Alternatives.Count / 2);
+                int n = (((int)(i / 2)) * 2) + 1;
+                float offsety = (50 / (2 * rows)) * ((n*2) / (2 * rows));
+
+                Vector2 offset = new Vector2(50 + i%2 * 75, offsety);
 
                 spriteBatch.DrawString(
                     Font,

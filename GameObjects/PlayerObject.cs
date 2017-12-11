@@ -26,9 +26,11 @@ namespace Gahame.GameObjects
         // Controlls variablees
         float jumpHeight;
         float minJumpHeight;
+
         float maxSpeed;
         float accelerationSpeed;
         float airAccelerationSpeed;
+
         float slowDownSpeed;
         float airSlowDownSpeed;
 
@@ -101,9 +103,6 @@ namespace Gahame.GameObjects
                 Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
                 if (d != null) d.StartDialogue();
             }
-
-            // TEST gameSPeed SAK
-            if (GameControlls.Up || GameControlls.Down) GahameController.GameSpeed = MyMaths.Lerp(GahameController.GameSpeed, GameControlls.Up ? 1 : 0, .05f);
 
             // Updates Components last*/
             base.Update(gameTime);
