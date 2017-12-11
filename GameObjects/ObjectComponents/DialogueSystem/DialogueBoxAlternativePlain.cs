@@ -78,10 +78,12 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 origin.X = Font.MeasureString(Alternatives[i].Text).X / 2;
                 origin.Y = Font.MeasureString(Alternatives[i].Text).Y / 2;
 
+                Vector2 offset = new Vector2(50 + i * 75, 25);
+
                 spriteBatch.DrawString(
                     Font,
                     Alternatives[i].Text,
-                    CameraController.PositionOnScreen(Position + new Vector2(50 + i*75, 25)),
+                    CameraController.PositionOnScreen(Position + offset),
                     col,
                     0,
                     origin,
