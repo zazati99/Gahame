@@ -27,7 +27,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             size = new Vector2(202, 50);
             Position = new Vector2(CameraController.ViewWidth() / 2 - 100, CameraController.ViewHeight() - 60);
 
-            Font.LineSpacing = (int)(size.Y / 2) - 8;
+            Font.LineSpacing = (int)(size.Y / 2) - FontSize;
         }
 
         // Updates Box
