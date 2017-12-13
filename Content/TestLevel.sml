@@ -73,12 +73,6 @@ Please no
 Key
 RealGroup
 ---
-Alternative
-Text
-hell yea
-Key
-RealGroup
----
 ---
 ---
 DialogueBoxGroup

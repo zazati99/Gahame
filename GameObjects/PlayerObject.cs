@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,7 +13,6 @@ namespace Gahame.GameObjects
 {
     public class PlayerObject : GameObject
     {
-
         // Componenst
         Sprite sprite;
         HitBox hitBox;
@@ -69,7 +64,7 @@ namespace Gahame.GameObjects
             airAccelerationSpeed = accelerationSpeed * 0.75f;
 
             slowDownSpeed = .25f;
-            airSlowDownSpeed = slowDownSpeed * 0.25f;
+            airSlowDownSpeed = slowDownSpeed * 0.5f;
 
             jumpHeight = 4.5f;
             minJumpHeight = jumpHeight / 2;

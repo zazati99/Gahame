@@ -4,8 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/Fonts/BitMapFont.bmp</File>
-    <File>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/Sprites/Player/playerBattleScreenStill.png</File>
-    <File>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/Sprites/Test.png</File>
+    <File>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/Sprites/Player/playerBattleScreenStill.png</File>
+    <File>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/Sprites/Test.png</File>
+    <File>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/Fonts/BitMapFont.bmp</File>
   </SourceFiles>
 </SourceFileCollection>
