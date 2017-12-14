@@ -11,7 +11,7 @@ using Gahame.GameObjects.ObjectComponents.Colliders;
 
 namespace Gahame.GameObjects
 {
-    public class PlayerObject : GameObject
+    public class PlayerObjectBattle : GameObject
     {
         // Componenst
         Sprite sprite;
@@ -30,7 +30,7 @@ namespace Gahame.GameObjects
         float airSlowDownSpeed;
 
         // Constructor stufferoo for playerino
-        public PlayerObject(GameScreen screen) : base(screen)
+        public PlayerObjectBattle(GameScreen screen) : base(screen)
         {
             // Cool sprite stuff
             sprite = new Sprite(this);
