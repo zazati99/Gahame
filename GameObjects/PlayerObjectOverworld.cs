@@ -35,9 +35,9 @@ namespace Gahame.GameObjects
 
             // HitBox COmponent 
             hitBox = new HitBox(this);
-            hitBox.Colliders.Add(new BoxCollider(new Vector2(14, 43)));
+            hitBox.Colliders.Add(new BoxCollider(new Vector2(14, 13)));
             hitBox.Colliders[0].Offset.X = -7;
-            hitBox.Colliders[0].Offset.Y = -19;
+            hitBox.Colliders[0].Offset.Y = 11;
             Components.Add(hitBox);
 
             // Physics
@@ -49,8 +49,8 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
-            screen.CamController.Static = true;
-            screen.CamController.SetPosition(new Vector2(330, 100));
+            //screen.CamController.Static = true;
+            //screen.CamController.SetPosition(new Vector2(330, 100));
 
             // Controlls variables
             maxSpeed = 2;

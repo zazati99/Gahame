@@ -55,8 +55,8 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
-            screen.CamController.Static = true;
-            screen.CamController.SetPosition(new Vector2(330, 100));
+            //screen.CamController.Static = true;
+            //screen.CamController.SetPosition(new Vector2(330, 100));
 
             // Controlls variables
             maxSpeed = 2;
