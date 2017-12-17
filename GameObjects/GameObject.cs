@@ -83,7 +83,7 @@ namespace Gahame.GameObjects
             object instance = null;
             for (int i = 0; i < Components.Count; i++)
             {
-                if (Components[i].GetType() == typeof(T))
+                if (Components[i] is T)
                 {
                     instance = Components[i];
                 }

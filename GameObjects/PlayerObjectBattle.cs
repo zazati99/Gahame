@@ -29,6 +29,8 @@ namespace Gahame.GameObjects
         float slowDownSpeed;
         float airSlowDownSpeed;
 
+        bool slowTime = false;
+
         // Constructor stufferoo for playerino
         public PlayerObjectBattle(GameScreen screen) : base(screen)
         {
@@ -98,6 +100,11 @@ namespace Gahame.GameObjects
                 Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
                 if (d != null) d.StartDialogue();
             }
+
+            if (GameControlls.ActivateCD) slowTime = !slowTime;
+            GahameController.GameSpeed = MyMaths.Lerp(GahameController.GameSpeed, slowTime ? 0.2f : 1, .20f);
+
+
 
             // Updates Components last*/
             base.Update(gameTime);

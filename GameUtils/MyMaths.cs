@@ -20,7 +20,7 @@
         // Round float to int
         public static int Round(float value)
         {
-            return (value - (int)value < .5f) ? (int)value : (int)value + 1;
+            return (int)(value + .5f);
         }
 
     }

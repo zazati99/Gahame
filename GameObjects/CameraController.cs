@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Gahame.GameScreens;
+using Gahame.GameUtils;
 
 using Microsoft.Xna.Framework;
 
@@ -14,7 +15,6 @@ namespace Gahame.GameObjects
     {
 
         // STATIC stuff
-
         // Gets position on screen
         public static Vector2 PositionOnScreen(Vector2 vec)
         {
@@ -83,7 +83,7 @@ namespace Gahame.GameObjects
                     SetPosition(Vector2.Lerp(Game1.cam.Pos,
                                              Vector2.Add(target.Position,
                                              new Vector2(-ScreenManager.DefaultViewportX/4 + CamOffset.X,
-                                             -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f));
+                                                         -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f * (1+GahameController.GameSpeed)/2));
 
                     if (Game1.cam.Pos.X < 0)
                     {

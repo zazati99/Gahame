@@ -32,6 +32,8 @@ namespace Gahame
 
             //IsFixedTimeStep = false;
             //graphics.SynchronizeWithVerticalRetrace = false;
+            //TimeSpan span = new TimeSpan(0, 0, 0, 0, 1);
+            //TargetElapsedTime = span;
 
             cam = new GameCamera
             {
