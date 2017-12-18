@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Gahame.GameUtils
@@ -11,8 +8,9 @@ namespace Gahame.GameUtils
     public class GameControlls
     {
 
-        // Previous keyboard state
-        static KeyboardState previousState = Keyboard.GetState();
+        // Previous keyboard and gamepad state
+        static KeyboardState previousKeyboardState = Keyboard.GetState();
+        static GamePadState previousGamePadState = GamePad.GetState(0);
 
         // Specified controlls
         public static bool Right { get; private set; }
@@ -32,59 +30,85 @@ namespace Gahame.GameUtils
         public static bool UpCD { get; private set; }
         public static bool DownCD { get; private set; }
 
-        public static bool SpaceCD { get; private set; }
+        public static bool JumpCD { get; private set; }
         public static bool ActivateCD { get; private set; }
 
-        public static bool E { get; private set; }
-        public static bool Space { get; private set; }
-        public static bool SpaceHeld { get; private set; }
+        public static bool Jump { get; private set; }
+        public static bool JumpHeld { get; private set; }
+
         public static bool Esc { get; private set; }
         public static bool Enter { get; private set; }
         public static bool F5 { get; private set; }
         public static bool F6 { get; private set; }
 
-        public static bool SpaceBufferCD { get; private set; }
-        private static int spaceBuffer;
+        public static bool JumpBufferCD { get; private set; }
+        private static int jumpBuffer;
+
+        public static float SignLeftStickX { get; private set; }
+
+        // check if last used controlls was controller if false it is keyboard
+        public static bool ControllerMode { get; private set; }
 
         // Checks all of the controlls (should happen in Game class) 
         public static void Update() 
         {
-            KeyboardState state = Keyboard.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
+            GamePadState gamePadState = GamePad.GetState(0);
 
-            Right = state.IsKeyDown(Keys.D);
-            Left = state.IsKeyDown(Keys.A);
-            Up = state.IsKeyDown(Keys.W);
-            Down = state.IsKeyDown(Keys.S);
+            // Check is keyboard mode or controller mode 
+            if (gamePadState.IsConnected)
+            {
+                // Get buttons pressed
+                bool keyboardButtonPressed = keyboardState.GetPressedKeys().Length > 0;
+                GamePadState emptyInput = new GamePadState(Vector2.Zero, Vector2.Zero, 0, 0, 0);
+                // checks the keyboard and controller buttons
+                if (gamePadState != emptyInput && !keyboardButtonPressed)
+                {
+                    ControllerMode = true;
+                }
+                else if (keyboardButtonPressed) ControllerMode = false;
+            }
+            else ControllerMode = false;
 
-            RightPressed = state.IsKeyDown(Keys.D) && !previousState.IsKeyDown(Keys.D);
-            LeftPressed = state.IsKeyDown(Keys.A) && !previousState.IsKeyDown(Keys.A);
-            UpPressed = state.IsKeyDown(Keys.W) && !previousState.IsKeyDown(Keys.W);
-            DownPressed = state.IsKeyDown(Keys.S) && !previousState.IsKeyDown(Keys.S);
+            // left controller stick
+            SignLeftStickX = Math.Min(Math.Abs(gamePadState.ThumbSticks.Left.X) + .10f, 1);
 
-            SpaceHeld = state.IsKeyDown(Keys.Space);
+            Right = keyboardState.IsKeyDown(Keys.D) || gamePadState.ThumbSticks.Left.X > .20f;
+            Left = keyboardState.IsKeyDown(Keys.A) || gamePadState.ThumbSticks.Left.X < -.20f;
+            Up = keyboardState.IsKeyDown(Keys.W) || gamePadState.ThumbSticks.Left.Y < -.20f;
+            Down = keyboardState.IsKeyDown(Keys.S) || gamePadState.ThumbSticks.Left.Y > .20f;
 
-            E = state.IsKeyDown(Keys.E) && !previousState.IsKeyDown(Keys.E);
-            Space = state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space);
-            Esc = state.IsKeyDown(Keys.Escape) && !previousState.IsKeyDown(Keys.Escape);
-            Enter = state.IsKeyDown(Keys.Enter) && !previousState.IsKeyDown(Keys.Enter);
-            F5 = state.IsKeyDown(Keys.F5) && !previousState.IsKeyDown(Keys.F5);
-            F6 = state.IsKeyDown(Keys.F6) && !previousState.IsKeyDown(Keys.F6);
+            RightPressed = (keyboardState.IsKeyDown(Keys.D) && !previousKeyboardState.IsKeyDown(Keys.D)) || (gamePadState.ThumbSticks.Left.X > .20f && !(previousGamePadState.ThumbSticks.Left.X > .20f));
+            LeftPressed = (keyboardState.IsKeyDown(Keys.A) && !previousKeyboardState.IsKeyDown(Keys.A)) || (gamePadState.ThumbSticks.Left.X < -.20f && !(previousGamePadState.ThumbSticks.Left.X < -.20f));
+            UpPressed = (keyboardState.IsKeyDown(Keys.W) && !previousKeyboardState.IsKeyDown(Keys.W)) || (gamePadState.ThumbSticks.Left.Y < -.20f && !(previousGamePadState.ThumbSticks.Left.Y < -.20f));
+            DownPressed = (keyboardState.IsKeyDown(Keys.S) && !previousKeyboardState.IsKeyDown(Keys.S)) || (gamePadState.ThumbSticks.Left.Y > .20f && !(previousGamePadState.ThumbSticks.Left.Y > .20f));
+
+            Jump = (keyboardState.IsKeyDown(Keys.Space) && !previousKeyboardState.IsKeyDown(Keys.Space)) || (gamePadState.IsButtonDown(Buttons.A) && !previousGamePadState.IsButtonDown(Buttons.A));
+            JumpHeld = keyboardState.IsKeyDown(Keys.Space) || gamePadState.IsButtonDown(Buttons.A);
+
+            Activate = (keyboardState.IsKeyDown(Keys.E) && !previousKeyboardState.IsKeyDown(Keys.E)) || (gamePadState.IsButtonDown(Buttons.B) && !previousGamePadState.IsButtonDown(Buttons.B));
+
+            Esc = (keyboardState.IsKeyDown(Keys.Escape) && !previousKeyboardState.IsKeyDown(Keys.Escape)) || (gamePadState.IsButtonDown(Buttons.Start) && !previousGamePadState.IsButtonDown(Buttons.Start));
+            Enter = keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter) || (gamePadState.IsButtonDown(Buttons.Back) && !previousGamePadState.IsButtonDown(Buttons.Back));
+
+            F5 = keyboardState.IsKeyDown(Keys.F5) && !previousKeyboardState.IsKeyDown(Keys.F5);
+            F6 = keyboardState.IsKeyDown(Keys.F6) && !previousKeyboardState.IsKeyDown(Keys.F6);
 
             RightCD = Right && !GahameController.CutScene;
             LeftCD = Left && !GahameController.CutScene;
             UpCD = Up && !GahameController.CutScene;
             DownCD = Down && !GahameController.CutScene;
 
-            SpaceCD = Space && !GahameController.CutScene;
-            ActivateCD = E && !GahameController.CutScene;
+            JumpCD = Jump && !GahameController.CutScene;
+            ActivateCD = Activate && !GahameController.CutScene;
 
             // Space buffer for jumping
-            if (spaceBuffer > 0) spaceBuffer--;
-            if (SpaceCD) spaceBuffer = 3;
-            SpaceBufferCD = (spaceBuffer > 0);
+            if (jumpBuffer > 0) jumpBuffer--;
+            if (JumpCD) jumpBuffer = 3;
+            JumpBufferCD = (jumpBuffer > 0);
 
-
-            previousState = state;
+            previousKeyboardState = keyboardState;
+            previousGamePadState = gamePadState;
         }
 
     }

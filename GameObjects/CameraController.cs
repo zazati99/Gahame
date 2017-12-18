@@ -86,7 +86,7 @@ namespace Gahame.GameObjects
                                                          -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f * (1+GahameController.GameSpeed)/2));*/
                     
                     SetPosition(new Vector2(MyMaths.Lerp(Game1.cam.Pos.X, target.Position.X - ScreenManager.DefaultViewportX / 4 + CamOffset.X, .2f * (1+GahameController.GameSpeed)/2),
-                                            MyMaths.Lerp(Game1.cam.Pos.Y, target.Position.Y - ScreenManager.DefaultViewportY / 4 + CamOffset.Y, .1f * (1+GahameController.GameSpeed)/2)));
+                                            MyMaths.Lerp(Game1.cam.Pos.Y, target.Position.Y - ScreenManager.DefaultViewportY / 4 + CamOffset.Y, .05f * (1+GahameController.GameSpeed)/2)));
 
                     if (Game1.cam.Pos.X < 0)
                     {

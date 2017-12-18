@@ -99,6 +99,8 @@ namespace Gahame
             string gameSpeed = string.Format("{0:N3}", GahameController.GameSpeed);
             spriteBatch.DrawString(GameFonts.Arial, gameSpeed, GameObjects.CameraController.PositionOnScreen(new Vector2(15, 21)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
+            spriteBatch.DrawString(GameFonts.Arial, GameControlls.ControllerMode ? "ControllerMode" : "KeyboardMode", GameObjects.CameraController.PositionOnScreen(new Vector2(15, 31)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+
             spriteBatch.End();
 
             base.Draw(gameTime);

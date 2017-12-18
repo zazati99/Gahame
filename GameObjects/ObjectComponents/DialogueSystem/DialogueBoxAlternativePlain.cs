@@ -49,7 +49,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 if (CurrentAlternative < 0) CurrentAlternative = Alternatives.Count - 1;
             }
             // next group
-            if (GameControlls.E && !GameControlls.ActivateCD)
+            if (GameControlls.Activate && !GameControlls.ActivateCD)
             {
                 group.ClearGroup();
                 group.dialogue.Key = Alternatives[CurrentAlternative].Key;

@@ -80,7 +80,11 @@ namespace Gahame.GameObjects
             if (GameControlls.RightCD || GameControlls.LeftCD)
             {
                 sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, maxSpeed * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
+
+                // Approach max speed
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
+                    maxSpeed * (GameControlls.ControllerMode ? Math.Abs(GameControlls.SignLeftStickX) : 1) * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
+                    GahameController.GameSpeed * (GameControlls.ControllerMode ? Math.Abs(GameControlls.SignLeftStickX) : 1) * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
             }
             // Stopping
             if (!GameControlls.RightCD && !GameControlls.LeftCD || GameControlls.RightCD && GameControlls.LeftCD)
@@ -89,10 +93,10 @@ namespace Gahame.GameObjects
             // Jumping
             if (physics.Grounded)
             {
-                if (GameControlls.SpaceBufferCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
+                if (GameControlls.JumpBufferCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
             }
             // Stopping if space is not held
-            if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.SpaceHeld)
+            if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.JumpHeld)
                 physics.Velocity.Y = (Physics.Gravity > 0) ? Math.Max(physics.Velocity.Y, -minJumpHeight * Math.Sign(Physics.Gravity)) : Math.Min(physics.Velocity.Y, -(jumpHeight / 2) * Math.Sign(Physics.Gravity));
 
             // Interact with object
@@ -114,6 +118,9 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            // Speed test
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
         }
 
     }
