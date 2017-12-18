@@ -66,14 +66,20 @@ namespace Gahame.GameObjects
             if (GameControlls.RightCD || GameControlls.LeftCD)
             {
                 sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, maxSpeed * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)), GahameController.GameSpeed * accelerationSpeed);
+                // Approach max X velocity
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
+                    maxSpeed * (GameControlls.ControllerMode ? GameControlls.AbsLeftStickX : 1) * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
+                    GahameController.GameSpeed * accelerationSpeed);
             }
             else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * slowDownSpeed);
 
             // Walking up and down
             if (GameControlls.UpCD || GameControlls.DownCD)
             {
-                physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, maxSpeed * ((GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0)), GahameController.GameSpeed * accelerationSpeed);
+                // Approach max Y velocity
+                physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y,
+                    maxSpeed * (GameControlls.ControllerMode ? GameControlls.AbsLeftStickY : 1) * ((GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0)),
+                    GahameController.GameSpeed * accelerationSpeed);
             }
             else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, GahameController.GameSpeed * slowDownSpeed);
 

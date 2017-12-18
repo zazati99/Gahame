@@ -44,7 +44,8 @@ namespace Gahame.GameUtils
         public static bool JumpBufferCD { get; private set; }
         private static int jumpBuffer;
 
-        public static float SignLeftStickX { get; private set; }
+        public static float AbsLeftStickX { get; private set; }
+        public static float AbsLeftStickY { get; private set; }
 
         // check if last used controlls was controller if false it is keyboard
         public static bool ControllerMode { get; private set; }
@@ -70,18 +71,20 @@ namespace Gahame.GameUtils
             }
             else ControllerMode = false;
 
-            // left controller stick
-            SignLeftStickX = Math.Min(Math.Abs(gamePadState.ThumbSticks.Left.X) + .10f, 1);
+            // left controller stick on X axis
+            AbsLeftStickX = Math.Min(Math.Abs(gamePadState.ThumbSticks.Left.X) + .10f, 1);
+            // Left controller stick on Y axis
+            AbsLeftStickY = Math.Min(Math.Abs(gamePadState.ThumbSticks.Left.Y) + .10f, 1);
 
             Right = keyboardState.IsKeyDown(Keys.D) || gamePadState.ThumbSticks.Left.X > .20f;
             Left = keyboardState.IsKeyDown(Keys.A) || gamePadState.ThumbSticks.Left.X < -.20f;
-            Up = keyboardState.IsKeyDown(Keys.W) || gamePadState.ThumbSticks.Left.Y < -.20f;
-            Down = keyboardState.IsKeyDown(Keys.S) || gamePadState.ThumbSticks.Left.Y > .20f;
+            Up = keyboardState.IsKeyDown(Keys.W) || gamePadState.ThumbSticks.Left.Y > .20f;
+            Down = keyboardState.IsKeyDown(Keys.S) || gamePadState.ThumbSticks.Left.Y < -.20f;
 
             RightPressed = (keyboardState.IsKeyDown(Keys.D) && !previousKeyboardState.IsKeyDown(Keys.D)) || (gamePadState.ThumbSticks.Left.X > .20f && !(previousGamePadState.ThumbSticks.Left.X > .20f));
             LeftPressed = (keyboardState.IsKeyDown(Keys.A) && !previousKeyboardState.IsKeyDown(Keys.A)) || (gamePadState.ThumbSticks.Left.X < -.20f && !(previousGamePadState.ThumbSticks.Left.X < -.20f));
-            UpPressed = (keyboardState.IsKeyDown(Keys.W) && !previousKeyboardState.IsKeyDown(Keys.W)) || (gamePadState.ThumbSticks.Left.Y < -.20f && !(previousGamePadState.ThumbSticks.Left.Y < -.20f));
-            DownPressed = (keyboardState.IsKeyDown(Keys.S) && !previousKeyboardState.IsKeyDown(Keys.S)) || (gamePadState.ThumbSticks.Left.Y > .20f && !(previousGamePadState.ThumbSticks.Left.Y > .20f));
+            UpPressed = (keyboardState.IsKeyDown(Keys.W) && !previousKeyboardState.IsKeyDown(Keys.W)) || (gamePadState.ThumbSticks.Left.Y > .20f && !(previousGamePadState.ThumbSticks.Left.Y > .20f));
+            DownPressed = (keyboardState.IsKeyDown(Keys.S) && !previousKeyboardState.IsKeyDown(Keys.S)) || (gamePadState.ThumbSticks.Left.Y < -.20f && !(previousGamePadState.ThumbSticks.Left.Y < -.20f));
 
             Jump = (keyboardState.IsKeyDown(Keys.Space) && !previousKeyboardState.IsKeyDown(Keys.Space)) || (gamePadState.IsButtonDown(Buttons.A) && !previousGamePadState.IsButtonDown(Buttons.A));
             JumpHeld = keyboardState.IsKeyDown(Keys.Space) || gamePadState.IsButtonDown(Buttons.A);

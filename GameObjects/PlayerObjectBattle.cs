@@ -79,12 +79,12 @@ namespace Gahame.GameObjects
             // Walking left and right
             if (GameControlls.RightCD || GameControlls.LeftCD)
             {
-                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
+                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed * (GameControlls.ControllerMode ? Math.Abs(GameControlls.AbsLeftStickX) : 1));
 
                 // Approach max speed
                 physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
-                    maxSpeed * (GameControlls.ControllerMode ? Math.Abs(GameControlls.SignLeftStickX) : 1) * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
-                    GahameController.GameSpeed * (GameControlls.ControllerMode ? Math.Abs(GameControlls.SignLeftStickX) : 1) * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
+                    maxSpeed * (GameControlls.ControllerMode ? GameControlls.AbsLeftStickX : 1) * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
+                    GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
             }
             // Stopping
             if (!GameControlls.RightCD && !GameControlls.LeftCD || GameControlls.RightCD && GameControlls.LeftCD)
