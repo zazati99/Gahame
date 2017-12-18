@@ -18,7 +18,7 @@ namespace Gahame.GameUtils
         // Load the fonts
         public static void LoadFonts(ContentManager content)
         {
-            Arial = content.Load<SpriteFont>("Fonts/font");
+            Arial = content.Load<SpriteFont>("Fonts/DialogueArial");
         }
 
     }

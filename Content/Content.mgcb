@@ -37,14 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Test.png
 
-#begin Fonts/BitMapFont.bmp
-/importer:TextureImporter
-/processor:FontTextureProcessor
-/processorParam:FirstCharacter= 
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Color
-/build:Fonts/BitMapFont.bmp
-
 #begin Fonts/font.bmp
 /importer:TextureImporter
 /processor:FontTextureProcessor
@@ -52,4 +44,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
 /build:Fonts/font.bmp
+
+#begin Fonts/DialogueArial.bmp
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:Fonts/DialogueArial.bmp
 

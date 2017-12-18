@@ -48,7 +48,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             Font = GameFonts.Arial;
 
             // Default fontsize
-            FontSize = 10;
+            FontSize = 8;
         }
 
         // Update the box

@@ -35,6 +35,8 @@ namespace Gahame
             //TimeSpan span = new TimeSpan(0, 0, 0, 0, 1);
             //TargetElapsedTime = span;
 
+            // EHehe this work?
+
             cam = new GameCamera
             {
                  Pos = Vector2.Zero,
