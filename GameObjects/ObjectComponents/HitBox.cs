@@ -58,7 +58,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 if (o == gameObject) continue;
 
                 HitBox temp = o.GetComponent<HitBox>();
-                if (o.GetType() == typeof(T) && temp != null)
+                if (o is T && temp != null)
                 {
                     for (int j = 0; j < Colliders.Count; j++)
                     {
@@ -220,7 +220,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 obj = gameObject.screen.GameObjects[i];
                 if (obj == gameObject) continue;
 
-                if (obj.GetType() == typeof(T))
+                if (obj is T)
                 {
                     HitBox otherHb = obj.GetComponent<HitBox>();
                     if (otherHb != null)

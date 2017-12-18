@@ -80,10 +80,13 @@ namespace Gahame.GameObjects
                 if (target != null)
                 {
                     //SetPosition(Vector2.Add(target.Position, new Vector2(-320, -180)));
-                    SetPosition(Vector2.Lerp(Game1.cam.Pos,
+                    /*SetPosition(Vector2.Lerp(Game1.cam.Pos,
                                              Vector2.Add(target.Position,
                                              new Vector2(-ScreenManager.DefaultViewportX/4 + CamOffset.X,
-                                                         -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f * (1+GahameController.GameSpeed)/2));
+                                                         -ScreenManager.DefaultViewportY / 4 + CamOffset.Y)), .2f * (1+GahameController.GameSpeed)/2));*/
+                    
+                    SetPosition(new Vector2(MyMaths.Lerp(Game1.cam.Pos.X, target.Position.X - ScreenManager.DefaultViewportX / 4 + CamOffset.X, .2f * (1+GahameController.GameSpeed)/2),
+                                            MyMaths.Lerp(Game1.cam.Pos.Y, target.Position.Y - ScreenManager.DefaultViewportY / 4 + CamOffset.Y, .1f * (1+GahameController.GameSpeed)/2)));
 
                     if (Game1.cam.Pos.X < 0)
                     {
