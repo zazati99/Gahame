@@ -87,7 +87,15 @@ namespace Gahame.GameObjects.ObjectComponents
                 gameObject.Position.X += Velocity.X * GahameController.GameSpeed;
                 gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed;
             }
-
         }
+
+        // Moves in direction
+        public void MoveInDirection(float velocity, float angle)
+        {
+            // Calculate stuff
+            Velocity.Y = (float)(Math.Sin(angle) * velocity);
+            Velocity.X = (float)(Math.Cos(angle) * velocity);
+        }
+
     }
 }

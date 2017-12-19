@@ -1,4 +1,6 @@
-﻿using Gahame.GameUtils;
+﻿using System;
+
+using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
 using Gahame.GameObjects.ObjectComponents.Colliders;
@@ -22,6 +24,7 @@ namespace Gahame.GameObjects
         float maxSpeed;
         float accelerationSpeed;
         float slowDownSpeed;
+        float speedInDirection;
 
         // Constructor stufferoo for playerino
         public PlayerObjectOverworld(GameScreen screen) : base(screen)
@@ -57,6 +60,7 @@ namespace Gahame.GameObjects
             maxSpeed = 2;
             accelerationSpeed = .5f;
             slowDownSpeed = .25f;
+            speedInDirection = 0;
 
         }
 
@@ -89,30 +93,8 @@ namespace Gahame.GameObjects
             } else // Gamepad Controlls
             {
 
-                // Approach max xspeed
-                if (GameControlls.RightCD || GameControlls.LeftCD)
-                {
-                    // Sprite scale (prob wont keep this)
-                    sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
-
-                    // approach max xspeed
-                    physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
-                                                          GameControlls.LeftStickX * maxSpeed,
-                                                          GahameController.GameSpeed * accelerationSpeed);
-
-                } 
-                else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, slowDownSpeed * GahameController.GameSpeed);    
-
-                // Approach max yspeed
-                if (GameControlls.UpCD || GameControlls.DownCD)
-                {
-                    // approach max yspeed
-                    physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y,
-                                                          GameControlls.LeftStickY * maxSpeed,
-                                                          GahameController.GameSpeed * accelerationSpeed);
-                } 
-                else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, slowDownSpeed * GahameController.GameSpeed);  
                 
+
             }
 
             // Update component last
@@ -123,6 +105,10 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            // Speed test
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.Y.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.Y.ToString()).X / 2, 42), Color.Black);
         }
     }
 }
