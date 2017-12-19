@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
-using Gahame.GameObjects;
-using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents.DialogueSystem;
-
 using Gahame.GameObjects.ObjectComponents.Colliders;
 
 namespace Gahame.GameObjects.ObjectComponents
@@ -35,7 +26,7 @@ namespace Gahame.GameObjects.ObjectComponents
         public HitBox(Vector2 size, GameObject gameObject) : base(gameObject)
         {
             initialize();
-            Colliders.Add(new BoxCollider(new Vector2(64,64)));
+            Colliders.Add(new BoxCollider(size));
         }
 
         // Initialize Should be called in constructor
@@ -72,6 +63,7 @@ namespace Gahame.GameObjects.ObjectComponents
             }
             return false;
         }
+
         // Check if 2 hitboxes at a given position is colliding By type
         public bool PlaceMeeting(Vector2 p, Type type)
         {
@@ -95,6 +87,7 @@ namespace Gahame.GameObjects.ObjectComponents
             }
             return false;
         }
+
         // Check if 2 hitboxes at a given position is colliding (By Tag)
         public bool PlaceMeeting(Vector2 p, string tag)
         {
@@ -121,6 +114,7 @@ namespace Gahame.GameObjects.ObjectComponents
             }
             return false;
         }
+
         // Check if 2 hitboxes at a given position is colliding (By solid)
         public bool SolidMeeting(float x, float y)
         {

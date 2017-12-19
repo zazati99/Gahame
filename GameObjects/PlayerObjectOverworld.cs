@@ -49,6 +49,7 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.target = this;
             screen.CamController.CamOffset.Y = -16;
+            screen.CamController.MoveAmount = new Vector2(.2f, .2f);
             //screen.CamController.Static = true;
             //screen.CamController.SetPosition(new Vector2(330, 100));
 
@@ -62,26 +63,57 @@ namespace Gahame.GameObjects
         // Update player
         public override void Update(GameTime gameTime)
         {
-            // Walking left and right
-            if (GameControlls.RightCD || GameControlls.LeftCD)
-            {
-                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
-                // Approach max X velocity
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
-                    maxSpeed * (GameControlls.ControllerMode ? GameControlls.AbsLeftStickX : 1) * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
-                    GahameController.GameSpeed * accelerationSpeed);
-            }
-            else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * slowDownSpeed);
 
-            // Walking up and down
-            if (GameControlls.UpCD || GameControlls.DownCD)
+            // Keyboard controlls
+            if (!GameControlls.ControllerMode){
+                // Walking left and right
+                if (GameControlls.RightCD || GameControlls.LeftCD)
+                {
+                    sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
+                    // Approach max X velocity
+                    physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
+                        maxSpeed * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
+                        GahameController.GameSpeed * accelerationSpeed);
+                }
+                else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * slowDownSpeed);
+
+                // Walking up and down
+                if (GameControlls.UpCD || GameControlls.DownCD)
+                {
+                    // Approach max Y velocity
+                    physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y,
+                        maxSpeed * ((GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0)),
+                        GahameController.GameSpeed * accelerationSpeed);
+                }
+                else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, GahameController.GameSpeed * slowDownSpeed);
+            } else // Gamepad Controlls
             {
-                // Approach max Y velocity
-                physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y,
-                    maxSpeed * (GameControlls.ControllerMode ? GameControlls.AbsLeftStickY : 1) * ((GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0)),
-                    GahameController.GameSpeed * accelerationSpeed);
+
+                // Approach max xspeed
+                if (GameControlls.RightCD || GameControlls.LeftCD)
+                {
+                    // Sprite scale (prob wont keep this)
+                    sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
+
+                    // approach max xspeed
+                    physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
+                                                          GameControlls.LeftStickX * maxSpeed,
+                                                          GahameController.GameSpeed * accelerationSpeed);
+
+                } 
+                else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, slowDownSpeed * GahameController.GameSpeed);    
+
+                // Approach max yspeed
+                if (GameControlls.UpCD || GameControlls.DownCD)
+                {
+                    // approach max yspeed
+                    physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y,
+                                                          GameControlls.LeftStickY * maxSpeed,
+                                                          GahameController.GameSpeed * accelerationSpeed);
+                } 
+                else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, slowDownSpeed * GahameController.GameSpeed);  
+                
             }
-            else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, GahameController.GameSpeed * slowDownSpeed);
 
             // Update component last
             base.Update(gameTime);

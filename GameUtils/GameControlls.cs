@@ -46,6 +46,8 @@ namespace Gahame.GameUtils
 
         public static float AbsLeftStickX { get; private set; }
         public static float AbsLeftStickY { get; private set; }
+        public static float LeftStickX { get; private set; }
+        public static float LeftStickY { get; private set; }
 
         // check if last used controlls was controller if false it is keyboard
         public static bool ControllerMode { get; private set; }
@@ -71,10 +73,15 @@ namespace Gahame.GameUtils
             }
             else ControllerMode = false;
 
-            // left controller stick on X axis
+            // Abs left controller stick on X axis
             AbsLeftStickX = Math.Min(Math.Abs(gamePadState.ThumbSticks.Left.X) + .10f, 1);
-            // Left controller stick on Y axis
+            // Abs left controller stick on Y axis
             AbsLeftStickY = Math.Min(Math.Abs(gamePadState.ThumbSticks.Left.Y) + .10f, 1);
+
+            // left controller stick on X axis
+            LeftStickX = gamePadState.ThumbSticks.Left.X;
+            // Left controller stick on Y axis
+            LeftStickY = -gamePadState.ThumbSticks.Left.Y;
 
             Right = keyboardState.IsKeyDown(Keys.D) || gamePadState.ThumbSticks.Left.X > .20f;
             Left = keyboardState.IsKeyDown(Keys.A) || gamePadState.ThumbSticks.Left.X < -.20f;
