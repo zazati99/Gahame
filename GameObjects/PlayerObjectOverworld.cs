@@ -68,34 +68,7 @@ namespace Gahame.GameObjects
         public override void Update(GameTime gameTime)
         {
 
-            // Keyboard controlls
-            if (!GameControlls.ControllerMode){
-                // Walking left and right
-                if (GameControlls.RightCD || GameControlls.LeftCD)
-                {
-                    sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed);
-                    // Approach max X velocity
-                    physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
-                        maxSpeed * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
-                        GahameController.GameSpeed * accelerationSpeed);
-                }
-                else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * slowDownSpeed);
 
-                // Walking up and down
-                if (GameControlls.UpCD || GameControlls.DownCD)
-                {
-                    // Approach max Y velocity
-                    physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y,
-                        maxSpeed * ((GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0)),
-                        GahameController.GameSpeed * accelerationSpeed);
-                }
-                else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, GahameController.GameSpeed * slowDownSpeed);
-            } else // Gamepad Controlls
-            {
-
-                
-
-            }
 
             // Update component last
             base.Update(gameTime);

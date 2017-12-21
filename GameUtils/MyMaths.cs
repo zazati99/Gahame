@@ -1,4 +1,7 @@
-﻿namespace Gahame.GameUtils
+﻿using System;
+using Microsoft.Xna.Framework;
+
+namespace Gahame.GameUtils
 {
 
     // A bit of matheroni since the other Maths class doesnt provide equal opportunities
@@ -21,6 +24,13 @@
         public static int Round(float value)
         {
             return (int)(value + .5f);
+        }
+
+        // Normalize sick
+        public static Vector2 Normalize(float x, float y)
+        {
+            float hyp = (float)(Math.Sqrt(x * x + y * y));
+            return new Vector2(x / hyp, y / hyp);
         }
 
     }
