@@ -194,6 +194,8 @@ namespace Gahame.GameScreens
             if (nextScreenReady)
             {
                 ChangeScreenClear(nextScreen);
+                nextScreenReady = false;
+                nextScreen = null;
             }
         }
 
