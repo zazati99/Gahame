@@ -26,6 +26,9 @@ namespace Gahame.GameObjects
         float slowDownSpeed;
         float speedInDirection;
 
+        // normalized vector
+        Vector2 norm;
+
         // Constructor stufferoo for playerino
         public PlayerObjectOverworld(GameScreen screen) : base(screen)
         {
@@ -61,14 +64,39 @@ namespace Gahame.GameObjects
             accelerationSpeed = .5f;
             slowDownSpeed = .25f;
             speedInDirection = 0;
-
         }
 
         // Update player
         public override void Update(GameTime gameTime)
         {
+            // Normalized vector
+            if (GameControlls.ControllerMode)
+            {
+                //norm = MyMaths.Normalize(GameControlls.LeftStickX, GameControlls.LeftStickY);
+                norm.X = GameControlls.LeftStickX;
+                norm.Y = GameControlls.LeftStickY;
+                if (Math.Abs(norm.X) > 0.70f || Math.Abs(norm.Y) > 0.70f)
+                    norm = MyMaths.Normalize(GameControlls.LeftStickX, GameControlls.LeftStickY);
+            } else
+            {
+                norm = MyMaths.Normalize((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), (GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0));
+            }
 
+            // Approach max xspeed
+            if (GameControlls.RightCD || GameControlls.LeftCD)
+            {
+                // Approach xSPeed;
+                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, maxSpeed * norm.X, accelerationSpeed * GahameController.GameSpeed);
+            }
+            else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, slowDownSpeed * GahameController.GameSpeed);
 
+            // approach max yspeed;
+            if (GameControlls.UpCD || GameControlls.DownCD)
+            {
+                // Approach xSPeed;
+                physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, maxSpeed * norm.Y, accelerationSpeed * GahameController.GameSpeed);
+            }
+            else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, slowDownSpeed * GahameController.GameSpeed);
 
             // Update component last
             base.Update(gameTime);

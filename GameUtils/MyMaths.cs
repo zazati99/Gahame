@@ -26,10 +26,17 @@ namespace Gahame.GameUtils
             return (int)(value + .5f);
         }
 
+        // Clamp between values
+        public static float Clamp(float value, float min, float max)
+        {
+            return (value >= min && value <= max) ? value : (value > max) ? max : min;
+        }
+
         // Normalize sick
         public static Vector2 Normalize(float x, float y)
         {
             float hyp = (float)(Math.Sqrt(x * x + y * y));
+            if (hyp == 0) return Vector2.Zero;
             return new Vector2(x / hyp, y / hyp);
         }
 

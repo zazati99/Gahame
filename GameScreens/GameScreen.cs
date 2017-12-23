@@ -27,9 +27,16 @@ namespace Gahame.GameScreens
         // Screen size size
         public Vector2 ScreenSize;
 
+        // Default camera position
+        public Vector2 DefaultCameraPosition;
+
+        // Name of screen (should be same as path)
+        public string Name;
+
         // Constructor
         public GameScreen()
         {
+            // default screen size
             ScreenSize = new Vector2(3000, 3000);
 
             // Cam controller creation
@@ -37,6 +44,13 @@ namespace Gahame.GameScreens
 
             // Creates list
             GameObjects = new List<GameObject>();
+        }
+
+        // Gets called when screen is changed to
+        public virtual void Start()
+        {
+            // sets default camera position
+            Game1.cam.Pos = DefaultCameraPosition;
         }
 
         // Getting contentManager from stuff (must haver base thing)

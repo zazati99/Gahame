@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -73,6 +74,11 @@ namespace Gahame.GameScreens
         // the screenyboy
         static ScreenManager instance;
 
+        // Next screen (can be loaded on separate thread in background)
+        public GameScreen nextScreen;
+        bool nextScreenReady;
+        string nextScreenPath;
+
         // Public thing så att man kan komma åt 'at överallt
         public static ScreenManager Instance
         {
@@ -87,7 +93,7 @@ namespace Gahame.GameScreens
         // Initialize I guess?
         public void Initialize()
         {
-
+            
         }
 
         // Load content boy
@@ -95,13 +101,12 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
-            //currentScreen = GameFileMaganer.LoadScreen("Content/Debug.level");
             currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
 #else
-            //currentScreen = GameFileMaganer.LoadScreen("Content/TestLevel.sml");
             currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
 #endif
             // Load content below here
+            
         }
 
         // Unload those mean bois
@@ -113,12 +118,13 @@ namespace Gahame.GameScreens
         // Update all of the logicz here
         public void Update(GameTime gameTime)
         {
+            if (GameControlls.F6) GoToNextScreen();
             if (GameControlls.F5) SwitchFullscreen();
             if (GameControlls.Enter)
             {
                 Random r = new Random();
                 GahameController.Seed = r.Next();
-                ChangeScreen(GameFileMaganer.LoadScreenEmbedded("TestLevel.sml"));
+                ChangeScreenClear(GameFileMaganer.LoadScreenEmbedded("TestLevel.sml"));
             }
             // Updates the current Screen
             currentScreen.Update(gameTime);
@@ -133,8 +139,9 @@ namespace Gahame.GameScreens
 
         // GameScreen Functions
 
-        // ChangeScreen
-        public void ChangeScreen(GameScreen screen)
+        // DIFERENT WAYS OF LOADING SCREEN BELOW
+        // Change the current gamescreen and clears the old one
+        public void ChangeScreenClearLoad(GameScreen screen)
         {
             currentScreen.UnloadContent();
             currentScreen = null;
@@ -143,6 +150,51 @@ namespace Gahame.GameScreens
 
             currentScreen = screen;
             currentScreen.LoadContent();
+            currentScreen.Start();
+        }
+        // Change the current gamescreen and clears the old one but does not load content
+        public void ChangeScreenClear(GameScreen screen)
+        {
+            currentScreen.UnloadContent();
+            currentScreen = null;
+
+            GC.Collect();
+
+            currentScreen = screen;
+            currentScreen.Start();
+        }
+        // Change the current game screen without deleting old one
+        public void ChangeScreenLoad(GameScreen screen)
+        {
+            currentScreen = screen;
+            currentScreen.LoadContent();
+            currentScreen.Start();
+        }
+        // Change Screen without loading content
+        public void ChangeScreen(GameScreen screen)
+        {
+            currentScreen = screen;
+            screen.Start();
+        }
+
+        // Load next screen
+        public void LoadNextScreen(string path)
+        {
+            nextScreenReady = false;
+            new Thread(() =>
+            {
+                nextScreen = GameFileMaganer.LoadScreenEmbedded(path);
+                nextScreenReady = true;
+            }).Start();
+        }
+        // Go to next screen
+        public void GoToNextScreen()
+        {
+            // Go to screen if it's ready
+            if (nextScreenReady)
+            {
+                ChangeScreenClear(nextScreen);
+            }
         }
 
     }

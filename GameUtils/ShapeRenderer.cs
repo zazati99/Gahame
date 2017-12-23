@@ -301,7 +301,7 @@ namespace Gahame.GameUtils
         /// <param name="color">The color to draw the rectangle in</param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color)
         {
-            DrawRectangle(spriteBatch, rect, color, 1.0f);
+            DrawRectangle(spriteBatch, rect, color,1.0f , 1.0f);
         }
 
 
@@ -312,7 +312,7 @@ namespace Gahame.GameUtils
         /// <param name="rect">The rectangle to draw</param>
         /// <param name="color">The color to draw the rectangle in</param>
         /// <param name="thickness">The thickness of the lines</param>
-        public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, float thickness)
+        public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, float depth , float thickness)
         {
 
             // TODO: Handle rotations
@@ -334,7 +334,19 @@ namespace Gahame.GameUtils
         /// <param name="color">The color to draw the rectangle in</param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color)
         {
-            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, 1.0f);
+            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, 1.0f, 1.0f);
+        }
+
+        /// <summary>
+        /// Draws a rectangle with the thickness provided
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="location">Where to draw</param>
+        /// <param name="size">The size of the rectangle</param>
+        /// <param name="color">The color to draw the rectangle in</param>
+        public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, float depth , Color color)
+        {
+            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, depth, 1.0f);
         }
 
 
@@ -348,7 +360,7 @@ namespace Gahame.GameUtils
         /// <param name="thickness">The thickness of the line</param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color, float thickness)
         {
-            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, thickness);
+            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, 1.0f, thickness);
         }
 
         #endregion
@@ -416,7 +428,7 @@ namespace Gahame.GameUtils
             // calculate the angle between the two vectors
             float angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
 
-            DrawLine(spriteBatch, point1, distance, angle, color, thickness);
+            DrawLine(spriteBatch, point1, distance, angle, color, 1.0f, thickness);
         }
 
 
@@ -430,7 +442,7 @@ namespace Gahame.GameUtils
         /// <param name="color">The color to use</param>
         public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color)
         {
-            DrawLine(spriteBatch, point, length, angle, color, 1.0f);
+            DrawLine(spriteBatch, point, length, angle, color, 1.0f, 1.0f);
         }
 
 
@@ -443,7 +455,7 @@ namespace Gahame.GameUtils
         /// <param name="angle">The angle of this line from the starting point</param>
         /// <param name="color">The color to use</param>
         /// <param name="thickness">The thickness of the line</param>
-        public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color, float thickness)
+        public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color, float depth, float thickness)
         {
             if (pixel == null)
             {
@@ -459,7 +471,7 @@ namespace Gahame.GameUtils
                              Vector2.Zero,
                              new Vector2(length, thickness),
                              SpriteEffects.None,
-                             0);
+                             depth);
         }
 
         #endregion

@@ -382,9 +382,9 @@ namespace Gahame.GameUtils
         }
 
         // Load an Overworld screen with streamreader
-        public static BattleScreen LoadOverworldScreen(StreamReader reader)
+        public static GenericGameScreen LoadOverworldScreen(StreamReader reader)
         {
-            BattleScreen screen = new BattleScreen();
+            GenericGameScreen screen = new GenericGameScreen();
 
             string line;
             while ((line = reader.ReadLine()) != null)
@@ -406,7 +406,9 @@ namespace Gahame.GameUtils
                         temp.Close();
                         break;
                     case "Player":
-                        screen.GameObjects.Add(LoadPlayerOverworld(reader, screen));
+                        PlayerObjectOverworld player = LoadPlayerOverworld(reader, screen);
+                        screen.GameObjects.Add(player);
+                        screen.Player = player;
                         break;
                     case "Wall":
                         screen.GameObjects.Add(LoadWall(reader, screen));
@@ -436,6 +438,8 @@ namespace Gahame.GameUtils
                     break;
             }
 
+            screen.Name = path;
+
             reader.Close();
             return screen;
         }
@@ -455,6 +459,8 @@ namespace Gahame.GameUtils
                     screen = LoadOverworldScreen(reader);
                     break;
             }
+
+            screen.Name = path;
 
             reader.Close();
             return screen;

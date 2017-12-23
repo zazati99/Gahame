@@ -34,7 +34,7 @@ namespace Gahame.GameObjects.ObjectComponents.Colliders
         // Checks if this collider is within another collider
         public override bool IsColliding(Collider otherCol, Vector2 p1, Vector2 p2)
         {
-            if (otherCol.GetType() == typeof(BoxCollider))
+            if (otherCol is BoxCollider)
             {
                 BoxCollider o = (BoxCollider)otherCol;
                 return (p1.X+Offset.X < p2.X+o.Offset.X + o.Size.X &&
