@@ -66,6 +66,7 @@ namespace Gahame.GameObjects
             speedInDirection = 0;
         }
 
+
         // Update player
         public override void Update(GameTime gameTime)
         {

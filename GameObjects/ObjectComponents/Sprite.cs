@@ -50,6 +50,9 @@ namespace Gahame.GameObjects.ObjectComponents
             CurrentImage = 0;
             ImageSpeed = 0;
             SpriteRotation = 0;
+
+            // UI Elements should have depth between 0 and .4
+            // Depth should bee between .5 and .8
             Depth = .5f;
 
             SpriteOrigin = new Vector2(0, 0);

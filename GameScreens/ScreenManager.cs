@@ -77,7 +77,6 @@ namespace Gahame.GameScreens
         // Next screen (can be loaded on separate thread in background)
         public GameScreen nextScreen;
         bool nextScreenReady;
-        string nextScreenPath;
 
         // Public thing så att man kan komma åt 'at överallt
         public static ScreenManager Instance

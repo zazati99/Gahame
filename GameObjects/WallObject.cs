@@ -57,7 +57,7 @@ namespace Gahame.GameObjects
                 Texture2D tex = CreateRect(spriteBatch, col.Size);
                 rectangle.AddImage(tex);
 
-                rectangle.Depth = 1;
+                rectangle.Depth = .8f;
 
                 Components.Add(rectangle);
             }

@@ -67,6 +67,53 @@ namespace Gahame.GameUtils
             return o;
         }
 
+        // Load existing object
+        public static GameObject LoadExistingObject(StreamReader reader, GameScreen screen)
+        {
+
+            Type t = Type.GetType(reader.ReadLine());
+            GameObject o = (GameObject)Activator.CreateInstance(t);
+            o.screen = screen;
+
+            string line;
+
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "X":
+                        o.Position.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Y":
+                        o.Position.Y = float.Parse(reader.ReadLine());
+                        break;
+                    case "Tag":
+                        o.Tag = reader.ReadLine();
+                        break;
+                    case "Sprite":
+                        o.Components.Add(LoadSprite(reader, o));
+                        break;
+                    case "SpriteFile":
+                        // Loads Sprite from file on next line
+                        StreamReader temp = new StreamReader(reader.ReadLine());
+                        o.Components.Add(LoadSprite(temp, o));
+                        temp.Close();
+                        break;
+                    case "HitBox":
+                        o.Components.Add(LoadHitBox(reader, o));
+                        break;
+                    case "Physics":
+                        o.Components.Add(LoadPhysics(reader, o));
+                        break;
+                    case "Dialogue":
+                        o.Components.Add(LoadDialogue(reader, o));
+                        break;
+                }
+            }
+            o.Initialize();
+            return o;
+        }
+
         // Load a hitbox from a reader
         public static HitBox LoadHitBox(StreamReader reader, GameObject o)
         {
@@ -413,6 +460,9 @@ namespace Gahame.GameUtils
                     case "Wall":
                         screen.GameObjects.Add(LoadWall(reader, screen));
                         break;
+                    case "ExistingObject":
+                        screen.GameObjects.Add(LoadExistingObject(reader, screen));
+                        break;
                 }
             }
 
@@ -485,6 +535,47 @@ namespace Gahame.GameUtils
             FileStream stream = new FileStream(newPath, FileMode.Create, FileAccess.Write);
             stream.Write(bytes, 0, bytes.Length);
             stream.Close();
+        }
+
+        // TEST STUFF
+        // SML 2.0 interpreter
+        public static T LoadStuff<T>(string path)
+        {
+            T obj = default(T);
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + path));
+
+            obj = createInstance<T>(reader.ReadLine());
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                
+            }
+
+            reader.Close();
+            return obj;
+        }
+
+        // Load stuff with StreamReader
+        public static T LoadStuff<T>(StreamReader reader)
+        {
+            T obj = default(T);
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+
+            }
+
+            return obj;
+        }
+
+        private static T createInstance<T>(string type)
+        {
+            Type t = Type.GetType(type);
+            return (T)Activator.CreateInstance(t);
         }
 
     }

@@ -24,6 +24,9 @@ namespace Gahame.GameScreens
         // List of Gameobjects in the screen
         public List<GameObject> GameObjects;
 
+        // List of backgrounds
+        public List<ScreenBackground> Backgrounds;
+
         // Screen size size
         public Vector2 ScreenSize;
 
@@ -42,8 +45,11 @@ namespace Gahame.GameScreens
             // Cam controller creation
             CamController = new CameraController(null);
 
-            // Creates list
+            // Creates list of objeects
             GameObjects = new List<GameObject>();
+
+            // Create List of backgrounds
+            Backgrounds = new List<ScreenBackground>();
         }
 
         // Gets called when screen is changed to
@@ -63,6 +69,12 @@ namespace Gahame.GameScreens
         // Unloading content (must also have base thing)
         public virtual void UnloadContent()
         {
+            // dispose all backgrounds
+            for (int i = 0; i < Backgrounds.Count; i++)
+            {
+                Backgrounds[i].UnloadContent();
+            }
+            // Unload content
             content.Unload();
         }
 
@@ -81,6 +93,12 @@ namespace Gahame.GameScreens
         // Draw things in GameSreen
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+            // calls Draw function for backgrounds
+            for (int i = 0; i < Backgrounds.Count; i++)
+            {
+                Backgrounds[i].Draw(spriteBatch);
+            }
+
             // calls draw function for all gameObjects on screen
             for (int i = 0; i < GameObjects.Count; i++)
             {

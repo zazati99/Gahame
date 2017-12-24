@@ -65,6 +65,20 @@ namespace Gahame.GameScreens
         {
             base.LoadContent();
             // Load stuff and add GameObjects Below 
+            ScreenBackground bac = new ScreenBackground();
+            bac.LoadTexture(content, "Backgrounds/BackgroundTest");
+            bac.FollowCamera = true;
+            bac.ParalaxAmount = .85f;
+            bac.Depth = 1;
+            Backgrounds.Add(bac);
+
+            ScreenBackground bac2 = new ScreenBackground();
+            bac2.LoadTexture(content, "Backgrounds/BackgroundTest");
+            bac2.FollowCamera = true;
+            bac2.ParalaxAmount = .75f;
+            bac2.Position = new Vector2(0, 50);
+            bac2.Depth = 1;
+            Backgrounds.Add(bac2);
         }
 
         // Start initialize some stuff
