@@ -360,7 +360,7 @@ namespace Gahame.GameUtils
         /// <param name="thickness">The thickness of the line</param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color, float thickness)
         {
-            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, 1.0f, thickness);
+            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, .7f, thickness);
         }
 
         #endregion
@@ -428,7 +428,7 @@ namespace Gahame.GameUtils
             // calculate the angle between the two vectors
             float angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
 
-            DrawLine(spriteBatch, point1, distance, angle, color, 1.0f, thickness);
+            DrawLine(spriteBatch, point1, distance, angle, color, .7f, thickness);
         }
 
 
@@ -442,7 +442,7 @@ namespace Gahame.GameUtils
         /// <param name="color">The color to use</param>
         public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color)
         {
-            DrawLine(spriteBatch, point, length, angle, color, 1.0f, 1.0f);
+            DrawLine(spriteBatch, point, length, angle, color, .7f, 1.0f);
         }
 
 

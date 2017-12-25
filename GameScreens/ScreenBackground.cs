@@ -38,6 +38,7 @@ namespace Gahame.GameScreens
             this.screen = screen;
             RepeatX = false;
             RepeatY = false;
+            ParalaxAmount = 1;
         }
 
         // Load the Texture
