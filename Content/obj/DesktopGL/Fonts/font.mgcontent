@@ -3,7 +3,7 @@
   <SourceFile>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/Fonts/font.bmp</SourceFile>
   <SourceTime>2017-12-13T23:28:09.6466604+01:00</SourceTime>
   <DestFile>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/bin/DesktopGL/Fonts/font.xnb</DestFile>
-  <DestTime>2017-12-24T04:24:17.4927469+01:00</DestTime>
+  <DestTime>2017-12-25T14:35:24.1325968+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>FontTextureProcessor</Processor>
