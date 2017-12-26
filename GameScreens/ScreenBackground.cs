@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
-using System;
-
 using Gahame.GameObjects;
 
 namespace Gahame.GameScreens
@@ -66,6 +64,7 @@ namespace Gahame.GameScreens
                 {
                     // Position vector som ska bli memead
                     Vector2 pos;
+
                     // Do calculation memes if it's following camera
                     if (FollowCamera)
                     {
@@ -141,15 +140,6 @@ namespace Gahame.GameScreens
                 }
             }
             */
-        }
-
-        // Draws the image
-        void drawImage(SpriteBatch spriteBatch, Vector2 pos)
-        {
-            spriteBatch.Draw(Image,
-                pos,
-                layerDepth: Depth
-                );
         }
 
     }

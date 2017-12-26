@@ -67,10 +67,10 @@ namespace Gahame.GameScreens
             // Load stuff and add GameObjects Below 
             ScreenBackground bac = new ScreenBackground(this);
             bac.LoadTexture(content, "Backgrounds/testkek");
-            bac.FollowCamera = true;
+            bac.FollowCamera = false;
             bac.RepeatX = true;
             bac.RepeatY = true;
-            bac.ParalaxAmount = .8f;
+            //bac.ParalaxAmount = .5f;
             Backgrounds.Add(bac);
         }
 
