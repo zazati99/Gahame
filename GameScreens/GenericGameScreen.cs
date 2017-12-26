@@ -67,29 +67,11 @@ namespace Gahame.GameScreens
             // Load stuff and add GameObjects Below 
             ScreenBackground bac = new ScreenBackground(this);
             bac.LoadTexture(content, "Backgrounds/testkek");
-            bac.FollowCamera = false;
-            bac.Depth = 1;
-            bac.Position = Vector2.Zero;
-            bac.RepeatY = true;
+            bac.FollowCamera = true;
             bac.RepeatX = true;
+            bac.RepeatY = true;
+            bac.ParalaxAmount = .8f;
             Backgrounds.Add(bac);
-
-            ScreenBackground bac2 = new ScreenBackground(this);
-            bac2.LoadTexture(content, "Backgrounds/BackgroundTest");
-            bac2.FollowCamera = true;
-            bac2.Depth = .95f;
-            bac2.ParalaxAmount = .9f;
-            bac2.Position = new Vector2(0, -50);
-            Backgrounds.Add(bac2);
-
-            ScreenBackground bac3 = new ScreenBackground(this);
-            bac3.LoadTexture(content, "Backgrounds/BackgroundTest");
-            bac3.FollowCamera = true;
-            bac3.Depth = .94f;
-            bac3.ParalaxAmount = .75f;
-            bac3.Position = Vector2.Zero;
-            Backgrounds.Add(bac3);
-
         }
 
         // Start initialize some stuff
@@ -119,6 +101,9 @@ namespace Gahame.GameScreens
                     }
                 }
             }
+
+            //Backgrounds[0].Position.Y++;
+            //Backgrounds[0].Position.X++;
 
             for (int i = 0; i < loadingAreas.Count; i++)
             {
