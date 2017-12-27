@@ -11,7 +11,7 @@ namespace Gahame.GameScreens
         // Camera variables
         // Position of camera
         public static Vector2 Position { get; private set; }
-        public static Vector2 ViewOffset { get; private set; }
+        public static Vector2 ViewOffset;
 
         // what you will be able to see
         public static Vector2 View;
@@ -71,8 +71,10 @@ namespace Gahame.GameScreens
                 // sets the port to screen resolution
                 SetPort(new Vector2(screenResX, screenResY));
 
-                // make sure that aspect ratio is correct
+                // make sure that aspect ratio is correct and fix offset
                 View.Y = View.X * screenResY / screenResX;
+                ViewOffset.Y = -View.Y / 2;
+
             }
             // Go back to default port otherwise
             else
@@ -80,6 +82,7 @@ namespace Gahame.GameScreens
                 // sets default values
                 SetPort(defaultPort);
                 View = defaultView;
+                ViewOffset.Y = -View.Y / 2;
             }
         }
 
