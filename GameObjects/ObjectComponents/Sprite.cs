@@ -36,7 +36,7 @@ namespace Gahame.GameObjects.ObjectComponents
         public float SpriteRotation;
 
         // depth
-        public Single Depth;
+        public float Depth;
 
         // Constructor boiis
         public Sprite(GameObject gameObject) : base(gameObject)

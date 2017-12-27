@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
 using Gahame.GameObjects;
 using Gahame.GameObjects.ObjectComponents;
-using Gahame.GameObjects.ObjectComponents.Colliders;
 using Gahame.GameUtils;
 
 namespace Gahame.GameScreens
 {
-    public class GenericGameScreen : GameScreen 
+    public class OverworldScreen : GameScreen 
     {
         // the player
         public PlayerObjectOverworld Player;
@@ -34,8 +28,8 @@ namespace Gahame.GameScreens
         Random randomEncounter;
 
         // Constructor
-        public GenericGameScreen() : base(){
-
+        public OverworldScreen() : base()
+        {
             // Load content directly after being called
             LoadContent();
 
@@ -77,18 +71,21 @@ namespace Gahame.GameScreens
         // Start initialize some stuff
         public override void Start()
         {
+            // Call start from GameScreen
             base.Start();
         }
 
         // Unloads all the trash
         public override void UnloadContent()
         {
+            // Unloads all content
             base.UnloadContent();
         }
 
         // Updates everything
         public override void Update(GameTime gameTime)
         {
+            // Call update in GameScreen
             base.Update(gameTime);
 
             // Start battle if it has battles
@@ -102,17 +99,20 @@ namespace Gahame.GameScreens
                 }
             }
 
+            // Check if player is in loading area
             for (int i = 0; i < loadingAreas.Count; i++)
             {
                 loadingAreas[i].CheckCollisionWithPlayer(Player.Position);
             }
-
         }
 
         // Draws all of the boys
         public override void Draw(SpriteBatch spriteBatch)
         {
+            // Calls Draw in GameScreen
             base.Draw(spriteBatch);
+
+            // Just a little test thing
             for (int i = 0; i < loadingAreas.Count; i++) loadingAreas[i].Draw(spriteBatch);
         }
 

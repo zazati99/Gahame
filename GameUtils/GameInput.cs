@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Gahame.GameUtils
 {
-    public class GameControlls
+    public class GameInput
     {
 
         // Previous keyboard and gamepad state

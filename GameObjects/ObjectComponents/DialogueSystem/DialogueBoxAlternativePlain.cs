@@ -37,19 +37,19 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         public override void Update(GameTime gameTime)
         {
             // next alternative
-            if (GameControlls.RightPressed)
+            if (GameInput.RightPressed)
             {
                 CurrentAlternative++;
                 if (CurrentAlternative > Alternatives.Count - 1) CurrentAlternative = 0;
             }
             // previous alternative
-            if (GameControlls.LeftPressed)
+            if (GameInput.LeftPressed)
             {
                 CurrentAlternative--;
                 if (CurrentAlternative < 0) CurrentAlternative = Alternatives.Count - 1;
             }
             // next group
-            if (GameControlls.Activate && !GameControlls.ActivateCD)
+            if (GameInput.Activate && !GameInput.ActivateCD)
             {
                 group.ClearGroup();
                 group.dialogue.Key = Alternatives[CurrentAlternative].Key;

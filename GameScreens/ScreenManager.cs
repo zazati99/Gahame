@@ -71,9 +71,9 @@ namespace Gahame.GameScreens
         // Update all of the logicz here
         public void Update(GameTime gameTime)
         {
-            if (GameControlls.F6) GoToNextScreen();
-            if (GameControlls.F5) GameCamera.SwitchFullscreen();
-            if (GameControlls.Enter)
+            if (GameInput.F6) GoToNextScreen();
+            if (GameInput.F5) GameCamera.SwitchFullscreen();
+            if (GameInput.Enter)
             {
                 Random r = new Random();
                 GahameController.Seed = r.Next();

@@ -35,7 +35,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             }
 
             // Change box or stop dialogue
-            if (GameControlls.Activate && !GameControlls.ActivateCD)
+            if (GameInput.Activate && !GameInput.ActivateCD)
             {
                 // Checks if all text is there
                 if (CharIndex >= Text.Length)

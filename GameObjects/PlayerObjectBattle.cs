@@ -77,35 +77,35 @@ namespace Gahame.GameObjects
         {
 
             // Walking left and right
-            if (GameControlls.RightCD || GameControlls.LeftCD)
+            if (GameInput.RightCD || GameInput.LeftCD)
             {
-                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed * (GameControlls.ControllerMode ? Math.Abs(GameControlls.AbsLeftStickX) : 1));
+                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed * (GameInput.ControllerMode ? Math.Abs(GameInput.AbsLeftStickX) : 1));
 
                 // Approach max speed
                 physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
-                    maxSpeed * (GameControlls.ControllerMode ? GameControlls.AbsLeftStickX : 1) * ((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0)),
+                    maxSpeed * (GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)),
                     GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
             }
             // Stopping
-            if (!GameControlls.RightCD && !GameControlls.LeftCD || GameControlls.RightCD && GameControlls.LeftCD)
+            if (!GameInput.RightCD && !GameInput.LeftCD || GameInput.RightCD && GameInput.LeftCD)
                 physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0,GahameController.GameSpeed * (physics.Grounded ? slowDownSpeed : airSlowDownSpeed));
             
             // Jumping
             if (physics.Grounded)
             {
-                if (GameControlls.JumpBufferCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
+                if (GameInput.JumpBufferCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
             }
             // Stopping if space is not held
-            if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameControlls.JumpHeld)
+            if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameInput.JumpHeld)
                 physics.Velocity.Y = (Physics.Gravity > 0) ? Math.Max(physics.Velocity.Y, -minJumpHeight * Math.Sign(Physics.Gravity)) : Math.Min(physics.Velocity.Y, -(jumpHeight / 2) * Math.Sign(Physics.Gravity));
 
             // Interact with object
-            if (GameControlls.ActivateCD){
+            if (GameInput.ActivateCD){
                 Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
                 if (d != null) d.StartDialogue();
             }
 
-            if (GameControlls.ActivateCD) slowTime = !slowTime;
+            if (GameInput.ActivateCD) slowTime = !slowTime;
             GahameController.GameSpeed = MyMaths.Lerp(GahameController.GameSpeed, slowTime ? 0.2f : 1, .20f);
 
 
