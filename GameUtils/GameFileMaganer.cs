@@ -570,6 +570,5 @@ namespace Gahame.GameUtils
             Type t = Type.GetType(type);
             return (T)Activator.CreateInstance(t);
         }
-
     }
 }
