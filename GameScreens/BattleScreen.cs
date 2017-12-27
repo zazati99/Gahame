@@ -13,7 +13,6 @@ namespace Gahame.GameScreens
 {
     public class BattleScreen : GameScreen
     {
-
         // The previous GameScreen
         public GameScreen PreviousScreen;
 

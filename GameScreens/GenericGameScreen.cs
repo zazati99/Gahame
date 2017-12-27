@@ -67,10 +67,10 @@ namespace Gahame.GameScreens
             // Load stuff and add GameObjects Below 
             ScreenBackground bac = new ScreenBackground(this);
             bac.LoadTexture(content, "Backgrounds/testkek");
-            bac.FollowCamera = false;
-            bac.RepeatX = true;
+            bac.FollowCamera = true;
+            bac.ParalaxAmount = .75f;
             bac.RepeatY = true;
-            //bac.ParalaxAmount = .5f;
+            bac.RepeatX = true;
             Backgrounds.Add(bac);
         }
 
@@ -102,9 +102,6 @@ namespace Gahame.GameScreens
                 }
             }
 
-            //Backgrounds[0].Position.Y++;
-            //Backgrounds[0].Position.X++;
-
             for (int i = 0; i < loadingAreas.Count; i++)
             {
                 loadingAreas[i].CheckCollisionWithPlayer(Player.Position);
@@ -123,7 +120,7 @@ namespace Gahame.GameScreens
         public void GotoBattleScreen()
         {
             // set camera position
-            DefaultCameraPosition = Game1.cam.Pos;
+            DefaultCameraPosition = Camera.Position;
 
             // creates battlescreen
             BattleScreen battleScreen = (BattleScreen)GameFileMaganer.LoadScreenEmbedded(BattleScreens[0]);

@@ -55,9 +55,8 @@ namespace Gahame.GameObjects
             Components.Add(physics);
 
             // Camera
-            screen.CamController.target = this;
-            screen.CamController.CamOffset.Y = -16;
-            screen.CamController.MoveAmount = new Vector2(.2f, .05f);
+            screen.CamController.Target = this;
+            screen.CamController.MovementAmount = new Vector2(.2f, .05f);
             //screen.CamController.Static = true;
             //screen.CamController.SetPosition(new Vector2(330, 100));
 

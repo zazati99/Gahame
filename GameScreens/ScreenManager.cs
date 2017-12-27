@@ -16,55 +16,9 @@ namespace Gahame.GameScreens
 {
     public class ScreenManager
     {
-
-        // SCREEN VARIABLER OCH SÅNT BÖRJAR HÄR
-        public GraphicsDeviceManager Graphics;
-        public static int DefaultViewportX;
-        public static int DefaultViewportY;
-        public static int ViewportX;
-        public static int ViewportY;
-
-        public void DefaultViewPort()
-        {
-            ViewportX = DefaultViewportX;
-            ViewportY = DefaultViewportY;
-            Graphics.PreferredBackBufferWidth = ViewportX;
-            Graphics.PreferredBackBufferHeight = ViewportY;
-
-            Graphics.ApplyChanges();
-        }
-        public void ChangeViewPort(int x, int y)
-        {
-            ViewportX = x;
-            ViewportY = y;
-            Graphics.PreferredBackBufferWidth = ViewportX;
-            Graphics.PreferredBackBufferHeight = ViewportY;
-
-            Graphics.ApplyChanges();
-        }
-        public void SwitchFullscreen()
-        {
-            Graphics.IsFullScreen = !Graphics.IsFullScreen;
-            Graphics.ApplyChanges();
-            if (Graphics.IsFullScreen)
-            {
-                int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                int screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                ChangeViewPort(screenWidth, screenHeight);
-                float newZoom = screenWidth / (DefaultViewportX / 2f);
-                Game1.cam.Zoom = newZoom;
-            }
-            else
-            {
-                DefaultViewPort();
-                Game1.cam.Zoom = 2;
-            }
-        }
-        // HÄR SLUTAR SCREEN VARIABLE KAOSET
-
-
-
-
+        // The Game camera
+        public Camera GameCamera;
+ 
         // The current GameScreen 
         GameScreen currentScreen;
 
@@ -118,7 +72,7 @@ namespace Gahame.GameScreens
         public void Update(GameTime gameTime)
         {
             if (GameControlls.F6) GoToNextScreen();
-            if (GameControlls.F5) SwitchFullscreen();
+            if (GameControlls.F5) GameCamera.SwitchFullscreen();
             if (GameControlls.Enter)
             {
                 Random r = new Random();

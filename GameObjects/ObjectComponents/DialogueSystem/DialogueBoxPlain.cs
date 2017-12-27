@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using Gahame.GameUtils;
+using Gahame.GameScreens;
 
 namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 {
@@ -25,7 +20,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             // Position stuff
             origin = new Vector2();
             size = new Vector2(202, 50);
-            Position = new Vector2(CameraController.ViewWidth() / 2 - 100, CameraController.ViewHeight() - 60);
+            Position = new Vector2(Camera.View.X - 100, Camera.View.Y - 60);
 
             Font.LineSpacing = (int)(size.Y / 2) - FontSize;
         }
@@ -66,12 +61,12 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Draws box
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Position.Y = CameraController.ViewHeight() - 60;
+            Position.Y = Camera.View.Y - 60;
 
             // Draws the box
             ShapeRenderer.FillRectangle(
                 spriteBatch,
-                CameraController.PositionOnScreen(Position + new Vector2(-1, 0)),
+                Camera.PositionOnScreen(Position + new Vector2(-1, 0)),
                 size,
                 0.01f,
                 Color.Black);
@@ -80,7 +75,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             spriteBatch.DrawString(
                 Font,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
-                CameraController.PositionOnScreen(Position),
+                Camera.PositionOnScreen(Position),
                 Color.White,
                 0,
                 origin,

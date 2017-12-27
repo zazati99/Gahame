@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using Gahame.GameScreens;
 using Gahame.GameUtils;
+
 using System;
 
 namespace Gahame
@@ -11,37 +13,29 @@ namespace Gahame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public static GameCamera cam;
-        
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            // Content settings
             Content.RootDirectory = "Content";
 
-            ScreenManager.Instance.Graphics = graphics;
-
+            // Some graphics settings
+            graphics = new GraphicsDeviceManager(this);
             graphics.HardwareModeSwitch = false;
             graphics.GraphicsProfile = GraphicsProfile.Reach;
 
-            ScreenManager.DefaultViewportX = 640;
-            ScreenManager.DefaultViewportY = 360;
-            ScreenManager.Instance.DefaultViewPort();
-
+            // Randomizes seed
             Random r = new Random();
             GahameController.Seed = r.Next();
+
+            // Camera
+            Vector2 defaultView = new Vector2(320, 180); // the game view
+            Vector2 defaultPort = new Vector2(640, 360); // the window size
+            ScreenManager.Instance.GameCamera = new Camera(defaultPort, defaultView, graphics);
 
             //IsFixedTimeStep = false;
             //graphics.SynchronizeWithVerticalRetrace = false;
             //TimeSpan span = new TimeSpan(0, 0, 0, 0, 1);
             //TargetElapsedTime = span;
-
-            // EHehe this work?
-
-            cam = new GameCamera
-            {
-                 Pos = Vector2.Zero,
-                 Zoom = 2
-            };
         }
 
         protected override void Initialize()
@@ -88,19 +82,30 @@ namespace Gahame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // Draw stuff between these bad boys
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null,null,null, cam.get_transformation(graphics.GraphicsDevice));
+            spriteBatch.Begin(SpriteSortMode.BackToFront,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp,
+                null,
+                null,
+                null,
+                ScreenManager.Instance.GameCamera.GetTransformation());
 
+            // Call Draw in screenManager (basically draws all of the game)
             ScreenManager.Instance.Draw(spriteBatch);
 
+            // Draw fps counter (test stuff)
             float fps = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
             string fpsString = string.Format("{0:N3}", fps);
-            spriteBatch.DrawString(GameFonts.Arial, fpsString , GameObjects.CameraController.PositionOnScreen(new Vector2(15, 10)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, fpsString , Camera.PositionOnScreen(new Vector2(15, 10)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
+            // Draws the current gamespeed (test stuff)
             string gameSpeed = string.Format("{0:N3}", GahameController.GameSpeed);
-            spriteBatch.DrawString(GameFonts.Arial, gameSpeed, GameObjects.CameraController.PositionOnScreen(new Vector2(15, 21)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, gameSpeed, Camera.PositionOnScreen(new Vector2(15, 21)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
-            spriteBatch.DrawString(GameFonts.Arial, GameControlls.ControllerMode ? "ControllerMode" : "KeyboardMode", GameObjects.CameraController.PositionOnScreen(new Vector2(15, 31)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            // Shows if game is in controller mode or not (test stuff)
+            spriteBatch.DrawString(GameFonts.Arial, GameControlls.ControllerMode ? "ControllerMode" : "KeyboardMode", Camera.PositionOnScreen(new Vector2(15, 31)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
+            // End spriteBatch, can't draw beyond this
             spriteBatch.End();
 
             base.Draw(gameTime);

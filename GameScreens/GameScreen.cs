@@ -14,10 +14,6 @@ namespace Gahame.GameScreens
 {
     public class GameScreen
     {
-
-        // Game camera controller
-        public CameraController CamController;
-
         // ContentManager used by them GameScreens
         public ContentManager content { get; protected set; }
 
@@ -33,6 +29,9 @@ namespace Gahame.GameScreens
         // Default camera position
         public Vector2 DefaultCameraPosition;
 
+        // Camera controller
+        public CameraController CamController;
+
         // Name of screen (should be same as path)
         public string Name;
 
@@ -42,8 +41,8 @@ namespace Gahame.GameScreens
             // default screen size
             ScreenSize = new Vector2(3000, 3000);
 
-            // Cam controller creation
-            CamController = new CameraController(null);
+            // Cam controller initialization
+            CamController = new CameraController();
 
             // Creates list of objeects
             GameObjects = new List<GameObject>();
@@ -56,7 +55,7 @@ namespace Gahame.GameScreens
         public virtual void Start()
         {
             // sets default camera position
-            Game1.cam.Pos = DefaultCameraPosition;
+            Camera.SetPosition(DefaultCameraPosition);
         }
 
         // Getting contentManager from stuff (must haver base thing)

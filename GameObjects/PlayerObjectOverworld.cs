@@ -24,7 +24,6 @@ namespace Gahame.GameObjects
         float maxSpeed;
         float accelerationSpeed;
         float slowDownSpeed;
-        float speedInDirection;
 
         // normalized vector
         Vector2 norm;
@@ -53,9 +52,8 @@ namespace Gahame.GameObjects
             Components.Add(physics);
 
             // Camera
-            screen.CamController.target = this;
-            screen.CamController.CamOffset.Y = -16;
-            screen.CamController.MoveAmount = new Vector2(.2f, .2f);
+            screen.CamController.Target = this;
+            screen.CamController.MovementAmount = new Vector2(.2f, .2f);
             //screen.CamController.Static = true;
             //screen.CamController.SetPosition(new Vector2(330, 100));
 
@@ -63,7 +61,6 @@ namespace Gahame.GameObjects
             maxSpeed = 2;
             accelerationSpeed = .5f;
             slowDownSpeed = .25f;
-            speedInDirection = 0;
         }
 
 
