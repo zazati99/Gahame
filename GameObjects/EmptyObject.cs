@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
 
@@ -19,18 +12,18 @@ namespace Gahame.GameObjects
         // Calls constructor
         public EmptyObject(GameScreen screen) : base(screen)
         {
-            
+            Components.Add(new OverworldDepthFix(this));
         }
         // Should only be used when loading from file
         public EmptyObject() : base()
         {
-
+            Components.Add(new OverworldDepthFix(this));
         }
 
         // Initialize stuff
         public override void Initialize()
         {
-  
+        
         }
 
         // Updates the components that is being put in to this objeect

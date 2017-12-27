@@ -69,7 +69,7 @@ namespace Gahame
         protected override void Update(GameTime gameTime)
         {
             // Updates controlls before updating anythin else
-            GameControlls.Update();
+            GameInput.Update();
 
             // Update stuff here
             ScreenManager.Instance.Update(gameTime);
@@ -103,7 +103,7 @@ namespace Gahame
             spriteBatch.DrawString(GameFonts.Arial, gameSpeed, Camera.PositionOnScreen(new Vector2(15, 21)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             // Shows if game is in controller mode or not (test stuff)
-            spriteBatch.DrawString(GameFonts.Arial, GameControlls.ControllerMode ? "ControllerMode" : "KeyboardMode", Camera.PositionOnScreen(new Vector2(15, 31)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode", Camera.PositionOnScreen(new Vector2(15, 31)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             // End spriteBatch, can't draw beyond this
             spriteBatch.End();

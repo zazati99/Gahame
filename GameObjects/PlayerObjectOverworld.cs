@@ -54,8 +54,9 @@ namespace Gahame.GameObjects
             // Camera
             screen.CamController.Target = this;
             screen.CamController.MovementAmount = new Vector2(.2f, .2f);
-            //screen.CamController.Static = true;
-            //screen.CamController.SetPosition(new Vector2(330, 100));
+
+            // Depth fix
+            Components.Add(new OverworldDepthFix(this));
 
             // Controlls variables
             maxSpeed = 2;
@@ -68,20 +69,20 @@ namespace Gahame.GameObjects
         public override void Update(GameTime gameTime)
         {
             // Normalized vector
-            if (GameControlls.ControllerMode)
+            if (GameInput.ControllerMode)
             {
                 //norm = MyMaths.Normalize(GameControlls.LeftStickX, GameControlls.LeftStickY);
-                norm.X = GameControlls.LeftStickX;
-                norm.Y = GameControlls.LeftStickY;
+                norm.X = GameInput.LeftStickX;
+                norm.Y = GameInput.LeftStickY;
                 if (Math.Abs(norm.X) > 0.70f || Math.Abs(norm.Y) > 0.70f)
-                    norm = MyMaths.Normalize(GameControlls.LeftStickX, GameControlls.LeftStickY);
+                    norm = MyMaths.Normalize(GameInput.LeftStickX, GameInput.LeftStickY);
             } else
             {
-                norm = MyMaths.Normalize((GameControlls.RightCD ? 1 : 0) - (GameControlls.LeftCD ? 1 : 0), (GameControlls.DownCD ? 1 : 0) - (GameControlls.UpCD ? 1 : 0));
+                norm = MyMaths.Normalize((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0), (GameInput.DownCD ? 1 : 0) - (GameInput.UpCD ? 1 : 0));
             }
 
             // Approach max xspeed
-            if (GameControlls.RightCD || GameControlls.LeftCD)
+            if (GameInput.RightCD || GameInput.LeftCD)
             {
                 // Approach xSPeed;
                 physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, maxSpeed * norm.X, accelerationSpeed * GahameController.GameSpeed);
@@ -89,7 +90,7 @@ namespace Gahame.GameObjects
             else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, slowDownSpeed * GahameController.GameSpeed);
 
             // approach max yspeed;
-            if (GameControlls.UpCD || GameControlls.DownCD)
+            if (GameInput.UpCD || GameInput.DownCD)
             {
                 // Approach xSPeed;
                 physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, maxSpeed * norm.Y, accelerationSpeed * GahameController.GameSpeed);

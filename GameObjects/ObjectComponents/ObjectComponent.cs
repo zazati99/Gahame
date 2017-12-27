@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace Gahame.GameObjects.ObjectComponents
 {
-
     public class ObjectComponent
     {
-
         // lmao kolla om deet ens e möjligt att måla å så
         public bool Drawable { get; protected set; }
         public bool Updatable { get; protected set; }
@@ -39,6 +29,5 @@ namespace Gahame.GameObjects.ObjectComponents
         {
 
         }
-
     }
 }

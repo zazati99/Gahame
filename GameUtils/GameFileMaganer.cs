@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
@@ -70,7 +66,6 @@ namespace Gahame.GameUtils
         // Load existing object
         public static GameObject LoadExistingObject(StreamReader reader, GameScreen screen)
         {
-
             Type t = Type.GetType(reader.ReadLine());
             GameObject o = (GameObject)Activator.CreateInstance(t);
             o.screen = screen;
@@ -132,7 +127,6 @@ namespace Gahame.GameUtils
                         break;
                 }  
             }
-
             return hb;
         }
 
@@ -160,7 +154,6 @@ namespace Gahame.GameUtils
                         break;
                 }
             }
-
             return col;
         }
 
@@ -179,7 +172,6 @@ namespace Gahame.GameUtils
                         break;
                 }   
             }
-
             return d;
         }
 
@@ -273,7 +265,7 @@ namespace Gahame.GameUtils
         // Load Physics
         public static Physics LoadPhysics(StreamReader reader, GameObject o)
         {
-            Physics p = new Physics(o);
+            Physics physics = new Physics(o);
 
             string line;
             while ((line = reader.ReadLine()) != "---")
@@ -281,20 +273,20 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "GravityEnabled":
-                        p.GravityEnabled = true;
+                        physics.GravityEnabled = true;
                         break;
                     case "Solid":
-                        p.Solid = true;
+                        physics.Solid = true;
                         break;
                 }
             }
-            return p;
+            return physics;
         }
 
         // Load Player
         public static PlayerObjectBattle LoadPlayerBattle(StreamReader reader, GameScreen screen)
         {
-            PlayerObjectBattle p = new PlayerObjectBattle(screen);
+            PlayerObjectBattle player = new PlayerObjectBattle(screen);
 
             string line;
             while((line = reader.ReadLine()) != "---")
@@ -302,20 +294,20 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "X":
-                        p.Position.X = float.Parse(reader.ReadLine());
+                        player.Position.X = float.Parse(reader.ReadLine());
                         break;
                     case "Y":
-                        p.Position.Y = float.Parse(reader.ReadLine());
+                        player.Position.Y = float.Parse(reader.ReadLine());
                         break;
                 }
             }
-            return p;
+            return player;
         }
 
         // Load Player Overworld
         public static PlayerObjectOverworld LoadPlayerOverworld(StreamReader reader, GameScreen screen)
         {
-            PlayerObjectOverworld p = new PlayerObjectOverworld(screen);
+            PlayerObjectOverworld player = new PlayerObjectOverworld(screen);
 
             string line;
             while ((line = reader.ReadLine()) != "---")
@@ -323,14 +315,14 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "X":
-                        p.Position.X = float.Parse(reader.ReadLine());
+                        player.Position.X = float.Parse(reader.ReadLine());
                         break;
                     case "Y":
-                        p.Position.Y = float.Parse(reader.ReadLine());
+                        player.Position.Y = float.Parse(reader.ReadLine());
                         break;
                 }
             }
-            return p;
+            return player;
         }
 
         // Load Wall
@@ -361,7 +353,6 @@ namespace Gahame.GameUtils
                 }
 
             }
-
             wall.GetComponent<HitBox>().Colliders.Add(col);
             return wall;
         }
@@ -369,7 +360,7 @@ namespace Gahame.GameUtils
         // Loads Sprite from reader
         public static Sprite LoadSprite(StreamReader reader, GameObject o)
         {
-            Sprite s = new Sprite(o);
+            Sprite sprite = new Sprite(o);
 
             string line;
             while ((line = reader.ReadLine()) != "---")
@@ -377,18 +368,23 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "Path":
-                        s.AddImage(reader.ReadLine());
+                        sprite.AddImage(reader.ReadLine());
                         break;
                     case "ImageSpeed":
-                        s.ImageSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        sprite.ImageSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
                         break;
                     case "Depth":
-                        s.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        sprite.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "OriginX":
+                        sprite.SpriteOrigin.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "OriginY":
+                        sprite.SpriteOrigin.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
                         break;
                 }
             }
-
-            return s;
+            return sprite;
         }
 
         // Load GameScreen witth a Streamreader
@@ -423,15 +419,14 @@ namespace Gahame.GameUtils
                         break;
                 }
             }
-
             reader.Close();
             return screen;
         }
 
         // Load an Overworld screen with streamreader
-        public static GenericGameScreen LoadOverworldScreen(StreamReader reader)
+        public static OverworldScreen LoadOverworldScreen(StreamReader reader)
         {
-            GenericGameScreen screen = new GenericGameScreen();
+            OverworldScreen screen = new OverworldScreen();
 
             string line;
             while ((line = reader.ReadLine()) != null)
@@ -465,7 +460,6 @@ namespace Gahame.GameUtils
                         break;
                 }
             }
-
             reader.Close();
             return screen;
         }
@@ -553,7 +547,6 @@ namespace Gahame.GameUtils
             {
                 
             }
-
             reader.Close();
             return obj;
         }

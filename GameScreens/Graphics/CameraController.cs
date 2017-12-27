@@ -36,8 +36,8 @@ namespace Gahame.GameScreens
             // Do stuff with the target position
             if (Target != null)
             {
-                Position.X += (Target.Position.X - Position.X) * MovementAmount.X * GahameController.GameSpeed;
-                Position.Y += (Target.Position.Y - Position.Y) * MovementAmount.Y * GahameController.GameSpeed;
+                Position.X += (Target.Position.X - Position.X) * MovementAmount.X * (1 + GahameController.GameSpeed) / 2;
+                Position.Y += (Target.Position.Y - Position.Y) * MovementAmount.Y * (1 + GahameController.GameSpeed) / 2;
 
                 // Stops X position from going outside of screens
                 if (Position.X < -Camera.ViewOffset.X)

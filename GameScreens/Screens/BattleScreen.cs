@@ -46,7 +46,7 @@ namespace Gahame.GameScreens
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (GameControlls.Esc) EndBattle();
+            if (GameInput.Esc) EndBattle();
         }
 
         // Draws all of the boys
