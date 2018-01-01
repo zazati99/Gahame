@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
-using Gahame;
 using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
@@ -45,7 +39,7 @@ namespace Gahame.GameObjects
             Components = new List<ObjectComponent>();
         }
 
-        // Initialize stuff
+        // Initialize stuff, put initialization that need screen here if  you gonna be loading it from file
         public virtual void Initialize()
         {
 
@@ -60,7 +54,6 @@ namespace Gahame.GameObjects
                 if (Components[i].Updatable)
                     Components[i].Update(gameTime);
             }
-            
         }
 
         // Draws GameObject (must be base thing)
@@ -86,6 +79,7 @@ namespace Gahame.GameObjects
                 if (Components[i] is T)
                 {
                     instance = Components[i];
+                    return (T)instance;
                 }
             }
             return (T)instance;
@@ -97,23 +91,29 @@ namespace Gahame.GameObjects
             HitBox hb = GetComponent<HitBox>();
             return hb != null && hb.PlaceMeeting<T>(p);
         }
+
         // PlaceMeeting with X and Y coordinates
         public bool PlaceMeeting<T>(float x, float y)
         {
             HitBox hb = GetComponent<HitBox>();
             return hb != null && hb.PlaceMeeting<T>(new Vector2(x, y));
         }
+
         // PlaceMeeting with vector With specific tag
         public bool PlaceMeeting(Vector2 p, string tag)
         {
             HitBox hb = GetComponent<HitBox>();
             return hb != null && hb.PlaceMeeting(p, tag);
         }
+
+        // PlaceMeeting by Vector and Type
         public bool PlaceMeeting(Vector2 p, Type type)
         {
             HitBox hb = GetComponent<HitBox>();
             return hb != null && hb.PlaceMeeting(p, type);
         }
+
+        // Place meetinh my coordinates and Type
         public bool PlaceMeeting(float x, float y, Type type)
         {
             HitBox hb = GetComponent<HitBox>();
@@ -121,7 +121,7 @@ namespace Gahame.GameObjects
         }
 
         // Destroy a GameObject
-        protected void destroyObject(GameObject o)
+        protected void DestroyObject(GameObject o)
         {
             screen.GameObjects.Remove(o);
         }
@@ -143,7 +143,6 @@ namespace Gahame.GameObjects
 
             for (int i = 1; i < data.Length; i++)
             {
-
                 int newR = 0;
                 int newG = 0;
                 int newB = 0;

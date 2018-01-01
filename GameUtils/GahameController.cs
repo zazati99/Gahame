@@ -4,7 +4,7 @@
     {
         // Le important game variables
         public static bool CutScene = false;
-        public static float GameSpeed = 1;
+        public static float GameSpeed = 1.0f;
 
         // Random seed (might delet this)
         public static int Seed;

@@ -4,6 +4,8 @@ using Gahame.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using System;
+
 namespace Gahame.GameScreens
 {
     public class Camera
@@ -21,12 +23,18 @@ namespace Gahame.GameScreens
         public Vector2 Port;
         Vector2 defaultPort;
 
+        // Rotation of camera
+        public static float Rotation { get; private set; }
+
         // Graphics that will be needed to change some stuff
         GraphicsDeviceManager graphics;
-
+        
         // Constructor
         public Camera(Vector2 defaultPort, Vector2 defaultView, GraphicsDeviceManager graphics)
         {
+            // Rotation
+            Rotation = 0;
+
             // Graphics device manager
             this.graphics = graphics;
 
@@ -89,8 +97,16 @@ namespace Gahame.GameScreens
         // Transformation, this is what will get passed in to camera
         public Matrix GetTransformation()
         {
-            return Matrix.CreateTranslation(new Vector3(-Position - ViewOffset, 0)) *
-                   Matrix.CreateScale(new Vector3(Port.X / View.X, Port.Y / View.Y, 0));
+            return Matrix.CreateTranslation(new Vector3(-Position, 0)) *
+                   Matrix.CreateScale(new Vector3(Port.X / View.X, Port.Y / View.Y, 0)) *
+                   Matrix.CreateRotationZ(Rotation) * 
+                   Matrix.CreateTranslation(new Vector3(Port/2, 0));
+        }
+
+        // Set rotation
+        public static void SetRotation(float rotation)
+        {
+            Rotation = rotation;
         }
 
         // Set Position;

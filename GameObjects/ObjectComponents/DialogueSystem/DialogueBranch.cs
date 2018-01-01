@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 {
-    public class DialogueBoxGroup
+    public class DialogueBranch
     {
         // Dialogue that holds this gropus
         public Dialogue dialogue;
@@ -15,17 +15,13 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Current box in group
         public int CurrentBox;
 
-        // Key for this group
-        public string Key;
-
         // Constructor
-        public DialogueBoxGroup(Dialogue dialogue)
+        public DialogueBranch(Dialogue dialogue)
         {
             // variable stuff
             this.dialogue = dialogue;
             Boxes = new List<DialogueBox>();
             CurrentBox = 0;
-            Key = "";
         }
 
         // Updates the boxes

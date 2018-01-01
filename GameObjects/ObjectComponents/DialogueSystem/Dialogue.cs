@@ -14,7 +14,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
     public class Dialogue : ObjectComponent
     {
         // My boxes (needs secret key to be unlocked)
-        public Dictionary<string, DialogueBoxGroup> BoxGroups;
+        public Dictionary<string, DialogueBranch> DialogueBranches;
 
         // Key to the box
         public string Key;
@@ -26,7 +26,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         public Dialogue(GameObject o) : base(o)
         {
             // Box variables
-            BoxGroups = new Dictionary<string, DialogueBoxGroup>();
+            DialogueBranches = new Dictionary<string, DialogueBranch>();
 
             // Important component variables
             Drawable = false; // becomes true when active
@@ -41,13 +41,13 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
         public override void Update(GameTime gameTime)
         {
-            BoxGroups[Key].Update(gameTime);
+            DialogueBranches[Key].Update(gameTime);
         }
 
         // Draw all of the stuffs
         public override void Draw(SpriteBatch spriteBatch)
         {
-            BoxGroups[Key].Draw(spriteBatch);
+            DialogueBranches[Key].Draw(spriteBatch);
         }
 
         // Starts the dialoguie
@@ -62,9 +62,18 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Stops the dialogue
         public void StopDialogue()
         {
+            // Loop through branches to stop this madness
+            foreach (KeyValuePair<string, DialogueBranch> entry in DialogueBranches)
+            {
+                // clears group
+                entry.Value.ClearGroup();
+            }
+
+            // sets drawable and updatable to false
             Drawable = false;
             Updatable = false;
 
+            // go back to default stuff
             GahameController.CutScene = false;
             Key = "";
         }
