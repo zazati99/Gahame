@@ -9,7 +9,10 @@ namespace Gahame.GameScreens
     public class CameraController
     {
         // Position of camera in room
-        Vector2 Position;
+        public Vector2 Position;
+
+        // Rotation of camera in room
+        public float Rotation;
 
         // target of camer, will move towards this
         public GameObject Target;
@@ -60,6 +63,7 @@ namespace Gahame.GameScreens
 
             // Set position of camera to this position
             Camera.SetPosition(Position);
+            Camera.SetRotation(Rotation);
         }
     }
 }

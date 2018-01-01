@@ -55,7 +55,7 @@ Physics
 Solid
 ---
 Dialogue
-DialogueBoxGroup
+DialogueBranch
 DialogueBoxPlain
 Text
 hehe
@@ -75,7 +75,7 @@ RealGroup
 ---
 ---
 ---
-DialogueBoxGroup
+DialogueBranch
 Key
 MemeGroup
 DialogueBoxPlain
@@ -90,7 +90,7 @@ TextSpeed
 0.05
 ---
 ---
-DialogueBoxGroup
+DialogueBranch
 Key
 RealGroup
 DialogueBoxPlain

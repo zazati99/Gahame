@@ -15,7 +15,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         Vector2 size;
 
         // COnstructor for box
-        public DialogueBoxPlain(DialogueBoxGroup group) : base(group)
+        public DialogueBoxPlain(DialogueBranch group) : base(group)
         {
             // Position stuff
             origin = new Vector2();
@@ -41,21 +41,19 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 if (CharIndex >= Text.Length)
                 {
                     // stop dialogue
-                    if (group.CurrentBox == group.Boxes.Count - 1)
+                    if (branch.CurrentBox == branch.Boxes.Count - 1)
                     {
-                        group.ClearGroup();
-                        group.dialogue.StopDialogue();
+                        branch.dialogue.StopDialogue();
                     }
                     // Or go to next box
                     else
                     {
-                        group.CurrentBox++;
+                        branch.CurrentBox++;
                     }
                 }
                 // Fixes all of the text meme
                 else if (Skippable) CharIndex = Text.Length;
             }
-
         }
 
         // Draws box
@@ -83,6 +81,5 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 SpriteEffects.None,
                 0);
         }
-
     }
 }

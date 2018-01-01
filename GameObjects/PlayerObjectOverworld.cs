@@ -97,6 +97,18 @@ namespace Gahame.GameObjects
             }
             else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, slowDownSpeed * GahameController.GameSpeed);
 
+            // Activate Object
+            if (GameInput.ActivateCD)
+            {
+                // Insane
+                if (hitBox.InstancePlace<ActivatableObject>(Position) is ActivatableObject o)
+                {
+                    o.Activate();
+                }
+
+                screen.ScreenEffects.Add(new CameraShakeEffect(screen, 3, 20));
+            }
+
             // Update component last
             base.Update(gameTime);
         }

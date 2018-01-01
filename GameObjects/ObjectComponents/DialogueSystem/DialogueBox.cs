@@ -33,16 +33,16 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         public int FontSize;
 
         // The group that holds this box
-        protected DialogueBoxGroup group;
+        protected DialogueBranch branch;
 
         // Constructor with default settings
-        public DialogueBox(DialogueBoxGroup group)
+        public DialogueBox(DialogueBranch branch)
         {
-            // Le importante  variables
+            // Default values
             CharIndex = 0;
             UpdateSpeed = .25f;
             Skippable = true;
-            this.group = group;
+            this.branch = branch;
 
             // Default font
             Font = GameFonts.Arial;

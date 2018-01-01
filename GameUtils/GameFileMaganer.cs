@@ -17,15 +17,11 @@ namespace Gahame.GameUtils
     public class GameFileMaganer
     {
 
-        // Load Object with a reader
-        public static GameObject LoadGameObject(StreamReader reader, GameScreen screen)
+        #region Objects
+        // Load values for a GameObject
+        public static GameObject LoadGameObjectValues(GameObject o, StreamReader reader)
         {
-            EmptyObject o = new EmptyObject();
-            o.screen = screen;
-            o.Position = new Vector2(0, 0);
-
             string line;
-
             while ((line = reader.ReadLine()) != "---")
             {
                 switch (line)
@@ -59,6 +55,20 @@ namespace Gahame.GameUtils
                         break;
                 }
             }
+            return o;
+        }
+
+        // Load Object with a reader
+        public static GameObject LoadGameObject(StreamReader reader, GameScreen screen)
+        {
+            // creates empty object
+            EmptyObject o = new EmptyObject();
+            o.screen = screen;
+
+            // Load values with help of cool gameObject function
+            LoadGameObjectValues(o, reader);
+            
+            // Initialize objeect and the return it
             o.Initialize();
             return o;
         }
@@ -66,49 +76,21 @@ namespace Gahame.GameUtils
         // Load existing object
         public static GameObject LoadExistingObject(StreamReader reader, GameScreen screen)
         {
+            // Creates object with help of advanced stuff
             Type t = Type.GetType(reader.ReadLine());
             GameObject o = (GameObject)Activator.CreateInstance(t);
             o.screen = screen;
 
-            string line;
-
-            while ((line = reader.ReadLine()) != "---")
-            {
-                switch (line)
-                {
-                    case "X":
-                        o.Position.X = float.Parse(reader.ReadLine());
-                        break;
-                    case "Y":
-                        o.Position.Y = float.Parse(reader.ReadLine());
-                        break;
-                    case "Tag":
-                        o.Tag = reader.ReadLine();
-                        break;
-                    case "Sprite":
-                        o.Components.Add(LoadSprite(reader, o));
-                        break;
-                    case "SpriteFile":
-                        // Loads Sprite from file on next line
-                        StreamReader temp = new StreamReader(reader.ReadLine());
-                        o.Components.Add(LoadSprite(temp, o));
-                        temp.Close();
-                        break;
-                    case "HitBox":
-                        o.Components.Add(LoadHitBox(reader, o));
-                        break;
-                    case "Physics":
-                        o.Components.Add(LoadPhysics(reader, o));
-                        break;
-                    case "Dialogue":
-                        o.Components.Add(LoadDialogue(reader, o));
-                        break;
-                }
-            }
+            // Load values for the object
+            LoadGameObjectValues(o, reader);
+            
+            // Initialize object and return it
             o.Initialize();
             return o;
         }
+        #endregion
 
+        #region HitBox
         // Load a hitbox from a reader
         public static HitBox LoadHitBox(StreamReader reader, GameObject o)
         {
@@ -156,8 +138,9 @@ namespace Gahame.GameUtils
             }
             return col;
         }
+        #endregion
 
-        // YOU NOW ENTER DIALOGUE HELL
+        #region Dialogue
         // Load dialogue mee
         public static Dialogue LoadDialogue(StreamReader reader, GameObject o)
         {
@@ -166,9 +149,8 @@ namespace Gahame.GameUtils
             string line;
             while((line = reader.ReadLine()) != "---"){
                 switch(line){
-                    case "DialogueBoxGroup":
-                        DialogueBoxGroup group = LoadDialogueBoxGroup(reader, d);
-                        d.BoxGroups.Add(group.Key, group);
+                    case "DialogueBranch":
+                        LoadDialogueBranch(reader, d);
                         break;
                 }   
             }
@@ -176,9 +158,10 @@ namespace Gahame.GameUtils
         }
 
         // Load Dialogue box group
-        public static DialogueBoxGroup LoadDialogueBoxGroup(StreamReader reader, Dialogue d)
+        public static void LoadDialogueBranch(StreamReader reader, Dialogue d)
         {
-            DialogueBoxGroup group = new DialogueBoxGroup(d);
+            DialogueBranch branch = new DialogueBranch(d);
+            string Key = "";
 
             string line;
             while ((line = reader.ReadLine()) != "---")
@@ -186,21 +169,21 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "DialogueBoxPlain":
-                        group.Boxes.Add(LoadDialogueBoxPlain(reader, group));
+                        branch.Boxes.Add(LoadDialogueBoxPlain(reader, branch));
                         break;
                     case "DialogueBoxAlternativePlain":
-                        group.Boxes.Add(LoadDialogueBoxAlternativePlain(reader, group));
+                        branch.Boxes.Add(LoadDialogueBoxAlternativePlain(reader, branch));
                         break;
                     case "Key":
-                        group.Key = reader.ReadLine();
+                        Key = reader.ReadLine();
                         break;
                 }
             }
-            return group;
+            d.DialogueBranches.Add(Key, branch);
         }
 
         // Load a Dialogue box
-        public static DialogueBoxPlain LoadDialogueBoxPlain(StreamReader reader, DialogueBoxGroup group)
+        public static DialogueBoxPlain LoadDialogueBoxPlain(StreamReader reader, DialogueBranch group)
         {
             DialogueBoxPlain box = new DialogueBoxPlain(group);
 
@@ -223,7 +206,7 @@ namespace Gahame.GameUtils
         }
 
         // Load a plain choice box
-        public static DialogueBoxAlternativePlain LoadDialogueBoxAlternativePlain(StreamReader reader, DialogueBoxGroup group)
+        public static DialogueBoxAlternativePlain LoadDialogueBoxAlternativePlain(StreamReader reader, DialogueBranch group)
         {
             DialogueBoxAlternativePlain box = new DialogueBoxAlternativePlain(group);
 
@@ -260,8 +243,9 @@ namespace Gahame.GameUtils
             }
             return alternative;
         }
-        // END OF ALL OF THE DIALOGUE MEMES HERE
+        #endregion
 
+        #region Physics
         // Load Physics
         public static Physics LoadPhysics(StreamReader reader, GameObject o)
         {
@@ -282,7 +266,9 @@ namespace Gahame.GameUtils
             }
             return physics;
         }
+        #endregion
 
+        #region Player
         // Load Player
         public static PlayerObjectBattle LoadPlayerBattle(StreamReader reader, GameScreen screen)
         {
@@ -324,7 +310,9 @@ namespace Gahame.GameUtils
             }
             return player;
         }
+        #endregion
 
+        #region Walls
         // Load Wall
         public static WallObject LoadWall(StreamReader reader, GameScreen screen)
         {
@@ -356,7 +344,9 @@ namespace Gahame.GameUtils
             wall.GetComponent<HitBox>().Colliders.Add(col);
             return wall;
         }
+        #endregion
 
+        #region Sprite
         // Loads Sprite from reader
         public static Sprite LoadSprite(StreamReader reader, GameObject o)
         {
@@ -386,6 +376,37 @@ namespace Gahame.GameUtils
             }
             return sprite;
         }
+        #endregion
+
+        #region GameScreens
+        // Load common screen information
+        public static GameScreen LoadScreenInformation(GameScreen screen, StreamReader reader, string info)
+        {
+            switch (info)
+            {
+                case "Width":
+                    screen.ScreenSize.X = float.Parse(reader.ReadLine());
+                    break;
+                case "Height":
+                    screen.ScreenSize.Y = float.Parse(reader.ReadLine());
+                    break;
+                case "GameObject":
+                    screen.GameObjects.Add(LoadGameObject(reader, screen));
+                    break;
+                case "GameObjectFile":
+                    StreamReader temp = new StreamReader(reader.ReadLine());
+                    screen.GameObjects.Add(LoadGameObject(temp, screen));
+                    temp.Close();
+                    break;
+                case "Wall":
+                    screen.GameObjects.Add(LoadWall(reader, screen));
+                    break;
+                case "ExistingObject":
+                    screen.GameObjects.Add(LoadExistingObject(reader, screen));
+                    break;
+            }
+            return screen;
+        }
 
         // Load GameScreen witth a Streamreader
         public static BattleScreen LoadBattleScreen(StreamReader reader)
@@ -397,29 +418,14 @@ namespace Gahame.GameUtils
             {
                 switch (line)
                 {
-                    case "Width":
-                        screen.ScreenSize.X = float.Parse(reader.ReadLine());
-                        break;
-                    case "Height":
-                        screen.ScreenSize.Y = float.Parse(reader.ReadLine());
-                        break;
-                    case "GameObject":
-                        screen.GameObjects.Add(LoadGameObject(reader, screen));
-                        break;
-                    case "GameObjectFile":
-                        StreamReader temp = new StreamReader(reader.ReadLine());
-                        screen.GameObjects.Add(LoadGameObject(temp, screen));
-                        temp.Close();
-                        break;
                     case "Player":
                         screen.GameObjects.Add(LoadPlayerBattle(reader, screen));
                         break;
-                    case "Wall":
-                        screen.GameObjects.Add(LoadWall(reader, screen));
+                    default:
+                        screen = (BattleScreen)LoadScreenInformation(screen, reader, line);
                         break;
                 }
             }
-            reader.Close();
             return screen;
         }
 
@@ -433,45 +439,24 @@ namespace Gahame.GameUtils
             {
                 switch (line)
                 {
-                    case "Width":
-                        screen.ScreenSize.X = float.Parse(reader.ReadLine());
-                        break;
-                    case "Height":
-                        screen.ScreenSize.Y = float.Parse(reader.ReadLine());
-                        break;
-                    case "GameObject":
-                        screen.GameObjects.Add(LoadGameObject(reader, screen));
-                        break;
-                    case "GameObjectFile":
-                        StreamReader temp = new StreamReader(reader.ReadLine());
-                        screen.GameObjects.Add(LoadGameObject(temp, screen));
-                        temp.Close();
-                        break;
                     case "Player":
                         PlayerObjectOverworld player = LoadPlayerOverworld(reader, screen);
                         screen.GameObjects.Add(player);
                         screen.Player = player;
                         break;
-                    case "Wall":
-                        screen.GameObjects.Add(LoadWall(reader, screen));
-                        break;
-                    case "ExistingObject":
-                        screen.GameObjects.Add(LoadExistingObject(reader, screen));
+                    default:
+                        screen = (OverworldScreen)LoadScreenInformation(screen, reader, line);
                         break;
                 }
             }
-            reader.Close();
             return screen;
         }
 
-        // Load Embedded screen
-        public static GameScreen LoadScreenEmbedded(string path)
+        // Load Screen
+        public static GameScreen LoadGameScreen(StreamReader reader)
         {
+            // Creates screen and loads it
             GameScreen screen = null;
-
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + path));
-
             switch (reader.ReadLine())
             {
                 case "BattleScreen":
@@ -481,35 +466,47 @@ namespace Gahame.GameUtils
                     screen = LoadOverworldScreen(reader);
                     break;
             }
+            // return the screen
+            return screen;
+        }
 
+        // Load Embedded screen
+        public static GameScreen LoadScreenFromEmbeddedPath(string path)
+        {
+            // gets the embedded file and creates StreamReader
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + path));
+
+            // Loads the Screen file
+            GameScreen screen = LoadGameScreen(reader);
+
+            // Gives it the same name as path
             screen.Name = path;
 
+            // Close the reader and return the screen
             reader.Close();
             return screen;
         }
 
         // Load GameScreen from a path
-        public static GameScreen LoadScreen(string path)
+        public static GameScreen LoadScreenFromPath(string path)
         {
-            GameScreen screen = null;
+            // Creates a StreamReader from the path
             StreamReader reader = new StreamReader(path);
 
-            switch (reader.ReadLine())
-            {
-                case "BattleScreen":
-                    screen = LoadBattleScreen(reader);
-                    break;
-                case "OverworldScreen":
-                    screen = LoadOverworldScreen(reader);
-                    break;
-            }
+            // Loads the screen file
+            GameScreen screen = LoadGameScreen(reader);
 
+            // Gives it the same name as path
             screen.Name = path;
 
+            // Close the reader and return screen
             reader.Close();
             return screen;
         }
+        #endregion
 
+        #region Dumb Stuff
         // Write to log file
         public static void SaveLog(string[] log)
         {
@@ -570,5 +567,6 @@ namespace Gahame.GameUtils
             Type t = Type.GetType(type);
             return (T)Activator.CreateInstance(t);
         }
+        #endregion
     }
 }

@@ -23,6 +23,9 @@ namespace Gahame.GameScreens
         // List of backgrounds
         public List<ScreenBackground> Backgrounds;
 
+        // List of Screen Effects
+        public List<ScreenEffect> ScreenEffects;
+
         // Screen size size
         public Vector2 ScreenSize;
 
@@ -49,6 +52,9 @@ namespace Gahame.GameScreens
 
             // Create List of backgrounds
             Backgrounds = new List<ScreenBackground>();
+
+            // Create list of screen effects
+            ScreenEffects = new List<ScreenEffect>();
         }
 
         // Gets called when screen is changed to
@@ -85,6 +91,13 @@ namespace Gahame.GameScreens
             {
                 GameObjects[i].Update(gameTime);
             }
+
+            // Calls update on screen effects
+            for (int i = 0; i < ScreenEffects.Count; i++)
+            {
+                ScreenEffects[i].Update(gameTime);
+            }
+
             // Updates gamera
             CamController.Update();
         }
@@ -103,7 +116,12 @@ namespace Gahame.GameScreens
             {
                 GameObjects[i].Draw(spriteBatch);
             }
-        }
 
+            // calls draw for each screen effect
+            for (int i = 0; i < ScreenEffects.Count; i++)
+            {
+                ScreenEffects[i].Draw(spriteBatch);
+            }
+        }
     }
 }

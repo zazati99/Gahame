@@ -20,7 +20,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         Vector2 size;
 
         // Constructor 
-        public DialogueBoxAlternativePlain(DialogueBoxGroup group) : base(group)
+        public DialogueBoxAlternativePlain(DialogueBranch group) : base(group)
         {
             Alternatives = new List<Alternative>();
             CurrentAlternative = 0;
@@ -51,8 +51,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             // next group
             if (GameInput.Activate && !GameInput.ActivateCD)
             {
-                group.ClearGroup();
-                group.dialogue.Key = Alternatives[CurrentAlternative].Key;
+                branch.dialogue.Key = Alternatives[CurrentAlternative].Key;
                 CurrentAlternative = 0;
             }
         }

@@ -123,7 +123,7 @@ namespace Gahame.GameScreens
             DefaultCameraPosition = Camera.Position;
 
             // creates battlescreen
-            BattleScreen battleScreen = (BattleScreen)GameFileMaganer.LoadScreenEmbedded(BattleScreens[0]);
+            BattleScreen battleScreen = (BattleScreen)GameFileMaganer.LoadScreenFromEmbeddedPath(BattleScreens[0]);
             battleScreen.PreviousScreen = this;
 
             // changes the screen

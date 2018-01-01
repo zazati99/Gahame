@@ -54,7 +54,7 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
-            currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
+            currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #else
             currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
 #endif
@@ -77,7 +77,7 @@ namespace Gahame.GameScreens
             {
                 Random r = new Random();
                 GahameController.Seed = r.Next();
-                ChangeScreenClear(GameFileMaganer.LoadScreenEmbedded("TestLevel.sml"));
+                ChangeScreenClear(GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml"));
             }
             // Updates the current Screen
             currentScreen.Update(gameTime);
@@ -130,13 +130,13 @@ namespace Gahame.GameScreens
             screen.Start();
         }
 
-        // Load next screen
+        // Load next screen 
         public void LoadNextScreen(string path)
         {
             nextScreenReady = false;
             new Thread(() =>
             {
-                nextScreen = GameFileMaganer.LoadScreenEmbedded(path);
+                nextScreen = GameFileMaganer.LoadScreenFromEmbeddedPath(path);
                 nextScreenReady = true;
             }).Start();
         }
