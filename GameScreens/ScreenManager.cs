@@ -56,7 +56,7 @@ namespace Gahame.GameScreens
 #if DEBUG
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #else
-            currentScreen = GameFileMaganer.LoadScreenEmbedded("TestLevel.sml");
+            currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #endif
             // Load content below here
             
