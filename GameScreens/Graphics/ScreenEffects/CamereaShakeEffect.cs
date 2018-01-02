@@ -43,7 +43,7 @@ namespace Gahame.GameScreens
             if (!timer.Check())
             {
                 // random position
-                Vector2 randomPos = new Vector2(r.Next(-(int)(intensity * intensity) / 2, (int)(intensity * intensity)) / 2, r.Next(-(int)(intensity * intensity) / 2, (int)(intensity * intensity) / 2));
+                Vector2 randomPos = new Vector2(r.Next(-(int)(intensity * intensity) / 2, (int)(intensity * intensity) / 2), r.Next(-(int)(intensity * intensity) / 2, (int)(intensity * intensity) / 2));
                 screen.CamController.Position += randomPos;
 
                 // random rotation
