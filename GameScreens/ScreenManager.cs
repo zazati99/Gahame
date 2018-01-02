@@ -90,6 +90,13 @@ namespace Gahame.GameScreens
             currentScreen.Draw(spriteBatch);
         }
 
+        // Draws gui on another SpriteBatch
+        public void DrawGUI(SpriteBatch spriteBatch)
+        {
+            // Draws GUI from current screen
+            currentScreen.DrawGUI(spriteBatch);
+        }
+
         // GameScreen Functions
 
         // DIFERENT WAYS OF LOADING SCREEN BELOW

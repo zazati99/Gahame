@@ -26,6 +26,9 @@ namespace Gahame.GameScreens
         // List of Screen Effects
         public List<ScreenEffect> ScreenEffects;
 
+        // List of tilesets
+        public List<Tileset> Tilesets;
+
         // Screen size size
         public Vector2 ScreenSize;
 
@@ -55,6 +58,9 @@ namespace Gahame.GameScreens
 
             // Create list of screen effects
             ScreenEffects = new List<ScreenEffect>();
+
+            // Creates List of tilesets
+            Tilesets = new List<Tileset>();
         }
 
         // Gets called when screen is changed to
@@ -111,6 +117,12 @@ namespace Gahame.GameScreens
                 Backgrounds[i].Draw(spriteBatch);
             }
 
+            // Draws all of the tiles
+            for (int i = 0; i < Tilesets.Count; i++)
+            {
+                Tilesets[i].Draw(spriteBatch);
+            }
+
             // calls draw function for all gameObjects on screen
             for (int i = 0; i < GameObjects.Count; i++)
             {
@@ -123,5 +135,16 @@ namespace Gahame.GameScreens
                 ScreenEffects[i].Draw(spriteBatch);
             }
         }
+
+        // Draw GUI
+        public virtual void DrawGUI(SpriteBatch spriteBatch)
+        {
+            // Calls the draw for the drawerino of the gui
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                GameObjects[i].DrawGUI(spriteBatch);
+            }
+        }
+
     }
 }

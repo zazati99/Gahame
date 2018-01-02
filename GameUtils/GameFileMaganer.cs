@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Microsoft.Xna.Framework;
-
 using Gahame.GameScreens;
 using Gahame.GameObjects;
 using Gahame.GameObjects.ObjectComponents;
@@ -16,7 +14,6 @@ namespace Gahame.GameUtils
 {
     public class GameFileMaganer
     {
-
         #region Objects
         // Load values for a GameObject
         public static GameObject LoadGameObjectValues(GameObject o, StreamReader reader)
@@ -53,6 +50,9 @@ namespace Gahame.GameUtils
                     case "Dialogue":
                         o.Components.Add(LoadDialogue(reader, o));
                         break;
+                    case "OverworldDepthFix":
+                        o.Components.Add(new OverworldDepthFix(o));
+                    break;
                 }
             }
             return o;
@@ -62,7 +62,7 @@ namespace Gahame.GameUtils
         public static GameObject LoadGameObject(StreamReader reader, GameScreen screen)
         {
             // creates empty object
-            EmptyObject o = new EmptyObject();
+            GameObject o = new GameObject();
             o.screen = screen;
 
             // Load values with help of cool gameObject function
@@ -137,6 +137,38 @@ namespace Gahame.GameUtils
                 }
             }
             return col;
+        }
+        #endregion
+
+        #region Sprite
+        // Loads Sprite from reader
+        public static Sprite LoadSprite(StreamReader reader, GameObject o)
+        {
+            Sprite sprite = new Sprite(o);
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "Path":
+                        sprite.AddImage(reader.ReadLine());
+                        break;
+                    case "ImageSpeed":
+                        sprite.ImageSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Depth":
+                        sprite.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "OriginX":
+                        sprite.SpriteOrigin.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "OriginY":
+                        sprite.SpriteOrigin.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                }
+            }
+            return sprite;
         }
         #endregion
 
@@ -343,38 +375,6 @@ namespace Gahame.GameUtils
             }
             wall.GetComponent<HitBox>().Colliders.Add(col);
             return wall;
-        }
-        #endregion
-
-        #region Sprite
-        // Loads Sprite from reader
-        public static Sprite LoadSprite(StreamReader reader, GameObject o)
-        {
-            Sprite sprite = new Sprite(o);
-
-            string line;
-            while ((line = reader.ReadLine()) != "---")
-            {
-                switch (line)
-                {
-                    case "Path":
-                        sprite.AddImage(reader.ReadLine());
-                        break;
-                    case "ImageSpeed":
-                        sprite.ImageSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
-                        break;
-                    case "Depth":
-                        sprite.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
-                        break;
-                    case "OriginX":
-                        sprite.SpriteOrigin.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
-                        break;
-                    case "OriginY":
-                        sprite.SpriteOrigin.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
-                        break;
-                }
-            }
-            return sprite;
         }
         #endregion
 

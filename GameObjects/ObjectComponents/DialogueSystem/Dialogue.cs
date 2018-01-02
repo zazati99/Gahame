@@ -16,7 +16,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // My boxes (needs secret key to be unlocked)
         public Dictionary<string, DialogueBranch> DialogueBranches;
 
-        // Key to the box
+        // Key to the branch
         public string Key;
 
         // Accesible?
@@ -29,23 +29,24 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             DialogueBranches = new Dictionary<string, DialogueBranch>();
 
             // Important component variables
-            Drawable = false; // becomes true when active
+            DrawableGUI = false; // becomes true when active
             Updatable = false; // becomes true when active
 
-            // Key starts with ""
+            // Key starts with "" by default
             Key = "";
 
             // Accesible Meme 
             Accesible = true;
         }
 
+        // Updates text
         public override void Update(GameTime gameTime)
         {
             DialogueBranches[Key].Update(gameTime);
         }
 
         // Draw all of the stuffs
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void DrawGUI(SpriteBatch spriteBatch)
         {
             DialogueBranches[Key].Draw(spriteBatch);
         }
@@ -53,7 +54,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Starts the dialoguie
         public void StartDialogue()
         {
-            Drawable = true;
+            DrawableGUI = true;
             Updatable = true;
 
             GahameController.CutScene = true;
@@ -70,7 +71,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             }
 
             // sets drawable and updatable to false
-            Drawable = false;
+            DrawableGUI = false;
             Updatable = false;
 
             // go back to default stuff

@@ -13,6 +13,7 @@ namespace Gahame.GameObjects.ObjectComponents
             // Cool stuff
             Updatable = true;
             Drawable = false;
+            DrawableGUI = false;
         }
 
         // Update

@@ -7,6 +7,7 @@ namespace Gahame.GameObjects.ObjectComponents
     {
         // lmao kolla om deet ens e möjligt att måla å så
         public bool Drawable { get; protected set; }
+        public bool DrawableGUI { get; protected set; }
         public bool Updatable { get; protected set; }
 
         // Object that component exist in
@@ -26,6 +27,12 @@ namespace Gahame.GameObjects.ObjectComponents
 
         // Draws Component (if needed)
         public virtual void Draw(SpriteBatch spriteBatch)
+        {
+
+        }
+
+        // Draws Gui (if needed)
+        public virtual void DrawGUI(SpriteBatch spriteBatch)
         {
 
         }

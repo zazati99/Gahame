@@ -12,7 +12,6 @@ namespace Gahame.GameObjects
 {
     public class GameObject
     {
-
         // Object components
         public List<ObjectComponent> Components;
 
@@ -64,6 +63,17 @@ namespace Gahame.GameObjects
             {
                 if (Components[i].Drawable)
                     Components[i].Draw(spriteBatch);
+            }
+        }
+
+        // Draws GUI for Game Objects
+        public virtual void DrawGUI(SpriteBatch spriteBatch)
+        {
+            // Draws the GUI (if posiiblö)
+            for (int i = 0; i < Components.Count; i++)
+            {
+                if (Components[i].DrawableGUI)
+                    Components[i].DrawGUI(spriteBatch);
             }
         }
 

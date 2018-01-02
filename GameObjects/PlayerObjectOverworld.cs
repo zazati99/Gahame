@@ -106,7 +106,7 @@ namespace Gahame.GameObjects
                     o.Activate();
                 }
 
-                screen.ScreenEffects.Add(new CameraShakeEffect(screen, 3, 20));
+                screen.ScreenEffects.Add(new CameraShakeEffect(screen, 5, 20));
             }
 
             // Update component last

@@ -8,7 +8,6 @@ namespace Gahame.GameObjects.ObjectComponents
 {
     public class Physics : ObjectComponent
     {
-
         // gravity
         public static float Gravity = 0.25f;
 
@@ -30,6 +29,7 @@ namespace Gahame.GameObjects.ObjectComponents
             // Fixes important things
             Updatable = true;
             Drawable = false;
+            DrawableGUI = false;
             this.gameObject = gameObject;
 
             // variables that only affect physics stuff
@@ -42,10 +42,10 @@ namespace Gahame.GameObjects.ObjectComponents
         // Updates physics
         public override void Update(GameTime gameTime)
         {
+            // Checks if HitBox Exisits
             HitBox hb = gameObject.GetComponent<HitBox>();
             if (Solid && hb != null)
             {
-
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
@@ -57,7 +57,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     else Grounded = true;
                 }
 
-                // Horizontal collision
+                // Horizontal collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y))
                 {
                     gameObject.Position.X = (Velocity.X > 0) ? (int)gameObject.Position.X : (int)gameObject.Position.X + 1; 
@@ -69,7 +69,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 }
                 gameObject.Position.X += Velocity.X * GahameController.GameSpeed; // Updates x position
 
-                // Vertical collision
+                // Vertical collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed))
                 {
                     gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : (int)gameObject.Position.Y + 1;
@@ -80,22 +80,11 @@ namespace Gahame.GameObjects.ObjectComponents
                     Velocity.Y = 0;
                 }
                 gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed; // Update Y position
-
-            } else
+            } else // Just do velocity stuff without checking for collisions
             {
-                if (GravityEnabled) Velocity.Y += Gravity;
-                gameObject.Position.X += Velocity.X * GahameController.GameSpeed;
-                gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed;
+                if (GravityEnabled) Velocity.Y += Gravity * GahameController.GameSpeed;
+                gameObject.Position += Velocity * GahameController.GameSpeed;
             }
         }
-
-        // Moves in direction
-        public void MoveInDirection(float velocity, float angle)
-        {
-            // Calculate stuff
-            Velocity.Y = (float)(Math.Sin(angle) * velocity);
-            Velocity.X = (float)(Math.Cos(angle) * velocity);
-        }
-
     }
 }
