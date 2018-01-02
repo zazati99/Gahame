@@ -44,6 +44,7 @@ namespace Gahame.GameObjects.ObjectComponents
             // Fixes drawable and updatable thing
             Drawable = true;
             Updatable = true;
+            DrawableGUI = false;
 
             // Creates array of images
             Images = new List<Texture2D>();
@@ -51,7 +52,6 @@ namespace Gahame.GameObjects.ObjectComponents
             ImageSpeed = 0;
             SpriteRotation = 0;
 
-            // UI Elements should have depth between 0 and .4
             // Depth should bee between .5 and .8
             Depth = .5f;
 
@@ -100,7 +100,7 @@ namespace Gahame.GameObjects.ObjectComponents
                             scale: AbsVec(SpriteScale),
                             layerDepth: Depth,
                             rotation: SpriteRotation,
-                             effects: ((SpriteRotation > (float)(Math.PI/2) ? SpriteScale.X > 0 : SpriteScale.X < 0)) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+                            effects: ((SpriteRotation > (float)(Math.PI/2) ? SpriteScale.X > 0 : SpriteScale.X < 0)) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
         }
 
         // Add image to array of images

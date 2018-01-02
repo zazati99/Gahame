@@ -93,19 +93,34 @@ namespace Gahame
             // Call Draw in screenManager (basically draws all of the game)
             ScreenManager.Instance.Draw(spriteBatch);
 
+            // End spriteBatch, can't draw beyond this
+            spriteBatch.End();
+
+            // SpriteBatch for ui
+            spriteBatch.Begin(SpriteSortMode.BackToFront,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp,
+                null,
+                null,
+                null,
+                ScreenManager.Instance.GameCamera.UiTransformation());
+
+            // Draws gui in screens
+            ScreenManager.Instance.DrawGUI(spriteBatch);
+
             // Draw fps counter (test stuff)
             float fps = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
             string fpsString = string.Format("{0:N3}", fps);
-            spriteBatch.DrawString(GameFonts.Arial, fpsString , Camera.PositionOnScreen(new Vector2(15, 10)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, fpsString, new Vector2(15, 10), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             // Draws the current gamespeed (test stuff)
             string gameSpeed = string.Format("{0:N3}", GahameController.GameSpeed);
-            spriteBatch.DrawString(GameFonts.Arial, gameSpeed, Camera.PositionOnScreen(new Vector2(15, 21)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, gameSpeed, new Vector2(15, 21), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             // Shows if game is in controller mode or not (test stuff)
-            spriteBatch.DrawString(GameFonts.Arial, GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode", Camera.PositionOnScreen(new Vector2(15, 31)), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(GameFonts.Arial, GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode", new Vector2(15, 31), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
-            // End spriteBatch, can't draw beyond this
+            // End this SpriteBatch
             spriteBatch.End();
 
             base.Draw(gameTime);

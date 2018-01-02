@@ -39,6 +39,5 @@ namespace Gahame.GameUtils
             if (hyp == 0) return Vector2.Zero;
             return new Vector2(x / hyp, y / hyp);
         }
-
     }
 }

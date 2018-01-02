@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
-using Gahame.GameObjects;
-
 namespace Gahame.GameScreens
 {
     public class ScreenBackground
@@ -33,11 +31,13 @@ namespace Gahame.GameScreens
         // constructorino
         public ScreenBackground(GameScreen screen)
         {
+            // Le screen
             this.screen = screen;
+
+            // Default values
             RepeatX = false;
             RepeatY = false;
             ParalaxAmount = 1;
-
             Depth = 1;
         }
 

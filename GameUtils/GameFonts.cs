@@ -11,7 +11,6 @@ namespace Gahame.GameUtils
 {
     public class GameFonts
     {
-
         // Fonts
         public static SpriteFont Arial { get; private set; }
 
@@ -20,6 +19,5 @@ namespace Gahame.GameUtils
         {
             Arial = content.Load<SpriteFont>("Fonts/DialogueArial");
         }
-
     }
 }

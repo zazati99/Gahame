@@ -64,7 +64,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             // Draws the box
             ShapeRenderer.FillRectangle(
                 spriteBatch,
-                Camera.PositionOnScreen(Position + new Vector2(-1, 0)),
+                Position + new Vector2(-1, 0),
                 size,
                 0.01f,
                 Color.Black);
@@ -73,7 +73,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             spriteBatch.DrawString(
                 Font,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
-                Camera.PositionOnScreen(Position),
+                Position,
                 Color.White,
                 0,
                 origin,

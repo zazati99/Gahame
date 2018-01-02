@@ -102,6 +102,10 @@ namespace Gahame.GameScreens
                    Matrix.CreateRotationZ(Rotation) * 
                    Matrix.CreateTranslation(new Vector3(Port/2, 0));
         }
+        public Matrix UiTransformation()
+        {
+            return Matrix.CreateScale(new Vector3(Port.X / View.X, Port.Y / View.Y, 0));
+        }
 
         // Set rotation
         public static void SetRotation(float rotation)

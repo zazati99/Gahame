@@ -35,6 +35,7 @@ namespace Gahame.GameObjects.ObjectComponents
             //updatable and drawable things
             Updatable = false;
             Drawable = false;
+            DrawableGUI = false;
             // Creating collider stuff
             Colliders = new List<Collider>();
             Solid = false;

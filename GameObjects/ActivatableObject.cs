@@ -12,6 +12,7 @@ namespace Gahame.GameObjects
         {
 
         }
+
         // Constructor without screen stuff
         public ActivatableObject() : base()
         {

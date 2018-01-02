@@ -59,6 +59,8 @@ namespace Gahame.GameScreens
         {
             base.LoadContent();
             // Load stuff and add GameObjects Below 
+
+            // Test background
             ScreenBackground bac = new ScreenBackground(this);
             bac.LoadTexture(content, "Backgrounds/testkek");
             bac.FollowCamera = true;
@@ -66,6 +68,24 @@ namespace Gahame.GameScreens
             bac.RepeatY = true;
             bac.RepeatX = true;
             Backgrounds.Add(bac);
+
+            // Test tiles
+            Tileset tset = new Tileset();
+            tset.LoadTexture(content, "Backgrounds/tile", new Vector2(4, 4));
+
+            for (int y = 0; y < 4; y++)
+            {
+                for (int x = 0; x < 4; x++)
+                {
+                    Tile t = new Tile();
+                    t.Position = new Vector2(32 + 32 * x, 32 + 32 * y);
+                    t.ColumnRow = new Point(x, y);
+                    tset.Tiles.Add(t);
+                }
+            }
+
+            Tilesets.Add(tset);
+
         }
 
         // Start initialize some stuff
