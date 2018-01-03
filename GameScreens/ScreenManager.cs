@@ -28,6 +28,12 @@ namespace Gahame.GameScreens
         // the screenyboy
         static ScreenManager instance;
 
+        // Screen transition (will prob be null a lot)
+        public ScreenTransition Transition;
+
+        // are we transitioning screens
+        public bool ScreenTransition;
+
         // Next screen (can be loaded on separate thread in background)
         public GameScreen nextScreen;
         bool nextScreenReady;
@@ -46,7 +52,8 @@ namespace Gahame.GameScreens
         // Initialize I guess?
         public void Initialize()
         {
-            
+            // screentransition is false by default
+            ScreenTransition = false;
         }
 
         // Load content boy
@@ -71,7 +78,7 @@ namespace Gahame.GameScreens
         // Update all of the logicz here
         public void Update(GameTime gameTime)
         {
-            if (GameInput.F6) GoToNextScreen();
+            if (GameInput.F6) GoToNextScreen(new ScreenTransitionFade(.075f ,currentScreen, nextScreen, true));
             if (GameInput.F5) GameCamera.SwitchFullscreen();
             if (GameInput.Enter)
             {
@@ -79,8 +86,15 @@ namespace Gahame.GameScreens
                 GahameController.Seed = r.Next();
                 ChangeScreenClear(GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml"));
             }
+
             // Updates the current Screen
             currentScreen.Update(gameTime);
+
+            // Update screen transition
+            if (ScreenTransition)
+            {
+                Transition.Update(gameTime);
+            }
         }
 
         // Draw all of the master artwork right here
@@ -88,6 +102,12 @@ namespace Gahame.GameScreens
         {
             // Draws everything in ccurrent screen
             currentScreen.Draw(spriteBatch);
+
+            // Draws screen transition
+            if (ScreenTransition)
+            {
+                Transition.Draw(spriteBatch);
+            }
         }
 
         // Draws gui on another SpriteBatch
@@ -95,23 +115,18 @@ namespace Gahame.GameScreens
         {
             // Draws GUI from current screen
             currentScreen.DrawGUI(spriteBatch);
+
+            // Draws screen transition
+            if (ScreenTransition)
+            {
+                Transition.DrawGUI(spriteBatch);
+            }
         }
 
         // GameScreen Functions
 
         // DIFERENT WAYS OF LOADING SCREEN BELOW
-        // Change the current gamescreen and clears the old one
-        public void ChangeScreenClearLoad(GameScreen screen)
-        {
-            currentScreen.UnloadContent();
-            currentScreen = null;
 
-            GC.Collect();
-
-            currentScreen = screen;
-            currentScreen.LoadContent();
-            currentScreen.Start();
-        }
         // Change the current gamescreen and clears the old one but does not load content
         public void ChangeScreenClear(GameScreen screen)
         {
@@ -123,18 +138,23 @@ namespace Gahame.GameScreens
             currentScreen = screen;
             currentScreen.Start();
         }
-        // Change the current game screen without deleting old one
-        public void ChangeScreenLoad(GameScreen screen)
-        {
-            currentScreen = screen;
-            currentScreen.LoadContent();
-            currentScreen.Start();
-        }
+
         // Change Screen without loading content
         public void ChangeScreen(GameScreen screen)
         {
             currentScreen = screen;
             screen.Start();
+        }
+
+        // Change screen with a transition
+        public void ChangeScreen(ScreenTransition transition)
+        {   
+            if (!ScreenTransition)
+            {
+                ScreenTransition = true;
+                Transition = transition;
+                Transition.StartTransition();
+            }
         }
 
         // Load next screen 
@@ -154,6 +174,17 @@ namespace Gahame.GameScreens
             if (nextScreenReady)
             {
                 ChangeScreenClear(nextScreen);
+                nextScreenReady = false;
+                nextScreen = null;
+            }
+        }
+        // Go to next screen BUT WITH A COOL TRANSITION
+        public void GoToNextScreen(ScreenTransition transition)
+        {
+            // Go to screen if it's ready
+            if (nextScreenReady)
+            {
+                ChangeScreen(transition);
                 nextScreenReady = false;
                 nextScreen = null;
             }

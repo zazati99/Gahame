@@ -1,4 +1,4 @@
-﻿OverworldScreen
+﻿OverworldScreenSidePerspective
 Width
 1920
 Height

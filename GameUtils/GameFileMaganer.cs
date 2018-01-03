@@ -342,6 +342,27 @@ namespace Gahame.GameUtils
             }
             return player;
         }
+
+        // Load Player Overworld
+        public static PlayerObjectOverworldSidePerspective LoadPlayerOverworldSidePerspective(StreamReader reader, GameScreen screen)
+        {
+            PlayerObjectOverworldSidePerspective player = new PlayerObjectOverworldSidePerspective(screen);
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "X":
+                        player.Position.X = float.Parse(reader.ReadLine());
+                        break;
+                    case "Y":
+                        player.Position.Y = float.Parse(reader.ReadLine());
+                        break;
+                }
+            }
+            return player;
+        }
         #endregion
 
         #region Walls
@@ -452,6 +473,29 @@ namespace Gahame.GameUtils
             return screen;
         }
 
+        // Load an Overworld screen side perspective edition with streamreader
+        public static OverworldScreenSidePerspective LoadOverworldScreenSidePerspective(StreamReader reader)
+        {
+            OverworldScreenSidePerspective screen = new OverworldScreenSidePerspective();
+
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                switch (line)
+                {
+                    case "Player":
+                        PlayerObjectOverworldSidePerspective player = LoadPlayerOverworldSidePerspective(reader, screen);
+                        screen.GameObjects.Add(player);
+                        screen.Player = player;
+                        break;
+                    default:
+                        screen = (OverworldScreenSidePerspective)LoadScreenInformation(screen, reader, line);
+                        break;
+                }
+            }
+            return screen;
+        }
+
         // Load Screen
         public static GameScreen LoadGameScreen(StreamReader reader)
         {
@@ -464,6 +508,9 @@ namespace Gahame.GameUtils
                     break;
                 case "OverworldScreen":
                     screen = LoadOverworldScreen(reader);
+                    break;
+                case "OverworldScreenSidePerspective":
+                    screen = LoadOverworldScreenSidePerspective(reader);
                     break;
             }
             // return the screen

@@ -30,9 +30,6 @@ namespace Gahame.GameScreens
         // Constructor
         public OverworldScreen() : base()
         {
-            // Load content directly after being called
-            LoadContent();
-
             // BattleSCreens
             BattleScreens = new List<string>();
             BattleScreens.Add("BattleTest.sml");
@@ -52,6 +49,9 @@ namespace Gahame.GameScreens
 
             // HasBattles
             HasBattles = true;
+
+            // Load content directly after being called
+            LoadContent();
         }
 
         // Loads everything my dude

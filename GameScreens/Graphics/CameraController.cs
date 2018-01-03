@@ -20,6 +20,9 @@ namespace Gahame.GameScreens
         // How fast it will move towards target
         public Vector2 MovementAmount;
 
+        // Is it static !?!
+        public bool Static;
+
         // Constructor
         public CameraController()
         {
@@ -31,36 +34,43 @@ namespace Gahame.GameScreens
 
             // default move ammount is 1
             MovementAmount = Vector2.One;
+
+            // Static is false by default
+            Static = false;
         }
 
         // Updates camera
         public void Update()
         {
-            // Do stuff with the target position
-            if (Target != null)
+            // Do some stuff if the camera is not static
+            if (!Static)
             {
-                Position.X += (Target.Position.X - Position.X) * MovementAmount.X * (1 + GahameController.GameSpeed) / 2;
-                Position.Y += (Target.Position.Y - Position.Y) * MovementAmount.Y * (1 + GahameController.GameSpeed) / 2;
+                // Do stuff with the target position
+                if (Target != null)
+                {
+                    Position.X += (Target.Position.X - Position.X) * MovementAmount.X * (1 + GahameController.GameSpeed) / 2;
+                    Position.Y += (Target.Position.Y - Position.Y) * MovementAmount.Y * (1 + GahameController.GameSpeed) / 2;
 
-                // Stops X position from going outside of screens
-                if (Position.X < -Camera.ViewOffset.X)
-                {
-                    Position.X = -Camera.ViewOffset.X;
-                } else if (Position.X > Target.screen.ScreenSize.X + Camera.ViewOffset.X)
-                {
-                    Position.X = Target.screen.ScreenSize.X + Camera.ViewOffset.X;
-                }
-                // Stops Y position from going outside of screens
-                if (Position.Y < -Camera.ViewOffset.Y)
-                {
-                    Position.Y = -Camera.ViewOffset.Y;
-                }
-                else if (Position.Y > Target.screen.ScreenSize.Y + Camera.ViewOffset.Y)
-                {
-                    Position.Y = Target.screen.ScreenSize.Y + Camera.ViewOffset.Y;
+                    // Stops X position from going outside of screens
+                    if (Position.X < -Camera.ViewOffset.X)
+                    {
+                        Position.X = -Camera.ViewOffset.X;
+                    }
+                    else if (Position.X > Target.screen.ScreenSize.X + Camera.ViewOffset.X)
+                    {
+                        Position.X = Target.screen.ScreenSize.X + Camera.ViewOffset.X;
+                    }
+                    // Stops Y position from going outside of screens
+                    if (Position.Y < -Camera.ViewOffset.Y)
+                    {
+                        Position.Y = -Camera.ViewOffset.Y;
+                    }
+                    else if (Position.Y > Target.screen.ScreenSize.Y + Camera.ViewOffset.Y)
+                    {
+                        Position.Y = Target.screen.ScreenSize.Y + Camera.ViewOffset.Y;
+                    }
                 }
             }
-
             // Set position of camera to this position
             Camera.SetPosition(Position);
             Camera.SetRotation(Rotation);
