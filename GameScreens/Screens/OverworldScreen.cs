@@ -63,8 +63,6 @@ namespace Gahame.GameScreens
             // Test background
             ScreenBackground bac = new ScreenBackground(this);
             bac.LoadTexture(content, "Backgrounds/testkek");
-            bac.FollowCamera = true;
-            bac.ParalaxAmount = .75f;
             bac.RepeatY = true;
             bac.RepeatX = true;
             Backgrounds.Add(bac);

@@ -37,6 +37,7 @@ namespace Gahame.GameScreens
             // Default values
             RepeatX = false;
             RepeatY = false;
+            FollowCamera = false;
             ParalaxAmount = 1;
             Depth = 1;
         }
@@ -67,8 +68,8 @@ namespace Gahame.GameScreens
                     // Do calculation memes if it's following camera
                     if (FollowCamera)
                     {
-                        pos = (Camera.PositionOnScreen(new Vector2((RepeatX ? -Image.Width / ParalaxAmount + (Position.X % Image.Width / ParalaxAmount) : Position.X) + x * Image.Width / ParalaxAmount,
-                            (RepeatY ? -Image.Height / ParalaxAmount + (Position.Y % Image.Height / ParalaxAmount) : Position.Y) + y * Image.Height / ParalaxAmount)) * ParalaxAmount);
+                        pos = (Camera.PositionOnScreen(new Vector2((RepeatX ? (-Image.Width + (Position.X % Image.Width) / ParalaxAmount) : Position.X) + x * Image.Width / ParalaxAmount,
+                                                                   (RepeatY ? (-Image.Height + (Position.Y % Image.Height) / ParalaxAmount) : Position.Y) + y * Image.Height / ParalaxAmount)) * ParalaxAmount);
                     }
                     // If Not follow camera, do other calculation memes
                     else

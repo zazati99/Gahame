@@ -48,6 +48,8 @@ namespace Gahame.GameScreens
             bac.LoadTexture(content, "Backgrounds/testkek");
             bac.RepeatX = true;
             bac.RepeatY = true;
+            bac.FollowCamera = true;
+            bac.ParalaxAmount = .75f;
             Backgrounds.Add(bac);
         }
 
