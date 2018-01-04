@@ -26,11 +26,11 @@ namespace Gahame.GameScreens
 
         public override void StartTransition()
         {
+            // run start tansition in base thing
+            base.StartTransition();
+
             // creates fadeing rectangle
             rect = new Rectangle(0, 0, (int)Camera.View.X, (int)Camera.View.Y);
-
-            // It's a cutscene baby
-            GahameController.CutScene = true;
 
             // COlor of rect
             alpha = 0;
@@ -50,9 +50,7 @@ namespace Gahame.GameScreens
             }
             if (alpha == 0)
             {
-                GahameController.CutScene = false;
-                ScreenManager.Instance.ScreenTransition = false;
-                ScreenManager.Instance.Transition = null;
+                StopTransition();
             }
         }
 

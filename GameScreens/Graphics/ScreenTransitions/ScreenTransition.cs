@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Gahame.GameUtils;
+
 namespace Gahame.GameScreens
 {
     public class ScreenTransition
@@ -30,7 +32,17 @@ namespace Gahame.GameScreens
         // Start transition
         public virtual void StartTransition()
         {
+            // It's a cutscene baby
+            GahameController.CutScene = true;
+        }
 
+        // Stop transition
+        public virtual void StopTransition()
+        {
+            //It's not a cuscene baby :(
+            GahameController.CutScene = false;
+            ScreenManager.Instance.ScreenTransition = false;
+            ScreenManager.Instance.Transition = null;
         }
 
         // Update screen transition

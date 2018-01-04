@@ -78,7 +78,8 @@ namespace Gahame.GameScreens
         // Update all of the logicz here
         public void Update(GameTime gameTime)
         {
-            if (GameInput.F6) GoToNextScreen(new ScreenTransitionFade(.075f ,currentScreen, nextScreen, true));
+            //if (GameInput.F6) GoToNextScreen(new ScreenTransitionFade(.075f ,currentScreen, nextScreen, true));
+            if (GameInput.F6) GoToNextScreen(new ScreenTransitionRectangle(currentScreen, nextScreen, true));
             if (GameInput.F5) GameCamera.SwitchFullscreen();
             if (GameInput.Enter)
             {
