@@ -86,12 +86,12 @@ namespace Gahame.GameScreens
                     ChangeScreen();
                     screenChanged = true;
                 }
-                rec5.X = MyMaths.Lerp(rec5.X, -size2.X, .25f);
-                rec6.X = MyMaths.Lerp(rec6.X, size.X, .25f);
+                rec5.X = MyMaths.Approach(rec5.X, -size2.X, 5);
+                rec6.X = MyMaths.Approach(rec6.X, size.X, 5);
             }
 
             // STOPIT
-            if ((int)(rec6.X+.5f) == size.X)
+            if (rec6.X == size.X)
             {
                 StopTransition();
             }
