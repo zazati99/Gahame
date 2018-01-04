@@ -145,7 +145,8 @@ namespace Gahame.GameScreens
             battleScreen.PreviousScreen = this;
 
             // changes the screen
-            ScreenManager.Instance.ChangeScreen(battleScreen);
+            //ScreenManager.Instance.ChangeScreen(battleScreen);
+            ScreenManager.Instance.ChangeScreen(new ScreenTransitionRectangle(this, battleScreen, false));
         }
 
     }

@@ -20,6 +20,8 @@ namespace Gahame.GameScreens
 
         bool screenChanged;
 
+        float speed1, speed2, speed4;
+
         // EMpty constructor best constructor
         public ScreenTransitionRectangle(GameScreen currentScreen, GameScreen newScreen, bool clearOldScreen) : base(currentScreen, newScreen, clearOldScreen)
         {
@@ -47,6 +49,10 @@ namespace Gahame.GameScreens
 
             rec5 = new Vector2(0, 0);
             rec6 = new Vector2(size2.X, 0);
+
+            speed1 = 25f;
+            speed2 = 25;
+            speed4 = 25;
         }
 
         // Updateroni
@@ -63,23 +69,26 @@ namespace Gahame.GameScreens
             rec4.Y = size.Y * 3;
 
             // rec 1 thing
-            rec1.X = MyMaths.Lerp(rec1.X, 0, .25f);
+            speed1 = MyMaths.Approach(speed1, 1, 0.95f);
+            rec1.X = MyMaths.Approach(rec1.X, 0, speed1);
 
             // rec 2 thing
-            if ((int)rec1.X == 0)
+            if (rec1.X == 0)
             {
-                rec4.X = MyMaths.Lerp(rec4.X, 0, .25f);
+                speed4 = MyMaths.Approach(speed4, 1, 0.95f);
+                rec4.X = MyMaths.Approach(rec4.X, 0, speed4);
             }
 
             // rec 3 and 4 ok
-            if ((int)rec4.X == 0)
+            if (rec4.X == 0)
             {
-                rec2.X = MyMaths.Lerp(rec2.X, 0, .25f);
-                rec3.X = MyMaths.Lerp(rec3.X, 0, .25f);
+                speed2 = MyMaths.Approach(speed2, 1, 0.95f);
+                rec2.X = MyMaths.Approach(rec2.X, 0, speed2);
+                rec3.X = MyMaths.Approach(rec3.X, 0, speed2);
             }
 
             // rec 5 n 6
-            if ((int)rec2.X == 0)
+            if (rec2.X == 0)
             {
                 if (!screenChanged)
                 {
@@ -102,7 +111,7 @@ namespace Gahame.GameScreens
         public override void DrawGUI(SpriteBatch spriteBatch)
         {
             // Draw ze rectangles
-            if ((int)rec2.X != 0)
+            if (rec2.X != 0)
             {
                 ShapeRenderer.FillRectangle(spriteBatch, rec1, size, Color.Black);
                 ShapeRenderer.FillRectangle(spriteBatch, rec2, size, Color.Black);

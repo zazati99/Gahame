@@ -26,6 +26,12 @@ namespace Gahame.GameUtils
             return (int)(value + .5f);
         }
 
+        // Round Vector to int
+        public static Vector2 Round(Vector2 vector)
+        {
+            return new Vector2(Round(vector.X), Round(vector.Y));
+        }
+
         // Clamp between values
         public static float Clamp(float value, float min, float max)
         {

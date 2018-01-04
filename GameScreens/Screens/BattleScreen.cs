@@ -53,7 +53,8 @@ namespace Gahame.GameScreens
         public void EndBattle()
         {
             // Changes to previous screen and deletes this from memory;
-            ScreenManager.Instance.ChangeScreenClear(PreviousScreen);
+            //ScreenManager.Instance.ChangeScreenClear(PreviousScreen);
+            ScreenManager.Instance.ChangeScreen(new ScreenTransitionFade(.05f, this, PreviousScreen, true));
         }
 
     }
