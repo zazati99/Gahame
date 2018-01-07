@@ -50,7 +50,7 @@ namespace Gahame.GameScreens
             rec5 = new Vector2(0, 0);
             rec6 = new Vector2(size2.X, 0);
 
-            speed1 = 25f;
+            speed1 = 25;
             speed2 = 25;
             speed4 = 25;
         }

@@ -8,10 +8,10 @@ namespace Gahame.GameScreens
     public class ScreenTransition
     {
         // The screen that will be cnahged to
-        GameScreen newScreen;
+        protected GameScreen newScreen;
 
         // The Current screen, might be used to do screeneffects and camera stuff
-        GameScreen currentScreen;
+        protected GameScreen currentScreen;
 
         // Should it clear old screen??!?!
         bool clearOldScreen;

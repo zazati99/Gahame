@@ -12,9 +12,6 @@ namespace Gahame.GameScreens
 {
     public class OverworldScreen : GameScreen 
     {
-        // the player
-        public PlayerObjectOverworld Player;
-
         // Has this overworld screen battles?
         public bool HasBattles;
 
@@ -26,6 +23,9 @@ namespace Gahame.GameScreens
 
         // Random encounter
         Random randomEncounter;
+
+        // TEST CUTSCENE THING
+        CutsceneTimer ct;
 
         // Constructor
         public OverworldScreen() : base()
@@ -52,6 +52,9 @@ namespace Gahame.GameScreens
 
             // Load content directly after being called
             LoadContent();
+
+            // TEEEST
+            ct = new CutsceneTimer();
         }
 
         // Loads everything my dude
@@ -105,6 +108,22 @@ namespace Gahame.GameScreens
         {
             // Call update in GameScreen
             base.Update(gameTime);
+
+            if (GameInput.F6)
+            {
+                ct.StartTimer();
+                GahameController.CutScene = true;
+            }
+            ct.Update();
+            if (ct.EventDuring(60, 120))
+            {
+                Player.WalkHorizontal(2);
+            }
+            if (ct.EventDuring(180, 240))
+            {
+                Player.WalkVertical(2);
+            }
+            if (ct.EventAtTime(240)) GahameController.CutScene = false;
 
             // Start battle if it has battles
             if (HasBattles) {

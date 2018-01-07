@@ -4,7 +4,6 @@ using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
 using Gahame.GameObjects.ObjectComponents.Colliders;
-using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,7 +12,7 @@ namespace Gahame.GameObjects
 {
 
     // Overworld version of player object
-    public class PlayerObjectOverworld : GameObject
+    public class PlayerObjectOverworld : PlayerObject
     {
         // Componenst
         Sprite sprite;
@@ -64,10 +63,12 @@ namespace Gahame.GameObjects
             slowDownSpeed = .25f;
         }
 
-
         // Update player
         public override void Update(GameTime gameTime)
         {
+            // Do start update things
+            StartUpdate();
+
             // Normalized vector
             if (GameInput.ControllerMode)
             {
@@ -81,21 +82,23 @@ namespace Gahame.GameObjects
                 norm = MyMaths.Normalize((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0), (GameInput.DownCD ? 1 : 0) - (GameInput.UpCD ? 1 : 0));
             }
 
-            // Approach max xspeed
-            if (GameInput.RightCD || GameInput.LeftCD)
+            // Do movement if no cutscene
+            if (!GahameController.CutScene)
             {
-                // Approach xSPeed;
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, maxSpeed * norm.X, accelerationSpeed * GahameController.GameSpeed);
-            }
-            else physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, slowDownSpeed * GahameController.GameSpeed);
+                // Horizontal speed
+                if (GameInput.RightCD || GameInput.LeftCD)
+                {
+                    // le nice walk horizontal thing
+                    WalkHorizontal(maxSpeed * norm.X);
+                }
 
-            // approach max yspeed;
-            if (GameInput.UpCD || GameInput.DownCD)
-            {
-                // Approach xSPeed;
-                physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, maxSpeed * norm.Y, accelerationSpeed * GahameController.GameSpeed);
+                // Vertical speed
+                if (GameInput.UpCD || GameInput.DownCD)
+                {
+                    // le nice walk horizontal thing
+                    WalkVertical(maxSpeed * norm.Y);
+                }
             }
-            else physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, slowDownSpeed * GahameController.GameSpeed);
 
             // Activate Object
             if (GameInput.ActivateCD)
@@ -122,5 +125,40 @@ namespace Gahame.GameObjects
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.Y.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.Y.ToString()).X / 2, 42), Color.Black);
         }
+
+        #region Movement
+
+        // Walk horizontally
+        public override void WalkHorizontal(float speed)
+        {
+            // Approach the speed
+            physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, speed, accelerationSpeed * GahameController.GameSpeed);
+            WalkingHorizontal = true;
+        }
+
+        // Walk vertically
+        public override void WalkVertical(float speed)
+        {
+            // Approach the speed
+            physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, speed, accelerationSpeed * GahameController.GameSpeed);
+            WalkingVertical = true;
+        }
+
+        // Stop horizontal speed
+        public override void StopHorizontal()
+        {
+            // Approach 0 on horizontal speed
+            physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, slowDownSpeed * GahameController.GameSpeed);
+        }
+
+        // Stop horizontal speed
+        public override void StopVertical()
+        {
+            // Approach 0 on Vertical speed
+            physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, 0, slowDownSpeed * GahameController.GameSpeed);
+        }
+
+        #endregion
+
     }
 }

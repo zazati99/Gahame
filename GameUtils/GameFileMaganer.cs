@@ -461,9 +461,7 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "Player":
-                        PlayerObjectOverworld player = LoadPlayerOverworld(reader, screen);
-                        screen.GameObjects.Add(player);
-                        screen.Player = player;
+                        screen.GameObjects.Add(LoadPlayerOverworld(reader, screen));
                         break;
                     default:
                         screen = (OverworldScreen)LoadScreenInformation(screen, reader, line);
@@ -484,9 +482,7 @@ namespace Gahame.GameUtils
                 switch (line)
                 {
                     case "Player":
-                        PlayerObjectOverworldSidePerspective player = LoadPlayerOverworldSidePerspective(reader, screen);
-                        screen.GameObjects.Add(player);
-                        screen.Player = player;
+                        screen.GameObjects.Add(LoadPlayerOverworldSidePerspective(reader, screen));
                         break;
                     default:
                         screen = (OverworldScreenSidePerspective)LoadScreenInformation(screen, reader, line);

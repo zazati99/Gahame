@@ -42,6 +42,7 @@ namespace Gahame.GameScreens
         // Update 
         public override void Update(GameTime gameTime)
         {
+            // do the fade stuff
             alpha = MyMaths.Approach(alpha, (reverseAlpha ? 0 : 1), fadeSpeed);
             if (alpha >= 1)
             {

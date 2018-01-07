@@ -11,7 +11,7 @@ using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 
 namespace Gahame.GameObjects
 {
-    public class PlayerObjectOverworldSidePerspective : GameObject
+    public class PlayerObjectOverworldSidePerspective : PlayerObject
     {
         // Componenst
         Sprite sprite;
@@ -29,7 +29,7 @@ namespace Gahame.GameObjects
         float slowDownSpeed;
         float airSlowDownSpeed;
 
-        bool slowTime = false;
+        public bool Jumping;
 
         // Constructor stufferoo for playerino
         public PlayerObjectOverworldSidePerspective(GameScreen screen) : base(screen)
@@ -70,48 +70,41 @@ namespace Gahame.GameObjects
 
             jumpHeight = 4.5f;
             minJumpHeight = jumpHeight / 2;
+
+            Jumping = false;
         }
 
         // Update stufferino
         public override void Update(GameTime gameTime)
         {
+            // Start updateing
+            StartUpdate();
 
-            // Walking left and right
-            if (GameInput.RightCD || GameInput.LeftCD)
+            // Do controlls for player if it's not a cutscene
+            if (!GahameController.CutScene)
             {
-                sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X, (GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0), .25f * GahameController.GameSpeed * (GameInput.ControllerMode ? Math.Abs(GameInput.AbsLeftStickX) : 1));
+                // Walking left and right
+                if (GameInput.RightCD || GameInput.LeftCD)
+                    WalkHorizontal((GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)) * maxSpeed);
 
-                // Approach max speed
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X,
-                    maxSpeed * (GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)),
-                    GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
-            }
-            // Stopping
-            if (!GameInput.RightCD && !GameInput.LeftCD || GameInput.RightCD && GameInput.LeftCD)
-                physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * (physics.Grounded ? slowDownSpeed : airSlowDownSpeed));
+                // Jumping
+                if (GameInput.JumpBufferCD) Jump();
 
-            // Jumping
-            if (physics.Grounded)
-            {
-                if (GameInput.JumpBufferCD) physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
-            }
-            // Stopping if space is not held
-            if (((Physics.Gravity > 0) ? physics.Velocity.Y < 0 : physics.Velocity.Y > 0) && !GameInput.JumpHeld)
-                physics.Velocity.Y = (Physics.Gravity > 0) ? Math.Max(physics.Velocity.Y, -minJumpHeight * Math.Sign(Physics.Gravity)) : Math.Min(physics.Velocity.Y, -(jumpHeight / 2) * Math.Sign(Physics.Gravity));
+                // Stop Jump things
+                Jumping = GameInput.JumpHeld;
 
-            // Interact with object
-            if (GameInput.ActivateCD)
-            {
-                Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
-                if (d != null) d.StartDialogue();
+                // Stop jump
+                if (!GameInput.JumpHeld) StopJump();
+
+                // Interact with object
+                if (GameInput.ActivateCD)
+                {
+                    Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
+                    if (d != null) d.StartDialogue();
+                }
             }
 
-            if (GameInput.ActivateCD) slowTime = !slowTime;
-            GahameController.GameSpeed = MyMaths.Lerp(GahameController.GameSpeed, slowTime ? 0.2f : 1, .20f);
-
-
-
-            // Updates Components last*/
+            // Updates Components last
             base.Update(gameTime);
         }
 
@@ -123,6 +116,52 @@ namespace Gahame.GameObjects
             // Speed test
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
         }
+
+        #region Movement
+        // Walk horizontaly
+        public override void WalkHorizontal(float targetSpeed)
+        {
+            // lerp the sprite scale (prob wont keep)
+            sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X,
+                Math.Sign(targetSpeed),
+                .25f * GahameController.GameSpeed * (GameInput.ControllerMode && !GahameController.CutScene ? Math.Abs(GameInput.AbsLeftStickX) : 1));
+
+            // keeps it from memeing maxSpeed
+            targetSpeed = MyMaths.Clamp(targetSpeed, -maxSpeed, maxSpeed);
+
+            // Approach the target speed
+            physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, targetSpeed,
+                GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
+
+            // You be walking
+            WalkingHorizontal = true;
+        }
+
+        // Stop walking
+        public override void StopHorizontal()
+        {
+            physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * (physics.Grounded ? slowDownSpeed : airSlowDownSpeed));
+        }
+
+        // Jump
+        public void Jump()
+        {
+            if (physics.Grounded)
+            {
+                physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity);
+                Jumping = true;
+            }
+        }
+
+        // Stop the jump
+        public void StopJump()
+        {
+            if (physics.Velocity.Y < 0)
+            {
+                physics.Velocity.Y = Math.Max(physics.Velocity.Y, -minJumpHeight);
+            }
+        }
+        #endregion
 
     }
 }

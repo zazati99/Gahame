@@ -38,6 +38,9 @@ namespace Gahame.GameScreens
         // Camera controller
         public CameraController CamController;
 
+        // Player Object, so that it can be accesed in cutscenes and stuff
+        public PlayerObject Player;
+
         // Name of screen (should be same as path)
         public string Name;
 

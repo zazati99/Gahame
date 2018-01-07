@@ -10,9 +10,6 @@ namespace Gahame.GameScreens
 {
     public class OverworldScreenSidePerspective : GameScreen
     {
-        // Player in screen
-        public PlayerObjectOverworldSidePerspective Player;
-
         // List of loading areas for other game screens
         List<ScreenLoadArea> loadingAreas;
 
