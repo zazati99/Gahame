@@ -58,7 +58,7 @@ Dialogue
 DialogueBranch
 DialogueBoxPlain
 Text
-Did id work?
+Did it work?
 ---
 DialogueBoxAlternativePlain
 Alternative
