@@ -6,25 +6,37 @@
         int time;
 
         // Is timer start ?!?
-        bool timerStarted;
+        bool timerUpdate;
 
         // Constructor
         public CutsceneTimer()
         {
             time = 0;
-            timerStarted = false;
+            timerUpdate = false;
         }
 
         // Timer update
-        public void StartTimer()
+        public void Start()
         {
-            timerStarted = true;
+            timerUpdate = true;
+        }
+
+        // Pause the timer
+        public void Pause()
+        {
+            timerUpdate = false;
+        }
+
+        // Stop
+        public void Stop(){
+            timerUpdate = false;
+            time = 0;
         }
 
         // Update timer
         public void Update()
         {
-            if (timerStarted) time++;
+            if (timerUpdate) time++;
         }
 
         // DO something at specific time
