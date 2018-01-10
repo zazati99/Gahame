@@ -112,7 +112,7 @@ namespace Gahame.GameScreens
 
             if (GameInput.F6)
             {
-                ct.StartTimer();
+                ct.Start();
                 GahameController.CutScene = true;
             }
             ct.Update();
@@ -124,7 +124,11 @@ namespace Gahame.GameScreens
             {
                 Player.WalkVertical(2);
             }
-            if (ct.EventAtTime(240)) GahameController.CutScene = false;
+            if (ct.EventAtTime(240))
+            {
+                GahameController.CutScene = false;
+                ct.Stop();
+            } 
 
             // Start battle if it has battles
             if (HasBattles) {
