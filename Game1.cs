@@ -13,6 +13,8 @@ namespace Gahame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        GameFont fnt;
+
         public Game1()
         {
             // Content settings
@@ -36,6 +38,9 @@ namespace Gahame
             //graphics.SynchronizeWithVerticalRetrace = false;
             //TimeSpan span = new TimeSpan(0, 0, 0, 0, 1);
             //TargetElapsedTime = span;
+
+            // TEST GARBAGE
+            fnt = new GameFont();
         }
 
         protected override void Initialize()
@@ -57,6 +62,9 @@ namespace Gahame
 
             // Load all fo that sweet sweet content right here
             ScreenManager.Instance.LoadContent(Content);
+
+            // TEST GARBAGE
+            fnt.LoadFont(Content, "Fonts/GahameFont");
         }
 
         protected override void UnloadContent()
@@ -119,6 +127,8 @@ namespace Gahame
 
             // Shows if game is in controller mode or not (test stuff)
             spriteBatch.DrawString(GameFonts.Arial, GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode", new Vector2(15, 31), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
+
+            fnt.DrawString(spriteBatch, GameFont.Gahamefy("hej på dig"), new Vector2(15, 45));
 
             // End this SpriteBatch
             spriteBatch.End();
