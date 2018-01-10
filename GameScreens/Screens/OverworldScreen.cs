@@ -68,7 +68,7 @@ namespace Gahame.GameScreens
             bac.LoadTexture(content, "Backgrounds/testkek");
             bac.RepeatY = true;
             bac.RepeatX = true;
-            bac.FollowCamera = true;
+            bac.FollowCamera = false;
             Backgrounds.Add(bac);
 
             // Test tiles
