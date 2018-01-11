@@ -128,7 +128,7 @@ namespace Gahame
             // Shows if game is in controller mode or not (test stuff)
             spriteBatch.DrawString(GameFonts.Arial, GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode", new Vector2(15, 31), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
-            fnt.DrawString(spriteBatch, GameFont.Gahamefy("hej på dig"), new Vector2(15, 45));
+            fnt.DrawString(spriteBatch, GameFont.Gahamefy("gahame"), new Vector2(15, 45));
 
             // End this SpriteBatch
             spriteBatch.End();
