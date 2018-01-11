@@ -87,6 +87,7 @@ namespace Gahame.GameUtils
             newString = s.ToUpper();
             newString = newString.Replace('T', 'D');
             newString = newString.Replace('G', 'K');
+            newString = newString.Replace('V', 'W');
 
             return newString;
         }
