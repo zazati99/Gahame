@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/Fonts/DialogueArial.bmp</SourceFile>
-  <SourceTime>2017-12-13T20:14:36.2775796+01:00</SourceTime>
-  <DestFile>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/bin/DesktopGL/Fonts/DialogueArial.xnb</DestFile>
-  <DestTime>2018-01-10T21:45:06.3846142+01:00</DestTime>
+  <SourceFile>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/Fonts/DialogueArial.bmp</SourceFile>
+  <SourceTime>2017-12-18T16:51:14+01:00</SourceTime>
+  <DestFile>/Users/sebastianjohansson/Projects/Gahame/Gahame/Content/bin/DesktopGL/Fonts/DialogueArial.xnb</DestFile>
+  <DestTime>2018-01-11T08:19:31+01:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
+  <ImporterTime>2016-03-30T08:36:22+02:00</ImporterTime>
   <Processor>FontTextureProcessor</Processor>
-  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
+  <ProcessorTime>2016-03-30T08:36:22+02:00</ProcessorTime>
   <Parameters>
     <Key>FirstCharacter</Key>
     <Value> </Value>

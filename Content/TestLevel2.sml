@@ -69,7 +69,7 @@ MemeGroup
 ---
 Alternative
 Text
-nope
+---
 Key
 RealGroup
 ---
@@ -81,6 +81,8 @@ MemeGroup
 DialogueBoxPlain
 Text
 hehehehee
+TextSpeed
+0.05
 ---
 DialogueBoxPlain
 Text

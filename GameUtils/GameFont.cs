@@ -14,6 +14,9 @@ namespace Gahame.GameUtils
         // Rectangles that holds characters
         Dictionary<string, Rectangle> characters;
 
+        // Line spacing
+        public float LineSpacing;
+
         // consonants
         public static char[] cons = { 'M','D','B','K','N','R','P','W','F','H','S','C','L','J' };
 
@@ -23,12 +26,6 @@ namespace Gahame.GameUtils
         // Point for width and height
         Point size;
 
-        // Constructor
-        public GameFont()
-        {
-
-        }
-
         // Loads texture and memes alot
         public void LoadFont(ContentManager content, string path)
         {
@@ -36,6 +33,9 @@ namespace Gahame.GameUtils
             fontTexture = content.Load<Texture2D>(path);
             size.X = fontTexture.Width / 9;
             size.Y = fontTexture.Height / 14;
+
+            // Nice default line spacing
+            LineSpacing = size.Y + 1;
 
             // Creates dictionary
             characters = new Dictionary<string, Rectangle>();
@@ -50,7 +50,7 @@ namespace Gahame.GameUtils
         }
 
         // Draws a string
-        public void DrawString(SpriteBatch spriteBatch, string s, Vector2 pos)
+        public void DrawString(SpriteBatch spriteBatch, string s, Vector2 pos, Color color)
         {
             Vector2 rp = new Vector2(0, 0);
             for (int i = 0; i < s.Length; i++)
@@ -62,20 +62,20 @@ namespace Gahame.GameUtils
                     {
                         if (isVowel(s[i + 1]))
                         {
-                            spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i]) + cts(s[i + 1])], layerDepth: 0, color: Color.Black);
+                            spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i]) + cts(s[i + 1])], layerDepth: 0, color: color);
                             i++;
-                        } else spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i])], layerDepth: 0, color: Color.Black);
-                    } else spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i])], layerDepth: 0, color: Color.Black);
+                        } else spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i])], layerDepth: 0, color: color);
+                    } else spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i])], layerDepth: 0, color: color);
                     rp.X += size.X + 2;
                 } else if (isVowel(s[i]))
                 {
-                    spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters["H" + cts(s[i])], layerDepth: 0, color: Color.Black);
+                    spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters["H" + cts(s[i])], layerDepth: 0, color: color);
                     rp.X += size.X + 2;
                 }
                 else if (s[i] == '\n')
                 {
                     rp.X = 0;
-                    rp.Y += size.Y + 1;
+                    rp.Y += LineSpacing;
                 }
             }
         }

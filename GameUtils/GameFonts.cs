@@ -13,11 +13,15 @@ namespace Gahame.GameUtils
     {
         // Fonts
         public static SpriteFont Arial { get; private set; }
+        public static GameFont GahameFont { get; private set; }
 
         // Load the fonts
         public static void LoadFonts(ContentManager content)
         {
             Arial = content.Load<SpriteFont>("Fonts/DialogueArial");
+
+            GahameFont = new GameFont();
+            GahameFont.LoadFont(content, "Fonts/GahameFont");
         }
     }
 }
