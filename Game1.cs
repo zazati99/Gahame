@@ -64,7 +64,7 @@ namespace Gahame
             ScreenManager.Instance.LoadContent(Content);
 
             // TEST GARBAGE
-            fnt.LoadFont(Content, "Fonts/GahameFont");
+            fnt.LoadFont(Content, "Fonts/NewGahameFont");
         }
 
         protected override void UnloadContent()
@@ -126,9 +126,7 @@ namespace Gahame
             spriteBatch.DrawString(GameFonts.Arial, gameSpeed, new Vector2(15, 21), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             // Shows if game is in controller mode or not (test stuff)
-            spriteBatch.DrawString(GameFonts.Arial, GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode", new Vector2(15, 31), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
-
-            fnt.DrawString(spriteBatch, GameFont.Gahamefy("sebastian"), new Vector2(15, 45), Color.Black);
+            fnt.DrawString(spriteBatch, GameFont.Gahamefy(GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode"), new Vector2(15, 34), Color.Black);
 
             // End this SpriteBatch
             spriteBatch.End();

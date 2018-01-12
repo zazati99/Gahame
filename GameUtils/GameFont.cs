@@ -12,16 +12,19 @@ namespace Gahame.GameUtils
         Texture2D fontTexture;
 
         // Rectangles that holds characters
-        Dictionary<string, Rectangle> characters;
+        Dictionary<char, Rectangle> characters;
 
         // Line spacing
         public float LineSpacing;
+
+        // Character spacing
+        public float CharSpacing;
 
         // consonants
         public static char[] cons = { 'M','D','B','K','N','R','P','W','F','H','S','C','L','J' };
 
         // vowels
-        public static char[] vowels = { 'A', 'E', 'I', 'O', 'U', 'Y', 'Å', 'Ä' };
+        public static char[] vowels = { 'A', 'E', 'I', 'O', 'U', 'Å', 'Y', 'Ä' };
 
         // Point for width and height
         Point size;
@@ -29,6 +32,7 @@ namespace Gahame.GameUtils
         // Loads texture and memes alot
         public void LoadFont(ContentManager content, string path)
         {
+            /*
             // Load Texture and get size of each character
             fontTexture = content.Load<Texture2D>(path);
             size.X = fontTexture.Width / 9;
@@ -47,12 +51,46 @@ namespace Gahame.GameUtils
                     characters.Add(cts(cons[i]) + cts(vowels[j]), new Rectangle((j+1) * size.X, i * size.Y, size.X, size.Y));
                 }
             }
+            */
+            // Loads from path and memes a bit
+            fontTexture = content.Load<Texture2D>(path);
+            size.X = fontTexture.Width / 8;
+            size.Y = fontTexture.Height / 3;
+
+            // sets default spacing
+            LineSpacing = size.Y + 1;
+            CharSpacing = size.X + 2;
+
+            // Creates dictionary
+            characters = new Dictionary<char, Rectangle>();
+
+            // Sets consonants
+            Point charPos = new Point(0,0);
+            for (int i = 0; i < cons.Length; i++)
+            {
+                // Add character
+                characters.Add(cons[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+
+                // Fix position
+                charPos.X += size.X;
+                if (i == 6) charPos = new Point(0, size.Y);
+            }
+            // Sets vowels
+            charPos = new Point(0, size.Y * 2);
+            for (int i = 0; i < vowels.Length; i++)
+            {
+                // Add character
+                characters.Add(vowels[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+
+                // Fix position
+                charPos.X += size.X;
+            }
         }
 
         // Draws a string
         public void DrawString(SpriteBatch spriteBatch, string s, Vector2 pos, Color color)
         {
-            Vector2 rp = new Vector2(0, 0);
+            /*Vector2 rp = new Vector2(0, 0);
             for (int i = 0; i < s.Length; i++)
             {
                 if (s[i] == ' ') rp.X += 5;
@@ -77,7 +115,52 @@ namespace Gahame.GameUtils
                     rp.X = 0;
                     rp.Y += LineSpacing;
                 }
+            }*/
+
+            Vector2 rp = new Vector2(0, 0);
+            for (int i = 0; i < s.Length; i++)
+            {
+                // Check what type of thing it is
+                if (isCons(s[i]))
+                {
+                    // draws consonant
+                    spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[i]], layerDepth: 0, color: color);
+
+                    // possibly draw a vowel
+                    if (i != s.Length - 1)
+                    {
+                        if (isVowel(s[i + 1]))
+                        {
+                            i++;
+                            spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[i]], layerDepth: 0, color: color);
+                        }
+                    }
+
+                    // meme relative position
+                    rp.X += CharSpacing;
+
+                } else if (isVowel(s[i]))
+                {
+                    // Draw the H before the vowel
+                    spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters['H'], layerDepth: 0, color: color);
+                    spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[i]], layerDepth: 0, color: color);
+
+                    // Meme relative position
+                    rp.X += CharSpacing;
+
+                } else if (s[i] == ' ')
+                {
+                    // only meme relative position
+                    rp.X += 6;
+
+                } else if (s[i] == '\n')
+                {
+                    // only meme position here as well
+                    rp.X = 0;
+                    rp.Y += LineSpacing;
+                }
             }
+
         }
 
         // Makes normal string gahameified
