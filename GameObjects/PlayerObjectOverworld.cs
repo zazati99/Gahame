@@ -121,6 +121,10 @@ namespace Gahame.GameObjects
         {
             base.Draw(spriteBatch);
 
+            string hihi = "DOP KEK MEMEM\nHEHE NICE";
+            float memeX = GameFonts.GahameFont.MeasureString(hihi).X/2;
+            GameFonts.GahameFont.DrawString(spriteBatch, hihi, new Vector2(Position.X-memeX, Position.Y - 48), Color.Black);
+
             // Speed test
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.Y.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.Y.ToString()).X / 2, 42), Color.Black);

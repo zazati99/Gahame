@@ -108,33 +108,6 @@ namespace Gahame.GameUtils
         // Draws a string
         public void DrawString(SpriteBatch spriteBatch, string s, Vector2 pos, Color color)
         {
-            /*Vector2 rp = new Vector2(0, 0);
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] == ' ') rp.X += 5;
-                else if (isCons(s[i]))
-                {
-                    if (i != s.Length-1)
-                    {
-                        if (isVowel(s[i + 1]))
-                        {
-                            spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i]) + cts(s[i + 1])], layerDepth: 0, color: color);
-                            i++;
-                        } else spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i])], layerDepth: 0, color: color);
-                    } else spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[cts(s[i])], layerDepth: 0, color: color);
-                    rp.X += size.X + 2;
-                } else if (isVowel(s[i]))
-                {
-                    spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters["H" + cts(s[i])], layerDepth: 0, color: color);
-                    rp.X += size.X + 2;
-                }
-                else if (s[i] == '\n')
-                {
-                    rp.X = 0;
-                    rp.Y += LineSpacing;
-                }
-            }*/
-
             Vector2 rp = new Vector2(0, 0);
             for (int i = 0; i < s.Length; i++)
             {
@@ -178,7 +151,42 @@ namespace Gahame.GameUtils
                     rp.Y += LineSpacing;
                 }
             }
+        }
 
+        // Measures a string and returns vector of width and height
+        public Vector2 MeasureString(string s)
+        {
+            // VEctor that will be memed
+            Vector2 bounds = new Vector2(0, 0);
+
+            string[] lines = s.Split('\n');
+
+            // find X size
+            for (int i = 0; i < lines.Length; i++)
+            {
+                float tempSize = 0;
+                for (int j = 0; j < lines[0].Length; j++)
+                {
+                    if (isCons(lines[i][j]) )
+                    {
+                        tempSize += CharSpacing;
+                        if (j != lines[i].Length - 1)
+                            if (isVowel(lines[i][j + 1])) j++;
+                    } else if (isVowel(lines[i][j]))
+                    {
+                        tempSize += CharSpacing;
+                    }else if (lines[i][j] == ' ')
+                    {
+                        tempSize += 6;
+                    }
+                }
+                if (tempSize > bounds.X) bounds.X = tempSize;
+            }
+
+            // get y size
+            bounds.Y = lines.Length * LineSpacing + size.Y;
+
+            return bounds;
         }
 
         // Makes normal string gahameified
