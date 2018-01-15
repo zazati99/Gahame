@@ -82,7 +82,6 @@ namespace Gahame.GameScreens
                 // make sure that aspect ratio is correct and fix offset
                 View.Y = View.X * screenResY / screenResX;
                 ViewOffset.Y = -View.Y / 2;
-
             }
             // Go back to default port otherwise
             else

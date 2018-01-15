@@ -13,7 +13,8 @@ namespace Gahame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        GameFont fnt;
+        // Exit game timer
+        Timer exitGameTimer;
 
         public Game1()
         {
@@ -34,13 +35,13 @@ namespace Gahame
             Vector2 defaultPort = new Vector2(640, 360); // the window size
             ScreenManager.Instance.GameCamera = new Camera(defaultPort, defaultView, graphics);
 
+            // Exit game Timer
+            exitGameTimer = new Timer();
+
             //IsFixedTimeStep = false;
             //graphics.SynchronizeWithVerticalRetrace = false;
             //TimeSpan span = new TimeSpan(0, 0, 0, 0, 1);
             //TargetElapsedTime = span;
-
-            // TEST GARBAGE
-            fnt = new GameFont();
         }
 
         protected override void Initialize()
@@ -62,9 +63,6 @@ namespace Gahame
 
             // Load all fo that sweet sweet content right here
             ScreenManager.Instance.LoadContent(Content);
-
-            // TEST GARBAGE
-            fnt.LoadFont(Content, "Fonts/NewGahameFont");
         }
 
         protected override void UnloadContent()
@@ -78,6 +76,13 @@ namespace Gahame
         {
             // Updates controlls before updating anythin else
             GameInput.Update();
+
+            // Exit game timer stuff
+            if (GameInput.EscHeld)
+            {
+                if (exitGameTimer.Check()) Exit();
+            }
+            else exitGameTimer.SetSeconds(2);
 
             // Update stuff here
             ScreenManager.Instance.Update(gameTime);
@@ -126,7 +131,7 @@ namespace Gahame
             spriteBatch.DrawString(GameFonts.Arial, gameSpeed, new Vector2(15, 21), Color.Black, 0, Vector2.One, 1, SpriteEffects.None, 0);
 
             // Shows if game is in controller mode or not (test stuff)
-            fnt.DrawString(spriteBatch, GameFont.Gahamefy(GameInput.ControllerMode ? "ControllerMode" : "KeyboardMode"), new Vector2(15, 34), Color.Black);
+            GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy(GameInput.ControllerMode ? "Controller Mode" : "Keyboard Mode"), new Vector2(15, 34), Color.Black);
 
             // End this SpriteBatch
             spriteBatch.End();

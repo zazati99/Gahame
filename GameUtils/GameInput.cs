@@ -37,6 +37,7 @@ namespace Gahame.GameUtils
         public static bool JumpHeld { get; private set; }
 
         public static bool Esc { get; private set; }
+        public static bool EscHeld { get; private set; }
         public static bool Enter { get; private set; }
         public static bool F5 { get; private set; }
         public static bool F6 { get; private set; }
@@ -102,6 +103,8 @@ namespace Gahame.GameUtils
             Activate = (keyboardState.IsKeyDown(Keys.E) && !previousKeyboardState.IsKeyDown(Keys.E)) || (gamePadState.IsButtonDown(Buttons.B) && !previousGamePadState.IsButtonDown(Buttons.B));
 
             Esc = (keyboardState.IsKeyDown(Keys.Escape) && !previousKeyboardState.IsKeyDown(Keys.Escape)) || (gamePadState.IsButtonDown(Buttons.Start) && !previousGamePadState.IsButtonDown(Buttons.Start));
+            EscHeld = (keyboardState.IsKeyDown(Keys.Escape) || gamePadState.IsButtonDown(Buttons.Start));
+
             Enter = keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter) || (gamePadState.IsButtonDown(Buttons.Back) && !previousGamePadState.IsButtonDown(Buttons.Back));
 
             F5 = keyboardState.IsKeyDown(Keys.F5) && !previousKeyboardState.IsKeyDown(Keys.F5);

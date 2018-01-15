@@ -32,26 +32,6 @@ namespace Gahame.GameUtils
         // Loads texture and memes alot
         public void LoadFont(ContentManager content, string path)
         {
-            /*
-            // Load Texture and get size of each character
-            fontTexture = content.Load<Texture2D>(path);
-            size.X = fontTexture.Width / 9;
-            size.Y = fontTexture.Height / 14;
-
-            // Nice default line spacing
-            LineSpacing = size.Y + 1;
-
-            // Creates dictionary
-            characters = new Dictionary<string, Rectangle>();
-            for (int i = 0; i < cons.Length; i++)
-            {
-                characters.Add(cts(cons[i]), new Rectangle(0, i * size.Y, size.X, size.Y));
-                for (int j = 0; j < vowels.Length; j++)
-                {
-                    characters.Add(cts(cons[i]) + cts(vowels[j]), new Rectangle((j+1) * size.X, i * size.Y, size.X, size.Y));
-                }
-            }
-            */
             // Loads from path and memes a bit
             fontTexture = content.Load<Texture2D>(path);
             size.X = fontTexture.Width / 8;
@@ -66,6 +46,44 @@ namespace Gahame.GameUtils
 
             // Sets consonants
             Point charPos = new Point(0,0);
+            for (int i = 0; i < cons.Length; i++)
+            {
+                // Add character
+                characters.Add(cons[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+
+                // Fix position
+                charPos.X += size.X;
+                if (i == 6) charPos = new Point(0, size.Y);
+            }
+            // Sets vowels
+            charPos = new Point(0, size.Y * 2);
+            for (int i = 0; i < vowels.Length; i++)
+            {
+                // Add character
+                characters.Add(vowels[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+
+                // Fix position
+                charPos.X += size.X;
+            }
+        }
+
+        // Loads texture and memes alot
+        public void LoadFont(Texture2D fontTexture)
+        {
+            // Loads from path and memes a bit
+            this.fontTexture = fontTexture;
+            size.X = fontTexture.Width / 8;
+            size.Y = fontTexture.Height / 3;
+
+            // sets default spacing
+            LineSpacing = size.Y + 1;
+            CharSpacing = size.X + 2;
+
+            // Creates dictionary
+            characters = new Dictionary<char, Rectangle>();
+
+            // Sets consonants
+            Point charPos = new Point(0, 0);
             for (int i = 0; i < cons.Length; i++)
             {
                 // Add character
