@@ -132,9 +132,20 @@ namespace Gahame.GameObjects
             //float memeX = GameFonts.GahameFont.MeasureString(hihi).X/2;
             //GameFonts.GahameFont.DrawString(spriteBatch, hihi, new Vector2(Position.X-memeX, Position.Y - 64), Color.Black);
 
-            Vector2 origin = GameFonts.GahameFont.MeasureString(TextTest) / 2;
-
-            GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy(TextTest), Position - origin - new Vector2(0, 48), Color.Blue);
+            Vector2 origin = GameFonts.Arial.MeasureString(TextTest) / 2;
+            //GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy(TextTest), Position - origin - new Vector2(0, 48), Color.Blue);
+            spriteBatch.DrawString
+            (
+                GameFonts.Arial,
+                TextTest,
+                Position - new Vector2(0, 48),
+                Color.DarkBlue,
+                0,
+                origin,
+                1,
+                SpriteEffects.None,
+                0f
+            );
 
             /*spriteBatch.DrawString(
                     GameFonts.Arial,

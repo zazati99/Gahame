@@ -145,17 +145,20 @@ namespace Gahame.GameUtils
             {
                 if (!previousKeyboardState.IsKeyDown(keys[i]))
                 {
-                    if (keys[i] != Keys.Enter && keys[i] != Keys.Space)
+                    if (keys[i] != Keys.Enter && keys[i] != Keys.Space && keys[i] != Keys.Back)
                     {
                         str += keys[i].ToString();
 
                     } else if (keys[i] == Keys.Space)
                     {
                         str += " ";
+                    } else if (keys[i] == Keys.Back)
+                    {
+                        if (str.Length > 0)
+                            str = str.Remove(str.Length - 1);
                     }
                 }
             }
         }
-
     }
 }
