@@ -122,8 +122,7 @@ namespace Gahame.GameUtils
                     {
                         if (isVowel(s[i + 1]))
                         {
-                            i++;
-                            spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[i]], layerDepth: 0, color: color);
+                            spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[++i]], layerDepth: 0, color: color);
                         }
                     }
 
@@ -165,7 +164,7 @@ namespace Gahame.GameUtils
             for (int i = 0; i < lines.Length; i++)
             {
                 float tempSize = 0;
-                for (int j = 0; j < lines[0].Length; j++)
+                for (int j = 0; j < lines[i].Length; j++)
                 {
                     if (isCons(lines[i][j]) )
                     {
