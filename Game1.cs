@@ -87,6 +87,8 @@ namespace Gahame
             // Update stuff here
             ScreenManager.Instance.Update(gameTime);
 
+            // DO End update for Game Input
+            GameInput.EndUpdate();
             base.Update(gameTime);
         }
 

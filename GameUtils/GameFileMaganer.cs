@@ -560,6 +560,15 @@ namespace Gahame.GameUtils
             }
             writer.Close();
         }
+        public static void SaveLog(string log)
+        {
+            StreamWriter writer = new StreamWriter("log.txt");
+            for (int i = 0; i < log.Length; i++)
+            {
+                writer.WriteLine(log[i]);
+            }
+            writer.Close();
+        }
 
         // Encrypt a file (probablt wont need this)
         public static void EncryptFile(string path, string newPath)

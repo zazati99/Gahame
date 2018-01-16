@@ -12,6 +12,10 @@ namespace Gahame.GameUtils
         static KeyboardState previousKeyboardState = Keyboard.GetState();
         static GamePadState previousGamePadState = GamePad.GetState(0);
 
+        // Current Keyboard state
+        static KeyboardState keyboardState;
+        static GamePadState gamePadState;
+
         // Specified controlls
         public static bool Right { get; private set; }
         public static bool Left { get; private set; }
@@ -59,8 +63,8 @@ namespace Gahame.GameUtils
         // Checks all of the controlls (should happen in Game class) 
         public static void Update() 
         {
-            KeyboardState keyboardState = Keyboard.GetState();
-            GamePadState gamePadState = GamePad.GetState(0);
+            keyboardState = Keyboard.GetState();
+            gamePadState = GamePad.GetState(0);
 
             // Check is keyboard mode or controller mode 
             if (gamePadState.IsConnected)
@@ -122,9 +126,35 @@ namespace Gahame.GameUtils
             if (jumpBuffer > 0) jumpBuffer--;
             if (JumpCD) jumpBuffer = 3;
             JumpBufferCD = (jumpBuffer > 0);
+        }
 
+        public static void EndUpdate()
+        {
             previousKeyboardState = keyboardState;
             previousGamePadState = gamePadState;
+        }
+
+        // Get keyboard input and return a char
+        public static void AddInputToString(ref String str)
+        {
+            // Get the keys that is currently pressed
+            Keys[] keys = keyboardState.GetPressedKeys();
+
+            // Loop through pressed keys an meme a bit
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (!previousKeyboardState.IsKeyDown(keys[i]))
+                {
+                    if (keys[i] != Keys.Enter && keys[i] != Keys.Space)
+                    {
+                        str += keys[i].ToString();
+
+                    } else if (keys[i] == Keys.Space)
+                    {
+                        str += " ";
+                    }
+                }
+            }
         }
 
     }

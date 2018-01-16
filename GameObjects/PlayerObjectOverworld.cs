@@ -27,6 +27,8 @@ namespace Gahame.GameObjects
         // normalized vector
         Vector2 norm;
 
+        string TextTest;
+
         // Constructor stufferoo for playerino
         public PlayerObjectOverworld(GameScreen screen) : base(screen)
         {
@@ -61,6 +63,9 @@ namespace Gahame.GameObjects
             maxSpeed = 2;
             accelerationSpeed = .5f;
             slowDownSpeed = .25f;
+
+            TextTest = "";
+
         }
 
         // Update player
@@ -112,6 +117,8 @@ namespace Gahame.GameObjects
                 screen.ScreenEffects.Add(new CameraShakeEffect(screen, 5, 20));
             }
 
+            GameInput.AddInputToString(ref TextTest);
+
             // Update component last
             base.Update(gameTime);
         }
@@ -121,9 +128,25 @@ namespace Gahame.GameObjects
         {
             base.Draw(spriteBatch);
 
-            string hihi = "DOP KEK MEMEM\nHEHE NICE MEME MEME BOBO";
-            float memeX = GameFonts.GahameFont.MeasureString(hihi).X/2;
-            GameFonts.GahameFont.DrawString(spriteBatch, hihi, new Vector2(Position.X-memeX, Position.Y - 64), Color.Black);
+            //string hihi = "DOP KEK MEMEM\nHEHE NICE MEME MEME BOBO";
+            //float memeX = GameFonts.GahameFont.MeasureString(hihi).X/2;
+            //GameFonts.GahameFont.DrawString(spriteBatch, hihi, new Vector2(Position.X-memeX, Position.Y - 64), Color.Black);
+
+            Vector2 origin = GameFonts.GahameFont.MeasureString(TextTest) / 2;
+
+            GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy(TextTest), Position - origin - new Vector2(0, 48), Color.Blue);
+
+            /*spriteBatch.DrawString(
+                    GameFonts.Arial,
+                    TextTest,
+                    Position + new Vector2(0, -48),
+                    Color.Pink,
+                    0,
+                    origin,
+                    1,
+                    SpriteEffects.None,
+                    0
+                    );*/
 
             // Speed test
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
