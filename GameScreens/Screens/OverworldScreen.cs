@@ -128,7 +128,7 @@ namespace Gahame.GameScreens
             {
                 GahameController.CutScene = false;
                 ct.Stop();
-            } 
+            }
 
             // Start battle if it has battles
             if (HasBattles) {

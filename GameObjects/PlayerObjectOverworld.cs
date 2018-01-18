@@ -8,6 +8,9 @@ using Gahame.GameObjects.ObjectComponents.Colliders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using NLua;
+
+
 namespace Gahame.GameObjects
 {
 
@@ -27,8 +30,8 @@ namespace Gahame.GameObjects
         // normalized vector
         Vector2 norm;
 
-        string TextTest;
-
+        //string TextTest;
+                 
         // Constructor stufferoo for playerino
         public PlayerObjectOverworld(GameScreen screen) : base(screen)
         {
@@ -64,8 +67,8 @@ namespace Gahame.GameObjects
             accelerationSpeed = .5f;
             slowDownSpeed = .25f;
 
-            TextTest = "";
-
+            //TextTest = "";
+            
         }
 
         // Update player
@@ -117,7 +120,9 @@ namespace Gahame.GameObjects
                 screen.ScreenEffects.Add(new CameraShakeEffect(screen, 5, 20));
             }
 
-            GameInput.AddInputToString(ref TextTest);
+            //GameInput.AddInputToString(ref TextTest);
+
+            //Position.X = (float)(double)lua.DoString("return addpos(" + Position.X.ToString() + ")")[0];
 
             // Update component last
             base.Update(gameTime);
@@ -132,20 +137,20 @@ namespace Gahame.GameObjects
             //float memeX = GameFonts.GahameFont.MeasureString(hihi).X/2;
             //GameFonts.GahameFont.DrawString(spriteBatch, hihi, new Vector2(Position.X-memeX, Position.Y - 64), Color.Black);
 
-            Vector2 origin = GameFonts.Arial.MeasureString(TextTest) / 2;
+            //Vector2 origin = GameFonts.Arial.MeasureString(TextTest) / 2;
             //GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy(TextTest), Position - origin - new Vector2(0, 48), Color.Blue);
-            spriteBatch.DrawString
+            /*spriteBatch.DrawString
             (
                 GameFonts.Arial,
-                TextTest,
+                meme,
                 Position - new Vector2(0, 48),
                 Color.DarkBlue,
                 0,
-                origin,
+                           Vector2.Zero,
                 1,
                 SpriteEffects.None,
                 0f
-            );
+            );*/
 
             /*spriteBatch.DrawString(
                     GameFonts.Arial,

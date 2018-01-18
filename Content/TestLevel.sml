@@ -189,4 +189,8 @@ TextSpeed
 ---
 ---
 OverworldDepthFix
+LuaScript
+String
+function Start() const = 50 end function Update() X = X + 1; ActionIsComing() end function ActionIsComing() Y = math.sin(X/20)*10 end
+---
 ---

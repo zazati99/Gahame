@@ -53,6 +53,9 @@ namespace Gahame.GameUtils
                     case "OverworldDepthFix":
                         o.Components.Add(new OverworldDepthFix(o));
                     break;
+                    case "LuaScript":
+                        o.Components.Add(LoadLuaScript(reader, o));
+                        break;
                 }
             }
             return o;
@@ -298,6 +301,28 @@ namespace Gahame.GameUtils
             }
             return physics;
         }
+        #endregion
+
+        #region Other Components
+
+        public static LuaScript LoadLuaScript(StreamReader reader, GameObject o)
+        {
+            LuaScript script = new LuaScript(o);
+
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "String":
+                        script.InitializeLua(reader.ReadLine());
+                        break;
+                }
+            }
+
+            return script;
+        }
+
         #endregion
 
         #region Player
