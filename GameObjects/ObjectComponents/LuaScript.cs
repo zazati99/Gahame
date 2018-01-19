@@ -23,6 +23,7 @@ namespace Gahame.GameObjects.ObjectComponents
             // HOHOHH
             Updatable = true;
             lua = new Lua();
+<<<<<<< HEAD
 
             bindingCS = new List<float>();
             bindingLua = new List<string>();
@@ -31,6 +32,9 @@ namespace Gahame.GameObjects.ObjectComponents
             addFloatBindings(ref gameObject.Position.Y, "y");
             addFloatBindings(ref gameObject.GetComponent<Physics>().Velocity.X, "xSpeed");
             addFloatBindings(ref gameObject.GetComponent<Physics>().Velocity.Y, "ySpeed");
+=======
+            lua.LoadCLRPackage();
+>>>>>>> 992a135987aa6a30df3e1b08615d7421df450c9c
         }
 
         // Initializes lua script
