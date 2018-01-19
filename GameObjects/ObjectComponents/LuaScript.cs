@@ -1,5 +1,11 @@
 ﻿using NLua;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Gahame.GameObjects.ObjectComponents
 {
     public class LuaScript : ObjectComponent
@@ -7,12 +13,24 @@ namespace Gahame.GameObjects.ObjectComponents
         // Lua thing
         Lua lua;
 
+        // Bindings
+        List<float> bindingCS;
+        List<string> bindingLua;
+
         // needed constructor
         public LuaScript(GameObject gameObject) : base(gameObject)
         {
             // HOHOHH
             Updatable = true;
             lua = new Lua();
+
+            bindingCS = new List<float>();
+            bindingLua = new List<string>();
+
+            addFloatBindings(ref gameObject.Position.X, "x");
+            addFloatBindings(ref gameObject.Position.Y, "y");
+            addFloatBindings(ref gameObject.GetComponent<Physics>().Velocity.X, "xSpeed");
+            addFloatBindings(ref gameObject.GetComponent<Physics>().Velocity.Y, "ySpeed");
         }
 
         // Initializes lua script
@@ -23,15 +41,35 @@ namespace Gahame.GameObjects.ObjectComponents
         }
 
         // Runs update function in script
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Update(Microsoft.Xna.Framework.GameTime  gameTime)
         {
-            setFloat("X", gameObject.Position.X);
-            setFloat("Y", gameObject.Position.Y);
+            setBindings();
 
             lua.DoString("Update()");
 
-            gameObject.Position.X = getFloat("X");
-            gameObject.Position.Y = getFloat("Y");
+            getBindings();
+        }
+
+        void addFloatBindings(ref float f, string s)
+        {
+            bindingCS.Add(f);
+            bindingLua.Add(s);
+        }
+
+        void setBindings()
+        {
+            for (int i = 0; i < bindingCS.Count; i++)
+            {
+                lua[bindingLua[i]] = bindingCS[i];   
+            }
+        }
+
+        void getBindings()
+        {
+            for (int i = 0; i < bindingCS.Count; i++)
+            {
+                bindingCS[i] = (float)(double)lua[bindingLua[i]];
+            }
         }
 
         // Lua set variable

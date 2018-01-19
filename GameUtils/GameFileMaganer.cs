@@ -317,6 +317,17 @@ namespace Gahame.GameUtils
                     case "String":
                         script.InitializeLua(reader.ReadLine());
                         break;
+                    case "File":
+                        StreamReader temp = new StreamReader(reader.ReadLine());
+                        script.InitializeLua(temp.ReadToEnd());
+                        temp.Close();
+                        break;
+                    case "EmbeddedFile":
+                        Assembly assembly = Assembly.GetExecutingAssembly();
+                        StreamReader temp2 = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + reader.ReadLine()));
+                        script.InitializeLua(temp2.ReadToEnd());
+                        temp2.Close();
+                        break;
                 }
             }
 
