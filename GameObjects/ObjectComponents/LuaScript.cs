@@ -13,6 +13,7 @@ namespace Gahame.GameObjects.ObjectComponents
             // HOHOHH
             Updatable = true;
             lua = new Lua();
+            lua.LoadCLRPackage();
         }
 
         // Initializes lua script
