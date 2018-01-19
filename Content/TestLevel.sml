@@ -190,12 +190,7 @@ TextSpeed
 ---
 OverworldDepthFix
 LuaScript
-<<<<<<< HEAD
 EmbeddedFile
 TestScript.lua
-=======
-String
-function Start()  end function Update()  end
->>>>>>> 992a135987aa6a30df3e1b08615d7421df450c9c
 ---
 ---
