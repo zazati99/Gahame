@@ -630,7 +630,11 @@ namespace Gahame.GameUtils
             string line;
             while ((line = reader.ReadLine()) != "---")
             {
-                
+                var propInfo = obj.GetType().GetProperty(reader.ReadLine());
+                if (propInfo.GetType() == typeof(float))
+                {
+                    propInfo.SetValue(obj, float.Parse(reader.ReadLine()), null);
+                }
             }
             reader.Close();
             return obj;

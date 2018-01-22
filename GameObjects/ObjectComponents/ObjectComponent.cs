@@ -36,5 +36,11 @@ namespace Gahame.GameObjects.ObjectComponents
         {
 
         }
+
+        // Set the GameObject of this component
+        public void SetGameObject(GameObject o)
+        {
+            gameObject = o;
+        }
     }
 }

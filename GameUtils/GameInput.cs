@@ -45,6 +45,9 @@ namespace Gahame.GameUtils
         public static bool Enter { get; private set; }
         public static bool F5 { get; private set; }
         public static bool F6 { get; private set; }
+        public static bool Shift { get; private set; }
+
+        public static bool DeletePressed { get; private set; }
 
         public static bool JumpBufferCD { get; private set; }
         private static int jumpBuffer;
@@ -111,8 +114,12 @@ namespace Gahame.GameUtils
 
             Enter = keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter) || (gamePadState.IsButtonDown(Buttons.Back) && !previousGamePadState.IsButtonDown(Buttons.Back));
 
+            DeletePressed = keyboardState.IsKeyDown(Keys.Delete) && !previousKeyboardState.IsKeyDown(Keys.Delete);
+
             F5 = keyboardState.IsKeyDown(Keys.F5) && !previousKeyboardState.IsKeyDown(Keys.F5);
             F6 = keyboardState.IsKeyDown(Keys.F6) && !previousKeyboardState.IsKeyDown(Keys.F6);
+
+            Shift = keyboardState.IsKeyDown(Keys.LeftShift);
 
             RightCD = Right && !GahameController.CutScene;
             LeftCD = Left && !GahameController.CutScene;

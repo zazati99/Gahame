@@ -83,11 +83,18 @@ namespace Gahame.GameScreens
         // Unloading content (must also have base thing)
         public virtual void UnloadContent()
         {
+            // Dispose all objects
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                GameObjects[i].UnloadContent();
+            }
+
             // dispose all backgrounds
             for (int i = 0; i < Backgrounds.Count; i++)
             {
                 Backgrounds[i].UnloadContent();
             }
+
             // Unload content
             content.Unload();
         }

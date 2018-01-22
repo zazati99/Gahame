@@ -44,6 +44,18 @@ namespace Gahame.GameObjects
 
         }
 
+        // UNloads content
+        public virtual void UnloadContent()
+        {
+            for (int i = 0; i < Components.Count; i++)
+            {
+                if (Components[i] is IDisposable d)
+                {
+                    d.Dispose();
+                }
+            }
+        }
+
         // Updates GameObject (Must be base thing)
         public virtual void Update(GameTime gameTime)
         {
@@ -133,8 +145,16 @@ namespace Gahame.GameObjects
         // Destroy a GameObject
         protected void DestroyObject(GameObject o)
         {
+            o.UnloadContent();
             screen.GameObjects.Remove(o);
         }
+        // Destroy this GameObject
+        public void DestroyObject()
+        {
+            UnloadContent();
+            screen.GameObjects.Remove(this);
+        }
+
 
         // Texture stuff
         protected Texture2D CreateRect(SpriteBatch spriteBatch, Vector2 size)

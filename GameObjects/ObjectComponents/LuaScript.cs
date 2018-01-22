@@ -1,5 +1,7 @@
 ﻿using NLua;
 
+using Gahame.GameUtils;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,35 +10,29 @@ using System.Threading.Tasks;
 
 namespace Gahame.GameObjects.ObjectComponents
 {
-    public class LuaScript : ObjectComponent
+    public class LuaScript : ObjectComponent, IDisposable
     {
         // Lua thing
         Lua lua;
-
-        // Bindings
-        List<float> bindingCS;
-        List<string> bindingLua;
 
         // needed constructor
         public LuaScript(GameObject gameObject) : base(gameObject)
         {
             // HOHOHH
             Updatable = true;
+            //lua = new Lua();
             lua = new Lua();
+            
 
-            bindingCS = new List<float>();
-            bindingLua = new List<string>();
-
-            addFloatBindings(ref gameObject.Position.X, "x");
-            addFloatBindings(ref gameObject.Position.Y, "y");
-            addFloatBindings(ref gameObject.GetComponent<Physics>().Velocity.X, "xSpeed");
-            addFloatBindings(ref gameObject.GetComponent<Physics>().Velocity.Y, "ySpeed");
-            lua.LoadCLRPackage();
+            //lua.LoadCLRPackage();
         }
 
         // Initializes lua script
         public void InitializeLua(string luaScript)
         {
+            // Register functions
+            lua.RegisterFunction("instanceDestroy", this, GetType().GetMethod("instanceDestroy"));
+
             lua.DoString(luaScript);
             lua.DoString("Start()");
         }
@@ -44,33 +40,19 @@ namespace Gahame.GameObjects.ObjectComponents
         // Runs update function in script
         public override void Update(Microsoft.Xna.Framework.GameTime  gameTime)
         {
-            setBindings();
+            setFloat("x", gameObject.Position.X);
+            setFloat("y", gameObject.Position.Y);
+            setFloat("xSpeed", gameObject.GetComponent<Physics>().Velocity.X);
+            setFloat("ySpeed", gameObject.GetComponent<Physics>().Velocity.Y);
 
-            lua.DoString("Update()");
+            lua.GetFunction("Update").Call();
 
-            getBindings();
-        }
+            gameObject.Position.X = getFloat("x");
+            gameObject.Position.Y = getFloat("y");
+            gameObject.GetComponent<Physics>().Velocity.X = getFloat("xSpeed");
+            gameObject.GetComponent<Physics>().Velocity.Y = getFloat("ySpeed");
 
-        void addFloatBindings(ref float f, string s)
-        {
-            bindingCS.Add(f);
-            bindingLua.Add(s);
-        }
-
-        void setBindings()
-        {
-            for (int i = 0; i < bindingCS.Count; i++)
-            {
-                lua[bindingLua[i]] = bindingCS[i];   
-            }
-        }
-
-        void getBindings()
-        {
-            for (int i = 0; i < bindingCS.Count; i++)
-            {
-                bindingCS[i] = (float)(double)lua[bindingLua[i]];
-            }
+            if (isGameObjectDelete()) gameObject.UnloadContent();
         }
 
         // Lua set variable
@@ -84,5 +66,29 @@ namespace Gahame.GameObjects.ObjectComponents
         {
             return (float)(double)lua[variable];
         }
+
+        // Dispose some scipt
+        public void Dispose()
+        {
+            // KIll lua
+            lua.Close();
+            lua.Dispose();
+        }
+
+        public void instanceDestroy()
+        {
+            gameObject.screen.GameObjects.Remove(gameObject);
+        }
+
+        bool isGameObjectDelete()
+        {
+            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
+            {
+                if (gameObject.screen.GameObjects[i] == gameObject)
+                    return false;
+            }
+            return true;
+        }
+
     }
 }
