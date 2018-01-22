@@ -189,8 +189,4 @@ TextSpeed
 ---
 ---
 OverworldDepthFix
-LuaScript
-File
-Gahame/Content/TestScript.lua
----
 ---
