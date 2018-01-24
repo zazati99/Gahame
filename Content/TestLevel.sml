@@ -10,9 +10,9 @@ RepeatY
 RepeatX
 ---
 Tileset
-TileAmountX
+AmountX
 4
-TileAmountY
+AmountY
 4
 Path
 Backgrounds/tile
@@ -22,7 +22,7 @@ X
 Y
 50
 Row
-1
+3
 Column
 1
 ---
