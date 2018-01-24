@@ -64,8 +64,9 @@ namespace Gahame.GameScreens
             // Load stuff and add GameObjects Below 
 
             // Test tiles
-            Tileset tset = new Tileset();
-            tset.LoadTexture(content, "Backgrounds/tile", new Vector2(4, 4));
+            Tileset tset = new Tileset(this);
+            tset.TileAmount = new Vector2(4, 4);
+            tset.LoadTexture("Backgrounds/tile");
 
             for (int y = 0; y < 4; y++)
             {

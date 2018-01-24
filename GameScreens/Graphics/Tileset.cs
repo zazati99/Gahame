@@ -20,10 +20,16 @@ namespace Gahame.GameScreens
         // tile rectangle
         Rectangle sourceRect;
 
+        // SCreen
+        GameScreen screen;
+
         // constructor
-        public Tileset()
+        public Tileset(GameScreen screen)
         {
             Tiles = new List<Tile>();
+            this.screen = screen;
+
+            TileAmount = new Vector2(0, 0);
         }
         
         // Draw Tiles
@@ -42,14 +48,13 @@ namespace Gahame.GameScreens
         }
 
         // Load the texture
-        public void LoadTexture(ContentManager content, string path, Vector2 tileAmount)
+        public void LoadTexture(string path)
         {
             // Load image from path
-            Image = content.Load<Texture2D>(path);
+            Image = screen.content.Load<Texture2D>(path);
 
             // make rectangle for that texture and size
-            sourceRect = new Rectangle(0, 0, (int)(Image.Width / tileAmount.X), (int)(Image.Height / tileAmount.Y));
-            TileAmount = tileAmount;
+            sourceRect = new Rectangle(0, 0, (int)(Image.Width / TileAmount.X), (int)(Image.Height / TileAmount.Y));
         }
     }
 }

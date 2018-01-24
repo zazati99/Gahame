@@ -481,6 +481,70 @@ namespace Gahame.GameUtils
 
         #endregion
 
+        #region Tiles
+
+        // Load tileset
+        public static Tileset LoadTileset(StreamReader reader,  GameScreen screen)
+        {
+            // Create tileset
+            Tileset tileset = new Tileset(screen);
+
+            // läs in memes
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch(line)
+                {
+                    case "AmountX":
+                        tileset.TileAmount.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "AmountY":
+                        tileset.TileAmount.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Path":
+                        tileset.LoadTexture(reader.ReadLine());
+                        break;
+                    case "Tile":
+                        tileset.Tiles.Add(LoadTile(reader));
+                        break;
+                }
+            }
+
+            return tileset;
+        }
+
+        // Load a lonly tile
+        public static Tile LoadTile(StreamReader reader)
+        {
+            // Create the tile
+            Tile tile = new Tile();
+
+            // Load stuff
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch(line)
+                {
+                    case "X":
+                        tile.Position.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Y":
+                        tile.Position.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Row":
+                        tile.ColumnRow.X = int.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Column":
+                        tile.ColumnRow.Y = int.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                }
+            }
+
+            return tile;
+        }
+
+        #endregion
+
         #region GameScreens
         // Load common screen information
         public static GameScreen LoadScreenInformation(GameScreen screen, StreamReader reader, string info)
@@ -509,6 +573,9 @@ namespace Gahame.GameUtils
                     break;
                 case "Background":
                     screen.Backgrounds.Add(LoadBackground(reader, screen));
+                    break;
+                case "Tileset":
+                    screen.Tilesets.Add(LoadTileset(reader, screen));
                     break;
             }
             return screen;
