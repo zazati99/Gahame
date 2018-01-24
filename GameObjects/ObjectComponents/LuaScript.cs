@@ -75,6 +75,7 @@ namespace Gahame.GameObjects.ObjectComponents
             lua.Dispose();
         }
 
+        // DEstroy gameObject
         public void instanceDestroy()
         {
             gameObject.screen.GameObjects.Remove(gameObject);

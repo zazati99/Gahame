@@ -40,7 +40,7 @@ namespace Gahame.GameScreens
         }
 
         // Updates camera
-        public void Update()
+        public virtual void Update()
         {
             // Do some stuff if the camera is not static
             if (!Static)

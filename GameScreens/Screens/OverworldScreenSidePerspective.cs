@@ -40,14 +40,6 @@ namespace Gahame.GameScreens
             a.Size = new Vector2(64, 64);
             a.ScreenName = "TestLevel.sml";
             loadingAreas.Add(a);
-
-            ScreenBackground bac = new ScreenBackground(this);
-            bac.LoadTexture(content, "Backgrounds/testkek");
-            bac.RepeatX = true;
-            bac.RepeatY = true;
-            bac.FollowCamera = true;
-            bac.ParalaxAmount = .75f;
-            Backgrounds.Add(bac);
         }
 
         // Unloads all the trash

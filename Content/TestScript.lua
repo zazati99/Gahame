@@ -4,6 +4,6 @@ end
 
 function Update()
     
-	instanceDestroy()
+	--x = x + 1
 	
 end

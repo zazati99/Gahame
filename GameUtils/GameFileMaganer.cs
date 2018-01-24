@@ -435,6 +435,52 @@ namespace Gahame.GameUtils
         }
         #endregion
 
+        #region Background
+
+        public static ScreenBackground LoadBackground(StreamReader reader, GameScreen screen)
+        {
+            // create le background
+            ScreenBackground background = new ScreenBackground(screen);
+
+            // get lines and load stuff
+            string line;
+            while ((line = reader.ReadLine()) != "---")
+            {
+                switch (line)
+                {
+                    case "Path":
+                        background.LoadTexture(reader.ReadLine());
+                        break;
+                    case "X":
+                        background.Position.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Y":
+                        background.Position.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "ParalaxAmount":
+                        background.ParalaxAmount = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "Depth":
+                        background.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
+                    case "FollowCamera":
+                        background.FollowCamera = true;
+                        break;
+                    case "RepeatX":
+                        background.RepeatX = true;
+                        break;
+                    case "RepeatY":
+                        background.RepeatY = true;
+                        break;
+                }
+            }
+
+            // return that shi
+            return background;
+        }
+
+        #endregion
+
         #region GameScreens
         // Load common screen information
         public static GameScreen LoadScreenInformation(GameScreen screen, StreamReader reader, string info)
@@ -460,6 +506,9 @@ namespace Gahame.GameUtils
                     break;
                 case "ExistingObject":
                     screen.GameObjects.Add(LoadExistingObject(reader, screen));
+                    break;
+                case "Background":
+                    screen.Backgrounds.Add(LoadBackground(reader, screen));
                     break;
             }
             return screen;

@@ -63,14 +63,6 @@ namespace Gahame.GameScreens
             base.LoadContent();
             // Load stuff and add GameObjects Below 
 
-            // Test background
-            ScreenBackground bac = new ScreenBackground(this);
-            bac.LoadTexture(content, "Backgrounds/testkek");
-            bac.RepeatY = true;
-            bac.RepeatX = true;
-            bac.FollowCamera = false;
-            Backgrounds.Add(bac);
-
             // Test tiles
             Tileset tset = new Tileset();
             tset.LoadTexture(content, "Backgrounds/tile", new Vector2(4, 4));

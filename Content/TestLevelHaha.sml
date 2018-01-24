@@ -3,12 +3,6 @@ Width
 1920
 Height
 1080
-Background
-Path
-Backgrounds/testkek
-RepeatY
-RepeatX
----
 Player
 X
 400
@@ -196,7 +190,7 @@ TextSpeed
 ---
 OverworldDepthFix
 LuaScript
-EmbeddedFile
-TestScript.lua
+String
+function Start() end function Update() end
 ---
 ---
