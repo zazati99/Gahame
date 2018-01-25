@@ -20,6 +20,9 @@ namespace Gahame.GameScreens
         // tile rectangle
         Rectangle sourceRect;
 
+        // depth 
+        public float Depth;
+
         // SCreen
         GameScreen screen;
 
@@ -30,6 +33,7 @@ namespace Gahame.GameScreens
             this.screen = screen;
 
             TileAmount = new Vector2(0, 0);
+            Depth = .5f;
         }
         
         // Draw Tiles
@@ -42,8 +46,9 @@ namespace Gahame.GameScreens
                 sourceRect.Y = Tiles[i].ColumnRow.Y * sourceRect.Height;
 
                 spriteBatch.Draw(texture: Image,
-                             position: Tiles[i].Position,
-                             sourceRectangle: sourceRect);
+                                 position: Tiles[i].Position,
+                                 sourceRectangle: sourceRect,
+                                 layerDepth: Depth);
             }
         }
 

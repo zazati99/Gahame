@@ -23,8 +23,8 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             Position = new Vector2(Camera.View.X / 2 - 100, Camera.View.Y - 60);
 
             Font.LineSpacing = (int)(size.Y / 2) - FontSize;
-            FontSize = 10;
-            GameFonts.GahameFont.LineSpacing = (int)(size.Y / 2) - FontSize;
+            FontSize = 8;
+            //GameFonts.GahameFont.LineSpacing = (int)(size.Y / 2) - FontSize;
         }
 
         // Updates Box
@@ -72,7 +72,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 Color.Black);
 
             // Draws the text
-            /*spriteBatch.DrawString(
+            spriteBatch.DrawString(
                 Font,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
                 Position,
@@ -81,9 +81,9 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 origin,
                 1,
                 SpriteEffects.None,
-                0);*/
+                0);
 
-            GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy((CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text), Position+new Vector2(1, 4), Color.White);
+            //GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy((CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text), Position+new Vector2(1, 4), Color.White);
 
         }
     }

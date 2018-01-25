@@ -9,6 +9,7 @@ using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 using System.IO;
 using System.Reflection;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Gahame.GameUtils
 {
@@ -19,25 +20,25 @@ namespace Gahame.GameUtils
         public static GameObject LoadGameObjectValues(GameObject o, StreamReader reader)
         {
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = RemoveSpaces(reader.ReadLine())) != "---")
             {
                 switch (line)
                 {
                     case "X":
-                        o.Position.X = float.Parse(reader.ReadLine());
+                        o.Position.X = float.Parse(RemoveSpaces(reader.ReadLine()));
                         break;
                     case "Y":
-                        o.Position.Y = float.Parse(reader.ReadLine());
+                        o.Position.Y = float.Parse(RemoveSpaces(reader.ReadLine()));
                         break;
                     case "Tag":
-                        o.Tag = reader.ReadLine();
+                        o.Tag = GetString(reader.ReadLine());
                         break;
                     case "Sprite":
                         o.Components.Add(LoadSprite(reader, o));
                         break;
                     case "SpriteFile":
                         // Loads Sprite from file on next line
-                        StreamReader temp = new StreamReader(reader.ReadLine());
+                        StreamReader temp = new StreamReader(RemoveSpaces(reader.ReadLine()));
                         o.Components.Add(LoadSprite(temp, o));
                         temp.Close();
                         break;
@@ -227,7 +228,7 @@ namespace Gahame.GameUtils
             {
                 switch(line){
                     case "Text":
-                        box.Text = reader.ReadLine().Replace("|", "\n");
+                        box.Text = GetString(reader.ReadLine().Replace("|", "\n"));
                         break;
                     case "TextSpeed":
                         box.UpdateSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
@@ -507,6 +508,9 @@ namespace Gahame.GameUtils
                     case "Tile":
                         tileset.Tiles.Add(LoadTile(reader));
                         break;
+                    case "Depth":
+                        tileset.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        break;
                 }
             }
 
@@ -702,6 +706,20 @@ namespace Gahame.GameUtils
         #endregion
 
         #region Dumb Stuff
+        // Remove spaces
+        public static string RemoveSpaces(string s)
+        {
+            return s.Trim(' ');
+        }
+
+        // Get string between quotes
+        public static string GetString(string s)
+        {
+            Regex reg = new Regex("\"[^\"]*\"");
+            string ss = reg.Match(s).ToString();
+            return ss.Trim('\"');
+        }
+
         // Write to log file
         public static void SaveLog(string[] log)
         {
