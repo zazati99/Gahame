@@ -26,6 +26,9 @@ namespace Gahame.GameScreens
         // acceleration;
         public Vector2 Acceleration;
 
+        // scale
+        public Vector2 Scale;
+
         // Lifespan
         public float LifeSpan;
 
@@ -61,7 +64,7 @@ namespace Gahame.GameScreens
         // Draw the particle
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position); 
+            spriteBatch.Draw(Texture, Position, scale: Scale); 
         }
     }
 }

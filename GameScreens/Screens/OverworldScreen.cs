@@ -87,8 +87,10 @@ namespace Gahame.GameScreens
             sys.MaxStartVelocity = new Vector2(.5f, 0);
             sys.MinAcceleration = new Vector2(0, 0.1f);
             sys.MaxAcceleration = new Vector2(0, 0.15f);
+            sys.MinScale = new Vector2(1, 1);
+            sys.MaxScale = new Vector2(2, 2);
             sys.PositionOffset = new Vector2(ScreenSize.X/2, 5);
-            sys.LifeSpan = 180;
+            sys.LifeSpan = 120;
             sys.EmitAmount = 10;
 
             sys.Position = new Vector2(ScreenSize.X/2, -20);

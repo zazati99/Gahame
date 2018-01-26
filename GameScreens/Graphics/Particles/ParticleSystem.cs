@@ -36,6 +36,10 @@ namespace Gahame.GameScreens
         public Vector2 MinStartVelocity;
         public Vector2 MaxStartVelocity;
 
+        // scale
+        public Vector2 MinScale;
+        public Vector2 MaxScale;
+
         // how long will boys live
         public float LifeSpan;
 
@@ -53,6 +57,8 @@ namespace Gahame.GameScreens
             MaxAcceleration = new Vector2(0, 0);
             MinStartVelocity = new Vector2(0, 0);
             MaxStartVelocity = new Vector2(0, 0);
+            MinScale = Vector2.One;
+            MaxScale = Vector2.One;
             LifeSpan = 60;
 
             // System properties
@@ -88,6 +94,8 @@ namespace Gahame.GameScreens
                 p.Velocity.Y = MyMaths.RandomInRange(MinStartVelocity.Y, MaxStartVelocity.Y);
                 p.Acceleration.X = MyMaths.RandomInRange(MinAcceleration.X, MaxAcceleration.X);
                 p.Acceleration.Y = MyMaths.RandomInRange(MinAcceleration.Y, MaxAcceleration.Y);
+                p.Scale.X = MyMaths.RandomInRange(MinScale.X, MaxScale.X);
+                p.Scale.Y = MyMaths.RandomInRange(MinScale.Y, MaxScale.Y);
                 p.LifeSpan = LifeSpan;
 
                 Particles.Add(p);
