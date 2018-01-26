@@ -88,10 +88,15 @@ namespace Gahame.GameScreens
             sys.MinAcceleration = new Vector2(0, 0.1f);
             sys.MaxAcceleration = new Vector2(0, 0.15f);
             sys.MinScale = new Vector2(1, 1);
-            sys.MaxScale = new Vector2(2, 2);
-            sys.PositionOffset = new Vector2(ScreenSize.X/2, 5);
+            sys.MaxScale = new Vector2(1, 4);
+
+            //sys.PositionOffset = new Vector2(Camera.View.X, 5);
+            sys.PositionOffset = new Vector2(ScreenSize.X / 2, 5);
+
             sys.LifeSpan = 120;
-            sys.EmitAmount = 10;
+
+            //sys.EmitAmount = (int)(400 * sys.PositionOffset.X * 2 / ScreenSize.X);
+            sys.EmitAmount = 400;
 
             sys.Position = new Vector2(ScreenSize.X/2, -20);
 
@@ -155,6 +160,7 @@ namespace Gahame.GameScreens
                 ct.Stop();
             }
 
+            //ParticleSystems[0].Position.X = Player.Position.X;
             ParticleSystems[0].Emit();
 
             // Start battle if it has battles
