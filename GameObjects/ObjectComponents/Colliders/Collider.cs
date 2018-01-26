@@ -21,7 +21,7 @@ namespace Gahame.GameObjects.ObjectComponents.Colliders
         public Vector2 Offset;
 
         // Virtual function that will be overriden
-        public virtual bool IsColliding(Collider col, Vector2 p1, Vector2 p2)
+        public virtual bool IsColliding(Collider otherCol, Vector2 p1, Vector2 p2)
         {
             return false;
         }

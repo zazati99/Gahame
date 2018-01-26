@@ -26,6 +26,9 @@ namespace Gahame.GameScreens
         // List of Screen Effects
         public List<ScreenEffect> ScreenEffects;
 
+        // List of particle systems
+        public List<ParticleSystem> ParticleSystems;
+
         // List of tilesets
         public List<Tileset> Tilesets;
 
@@ -61,6 +64,9 @@ namespace Gahame.GameScreens
 
             // Create list of screen effects
             ScreenEffects = new List<ScreenEffect>();
+
+            // Create list of particle systems
+            ParticleSystems = new List<ParticleSystem>();
 
             // Creates List of tilesets
             Tilesets = new List<Tileset>();
@@ -108,6 +114,12 @@ namespace Gahame.GameScreens
                 GameObjects[i].Update(gameTime);
             }
 
+            // Updates the particles
+            for (int i = 0; i < ParticleSystems.Count; i++)
+            {
+                ParticleSystems[i].Update(gameTime);
+            }
+
             // Calls update on screen effects
             for (int i = 0; i < ScreenEffects.Count; i++)
             {
@@ -137,6 +149,12 @@ namespace Gahame.GameScreens
             for (int i = 0; i < GameObjects.Count; i++)
             {
                 GameObjects[i].Draw(spriteBatch);
+            }
+
+            // Updates the particles
+            for (int i = 0; i < ParticleSystems.Count; i++)
+            {
+                ParticleSystems[i].Draw(spriteBatch);
             }
 
             // calls draw for each screen effect

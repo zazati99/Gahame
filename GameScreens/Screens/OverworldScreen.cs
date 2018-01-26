@@ -81,6 +81,27 @@ namespace Gahame.GameScreens
 
             Tilesets.Add(tset);
 
+            // test meme
+            ParticleSystem sys = new ParticleSystem(this);
+            sys.MinStartVelocity = new Vector2(-2, -2);
+            sys.MaxStartVelocity = new Vector2(2, 2);
+            sys.MinAcceleration = new Vector2(0, 0.1f);
+            sys.MaxAcceleration = new Vector2(0, 0.15f);
+            sys.LifeSpan = 120;
+            sys.EmitAmount = 3;
+
+            sys.Position = new Vector2(300, 100);
+
+            Color[] data = new Color[1];
+            data[0] = Color.Red;
+            Texture2D meme = new Texture2D(Game1.Graphics.GraphicsDevice , 1, 1);
+            meme.SetData(data);
+
+            sys.AddTexture(meme);
+
+
+            ParticleSystems.Add(sys);
+
         }
 
         // Start initialize some stuff
@@ -121,6 +142,12 @@ namespace Gahame.GameScreens
             {
                 GahameController.CutScene = false;
                 ct.Stop();
+            }
+
+            if (GameInput.ActivateHeld)
+            {
+                ParticleSystems[0].Position = Player.Position - new Vector2(0, 32);
+                ParticleSystems[0].Emit();
             }
 
             // Start battle if it has battles

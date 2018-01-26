@@ -8,6 +8,9 @@ namespace Gahame.GameUtils
 
     public static class MyMaths
     {
+        // Hmmm?
+        static Random random = new Random();
+
         // What have I become? The inline G O D
         public static float Approach(float value, float target, float speed)
         {
@@ -36,6 +39,12 @@ namespace Gahame.GameUtils
         public static float Clamp(float value, float min, float max)
         {
             return (value >= min && value <= max) ? value : (value > max) ? max : min;
+        }
+
+        // Hehe
+        public static float RandomInRange(float min, float max)
+        {
+            return min + (float)(random.NextDouble() * (max - min));
         }
 
         // Normalize sick

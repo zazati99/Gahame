@@ -10,7 +10,7 @@ namespace Gahame
 {
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
 
         // Exit game timer
@@ -22,9 +22,9 @@ namespace Gahame
             Content.RootDirectory = "Content";
 
             // Some graphics settings
-            graphics = new GraphicsDeviceManager(this);
-            graphics.HardwareModeSwitch = false;
-            graphics.GraphicsProfile = GraphicsProfile.Reach;
+            Graphics = new GraphicsDeviceManager(this);
+            Graphics.HardwareModeSwitch = false;
+            Graphics.GraphicsProfile = GraphicsProfile.Reach;
 
             // Randomizes seed
             Random r = new Random();
@@ -33,7 +33,7 @@ namespace Gahame
             // Camera
             Vector2 defaultView = new Vector2(320, 180); // the game view
             Vector2 defaultPort = new Vector2(640, 360); // the window size
-            ScreenManager.Instance.GameCamera = new Camera(defaultPort, defaultView, graphics);
+            ScreenManager.Instance.GameCamera = new Camera(defaultPort, defaultView, Graphics);
 
             // Exit game Timer
             exitGameTimer = new Timer();

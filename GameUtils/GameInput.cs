@@ -28,6 +28,7 @@ namespace Gahame.GameUtils
         public static bool DownPressed { get; private set; }
 
         public static bool Activate { get; private set; }
+        public static bool ActivateHeld { get; private set; }
 
         public static bool RightCD { get; private set; }
         public static bool LeftCD { get; private set; }
@@ -47,6 +48,7 @@ namespace Gahame.GameUtils
         public static bool F6 { get; private set; }
         public static bool Shift { get; private set; }
 
+        public static bool Delete { get; private set; }
         public static bool DeletePressed { get; private set; }
 
         public static bool JumpBufferCD { get; private set; }
@@ -107,6 +109,7 @@ namespace Gahame.GameUtils
             Jump = (keyboardState.IsKeyDown(Keys.Space) && !previousKeyboardState.IsKeyDown(Keys.Space)) || (gamePadState.IsButtonDown(Buttons.A) && !previousGamePadState.IsButtonDown(Buttons.A));
             JumpHeld = keyboardState.IsKeyDown(Keys.Space) || gamePadState.IsButtonDown(Buttons.A);
 
+            ActivateHeld = keyboardState.IsKeyDown(Keys.E) || gamePadState.IsButtonDown(Buttons.B);
             Activate = (keyboardState.IsKeyDown(Keys.E) && !previousKeyboardState.IsKeyDown(Keys.E)) || (gamePadState.IsButtonDown(Buttons.B) && !previousGamePadState.IsButtonDown(Buttons.B));
 
             Esc = (keyboardState.IsKeyDown(Keys.Escape) && !previousKeyboardState.IsKeyDown(Keys.Escape)) || (gamePadState.IsButtonDown(Buttons.Start) && !previousGamePadState.IsButtonDown(Buttons.Start));
@@ -114,7 +117,8 @@ namespace Gahame.GameUtils
 
             Enter = keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter) || (gamePadState.IsButtonDown(Buttons.Back) && !previousGamePadState.IsButtonDown(Buttons.Back));
 
-            DeletePressed = keyboardState.IsKeyDown(Keys.Delete) && !previousKeyboardState.IsKeyDown(Keys.Delete);
+            Delete = keyboardState.IsKeyDown(Keys.Delete);
+            DeletePressed = Delete && !previousKeyboardState.IsKeyDown(Keys.Delete);
 
             F5 = keyboardState.IsKeyDown(Keys.F5) && !previousKeyboardState.IsKeyDown(Keys.F5);
             F6 = keyboardState.IsKeyDown(Keys.F6) && !previousKeyboardState.IsKeyDown(Keys.F6);
