@@ -83,21 +83,30 @@ namespace Gahame.GameScreens
 
             // test meme
             ParticleSystem sys = new ParticleSystem(this);
-            sys.MinStartVelocity = new Vector2(-2, -2);
-            sys.MaxStartVelocity = new Vector2(2, 2);
+            sys.MinStartVelocity = new Vector2(-.5f, 0);
+            sys.MaxStartVelocity = new Vector2(.5f, 0);
             sys.MinAcceleration = new Vector2(0, 0.1f);
             sys.MaxAcceleration = new Vector2(0, 0.15f);
-            sys.LifeSpan = 120;
-            sys.EmitAmount = 3;
+            sys.PositionOffset = new Vector2(ScreenSize.X/2, 5);
+            sys.LifeSpan = 180;
+            sys.EmitAmount = 10;
 
-            sys.Position = new Vector2(300, 100);
+            sys.Position = new Vector2(ScreenSize.X/2, -20);
 
             Color[] data = new Color[1];
-            data[0] = Color.Red;
+            data[0] = Color.DarkBlue;
             Texture2D meme = new Texture2D(Game1.Graphics.GraphicsDevice , 1, 1);
             meme.SetData(data);
 
+            Color[] data2 = new Color[1];
+            data2[0] = Color.Blue;
+            Texture2D meme2 = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1);
+            meme2.SetData(data2);
+
             sys.AddTexture(meme);
+            sys.AddTexture(meme2);
+
+            //sys.AddTexture(content.Load<Texture2D>("Sprites/Test"));
 
 
             ParticleSystems.Add(sys);
@@ -144,11 +153,7 @@ namespace Gahame.GameScreens
                 ct.Stop();
             }
 
-            if (GameInput.ActivateHeld)
-            {
-                ParticleSystems[0].Position = Player.Position - new Vector2(0, 32);
-                ParticleSystems[0].Emit();
-            }
+            ParticleSystems[0].Emit();
 
             // Start battle if it has battles
             if (HasBattles) {

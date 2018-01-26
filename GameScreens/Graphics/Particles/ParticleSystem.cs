@@ -26,6 +26,7 @@ namespace Gahame.GameScreens
 
         // Position thing
         public Vector2 Position;
+        public Vector2 PositionOffset;
 
         // Acceleration
         public Vector2 MinAcceleration;
@@ -47,6 +48,7 @@ namespace Gahame.GameScreens
         {
             // particle properties
             DestroyOnCollision = false;
+            PositionOffset = new Vector2(0, 0);
             MinAcceleration = new Vector2(0, 0);
             MaxAcceleration = new Vector2(0, 0);
             MinStartVelocity = new Vector2(0, 0);
@@ -80,9 +82,8 @@ namespace Gahame.GameScreens
                 Particle p = new Particle(this);
 
                 // initialize stuff
-                p.Texture = textures[r.Next(textures.Count)];
-                //p.Texture = textures[0];
-                p.Position = Position;
+                p.Texture = textures[r.Next(0, textures.Count)];
+                p.Position = Position + new Vector2(MyMaths.RandomInRange(-PositionOffset.X, PositionOffset.X), MyMaths.RandomInRange(-PositionOffset.Y, PositionOffset.Y));
                 p.Velocity.X = MyMaths.RandomInRange(MinStartVelocity.X, MaxStartVelocity.X);
                 p.Velocity.Y = MyMaths.RandomInRange(MinStartVelocity.Y, MaxStartVelocity.Y);
                 p.Acceleration.X = MyMaths.RandomInRange(MinAcceleration.X, MaxAcceleration.X);
