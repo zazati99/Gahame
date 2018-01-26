@@ -20,25 +20,25 @@ namespace Gahame.GameUtils
         public static GameObject LoadGameObjectValues(GameObject o, StreamReader reader)
         {
             string line;
-            while ((line = RemoveSpaces(reader.ReadLine())) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "X":
-                        o.Position.X = float.Parse(RemoveSpaces(reader.ReadLine()));
+                        o.Position.X = float.Parse(line = GetLine(reader));
                         break;
                     case "Y":
-                        o.Position.Y = float.Parse(RemoveSpaces(reader.ReadLine()));
+                        o.Position.Y = float.Parse(line = GetLine(reader));
                         break;
                     case "Tag":
-                        o.Tag = GetString(reader.ReadLine());
+                        o.Tag = GetLine(reader);
                         break;
                     case "Sprite":
                         o.Components.Add(LoadSprite(reader, o));
                         break;
                     case "SpriteFile":
                         // Loads Sprite from file on next line
-                        StreamReader temp = new StreamReader(RemoveSpaces(reader.ReadLine()));
+                        StreamReader temp = new StreamReader(line = GetLine(reader));
                         o.Components.Add(LoadSprite(temp, o));
                         temp.Close();
                         break;
@@ -81,7 +81,7 @@ namespace Gahame.GameUtils
         public static GameObject LoadExistingObject(StreamReader reader, GameScreen screen)
         {
             // Creates object with help of advanced stuff
-            Type t = Type.GetType(reader.ReadLine());
+            Type t = Type.GetType(GetLine(reader));
             GameObject o = (GameObject)Activator.CreateInstance(t);
             o.screen = screen;
 
@@ -101,7 +101,7 @@ namespace Gahame.GameUtils
             HitBox hb = new HitBox(o);
 
             string line;
-            while((line = reader.ReadLine()) != "---")
+            while((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -122,21 +122,21 @@ namespace Gahame.GameUtils
             BoxCollider col = new BoxCollider();
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "Width":
-                        col.Size.X = float.Parse(reader.ReadLine());
+                        col.Size.X = float.Parse(GetLine(reader));
                         break;
                     case "Height":
-                        col.Size.Y = float.Parse(reader.ReadLine());
+                        col.Size.Y = float.Parse(GetLine(reader));
                         break;
                     case "OffsetX":
-                        col.Offset.X = float.Parse(reader.ReadLine());
+                        col.Offset.X = float.Parse(GetLine(reader));
                         break;
                     case "OffsetY":
-                        col.Offset.Y = float.Parse(reader.ReadLine());
+                        col.Offset.Y = float.Parse(GetLine(reader));
                         break;
                 }
             }
@@ -151,24 +151,24 @@ namespace Gahame.GameUtils
             Sprite sprite = new Sprite(o);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "Path":
-                        sprite.AddImage(reader.ReadLine());
+                        sprite.AddImage(GetLine(reader));
                         break;
                     case "ImageSpeed":
-                        sprite.ImageSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        sprite.ImageSpeed = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Depth":
-                        sprite.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        sprite.Depth = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "OriginX":
-                        sprite.SpriteOrigin.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        sprite.SpriteOrigin.X = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "OriginY":
-                        sprite.SpriteOrigin.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        sprite.SpriteOrigin.Y = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                 }
             }
@@ -183,7 +183,7 @@ namespace Gahame.GameUtils
             Dialogue d = new Dialogue(o);
 
             string line;
-            while((line = reader.ReadLine()) != "---"){
+            while((line = GetLine(reader)) != "---"){
                 switch(line){
                     case "DialogueBranch":
                         LoadDialogueBranch(reader, d);
@@ -200,7 +200,7 @@ namespace Gahame.GameUtils
             string Key = "";
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -211,7 +211,7 @@ namespace Gahame.GameUtils
                         branch.Boxes.Add(LoadDialogueBoxAlternativePlain(reader, branch));
                         break;
                     case "Key":
-                        Key = reader.ReadLine();
+                        Key = GetLine(reader);
                         break;
                 }
             }
@@ -224,14 +224,14 @@ namespace Gahame.GameUtils
             DialogueBoxPlain box = new DialogueBoxPlain(group);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch(line){
                     case "Text":
-                        box.Text = GetString(reader.ReadLine().Replace("|", "\n"));
+                        box.Text = GetLine(reader).Replace("|","\n");
                         break;
                     case "TextSpeed":
-                        box.UpdateSpeed = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        box.UpdateSpeed = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "NonSkippable":
                         box.Skippable = false;
@@ -247,7 +247,7 @@ namespace Gahame.GameUtils
             DialogueBoxAlternativePlain box = new DialogueBoxAlternativePlain(group);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -265,15 +265,15 @@ namespace Gahame.GameUtils
             Alternative alternative = new Alternative();
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "Text":
-                        alternative.Text = reader.ReadLine();
+                        alternative.Text = GetLine(reader);
                         break;
                     case "Key":
-                        alternative.Key = reader.ReadLine();
+                        alternative.Key = GetLine(reader);
                         break;
                 }
             }
@@ -288,7 +288,7 @@ namespace Gahame.GameUtils
             Physics physics = new Physics(o);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -311,21 +311,21 @@ namespace Gahame.GameUtils
             LuaScript script = new LuaScript(o);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "String":
-                        script.InitializeLua(reader.ReadLine());
+                        script.InitializeLua(GetLine(reader));
                         break;
                     case "File":
-                        StreamReader temp = new StreamReader(reader.ReadLine());
+                        StreamReader temp = new StreamReader(GetLine(reader));
                         script.InitializeLua(temp.ReadToEnd());
                         temp.Close();
                         break;
                     case "EmbeddedFile":
                         Assembly assembly = Assembly.GetExecutingAssembly();
-                        StreamReader temp2 = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + reader.ReadLine()));
+                        StreamReader temp2 = new StreamReader(assembly.GetManifestResourceStream(Program.ENBEDDEDCONTENT + GetLine(reader)));
                         script.InitializeLua(temp2.ReadToEnd());
                         temp2.Close();
                         break;
@@ -344,15 +344,15 @@ namespace Gahame.GameUtils
             PlayerObjectBattle player = new PlayerObjectBattle(screen);
 
             string line;
-            while((line = reader.ReadLine()) != "---")
+            while((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "X":
-                        player.Position.X = float.Parse(reader.ReadLine());
+                        player.Position.X = float.Parse(GetLine(reader));
                         break;
                     case "Y":
-                        player.Position.Y = float.Parse(reader.ReadLine());
+                        player.Position.Y = float.Parse(GetLine(reader));
                         break;
                 }
             }
@@ -365,15 +365,15 @@ namespace Gahame.GameUtils
             PlayerObjectOverworld player = new PlayerObjectOverworld(screen);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "X":
-                        player.Position.X = float.Parse(reader.ReadLine());
+                        player.Position.X = float.Parse(GetLine(reader));
                         break;
                     case "Y":
-                        player.Position.Y = float.Parse(reader.ReadLine());
+                        player.Position.Y = float.Parse(GetLine(reader));
                         break;
                 }
             }
@@ -386,15 +386,15 @@ namespace Gahame.GameUtils
             PlayerObjectOverworldSidePerspective player = new PlayerObjectOverworldSidePerspective(screen);
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "X":
-                        player.Position.X = float.Parse(reader.ReadLine());
+                        player.Position.X = float.Parse(GetLine(reader));
                         break;
                     case "Y":
-                        player.Position.Y = float.Parse(reader.ReadLine());
+                        player.Position.Y = float.Parse(GetLine(reader));
                         break;
                 }
             }
@@ -412,21 +412,21 @@ namespace Gahame.GameUtils
             BoxCollider col = new BoxCollider();
 
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "X":
-                        wall.Position.X = float.Parse(reader.ReadLine());
+                        wall.Position.X = float.Parse(GetLine(reader));
                         break;
                     case "Y":
-                        wall.Position.Y = float.Parse(reader.ReadLine());
+                        wall.Position.Y = float.Parse(GetLine(reader));
                         break;
                     case "Width":
-                        col.Size.X = float.Parse(reader.ReadLine());
+                        col.Size.X = float.Parse(GetLine(reader));
                         break;
                     case "Height":
-                        col.Size.Y = float.Parse(reader.ReadLine());
+                        col.Size.Y = float.Parse(GetLine(reader));
                         break;
                 }
 
@@ -445,24 +445,24 @@ namespace Gahame.GameUtils
 
             // get lines and load stuff
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
                     case "Path":
-                        background.LoadTexture(reader.ReadLine());
+                        background.LoadTexture(GetLine(reader));
                         break;
                     case "X":
-                        background.Position.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        background.Position.X = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Y":
-                        background.Position.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        background.Position.Y = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "ParalaxAmount":
-                        background.ParalaxAmount = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        background.ParalaxAmount = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Depth":
-                        background.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        background.Depth = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "FollowCamera":
                         background.FollowCamera = true;
@@ -492,24 +492,24 @@ namespace Gahame.GameUtils
 
             // läs in memes
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch(line)
                 {
                     case "AmountX":
-                        tileset.TileAmount.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tileset.TileAmount.X = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "AmountY":
-                        tileset.TileAmount.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tileset.TileAmount.Y = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Path":
-                        tileset.LoadTexture(reader.ReadLine());
+                        tileset.LoadTexture(GetLine(reader));
                         break;
                     case "Tile":
                         tileset.Tiles.Add(LoadTile(reader));
                         break;
                     case "Depth":
-                        tileset.Depth = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tileset.Depth = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                 }
             }
@@ -525,21 +525,21 @@ namespace Gahame.GameUtils
 
             // Load stuff
             string line;
-            while ((line = reader.ReadLine()) != "---")
+            while ((line = GetLine(reader)) != "---")
             {
                 switch(line)
                 {
                     case "X":
-                        tile.Position.X = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tile.Position.X = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Y":
-                        tile.Position.Y = float.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tile.Position.Y = float.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Row":
-                        tile.ColumnRow.X = int.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tile.ColumnRow.X = int.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                     case "Column":
-                        tile.ColumnRow.Y = int.Parse(reader.ReadLine(), CultureInfo.InvariantCulture);
+                        tile.ColumnRow.Y = int.Parse(GetLine(reader), CultureInfo.InvariantCulture);
                         break;
                 }
             }
@@ -556,16 +556,16 @@ namespace Gahame.GameUtils
             switch (info)
             {
                 case "Width":
-                    screen.ScreenSize.X = float.Parse(reader.ReadLine());
+                    screen.ScreenSize.X = float.Parse(GetLine(reader));
                     break;
                 case "Height":
-                    screen.ScreenSize.Y = float.Parse(reader.ReadLine());
+                    screen.ScreenSize.Y = float.Parse(GetLine(reader));
                     break;
                 case "GameObject":
                     screen.GameObjects.Add(LoadGameObject(reader, screen));
                     break;
                 case "GameObjectFile":
-                    StreamReader temp = new StreamReader(reader.ReadLine());
+                    StreamReader temp = new StreamReader(GetLine(reader));
                     screen.GameObjects.Add(LoadGameObject(temp, screen));
                     temp.Close();
                     break;
@@ -591,7 +591,7 @@ namespace Gahame.GameUtils
             BattleScreen screen = new BattleScreen();
 
             string line;
-            while ((line = reader.ReadLine()) != null)
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -612,7 +612,7 @@ namespace Gahame.GameUtils
             OverworldScreen screen = new OverworldScreen();
 
             string line;
-            while ((line = reader.ReadLine()) != null)
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -633,7 +633,7 @@ namespace Gahame.GameUtils
             OverworldScreenSidePerspective screen = new OverworldScreenSidePerspective();
 
             string line;
-            while ((line = reader.ReadLine()) != null)
+            while ((line = GetLine(reader)) != "---")
             {
                 switch (line)
                 {
@@ -653,7 +653,7 @@ namespace Gahame.GameUtils
         {
             // Creates screen and loads it
             GameScreen screen = null;
-            switch (reader.ReadLine())
+            switch (GetLine(reader))
             {
                 case "BattleScreen":
                     screen = LoadBattleScreen(reader);
@@ -707,17 +707,9 @@ namespace Gahame.GameUtils
 
         #region Dumb Stuff
         // Remove spaces
-        public static string RemoveSpaces(string s)
+        public static string GetLine(StreamReader reader)
         {
-            return s.Trim(' ');
-        }
-
-        // Get string between quotes
-        public static string GetString(string s)
-        {
-            Regex reg = new Regex("\"[^\"]*\"");
-            string ss = reg.Match(s).ToString();
-            return ss.Trim('\"');
+            return reader.ReadLine().Trim();
         }
 
         // Write to log file

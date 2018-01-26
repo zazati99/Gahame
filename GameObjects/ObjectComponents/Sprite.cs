@@ -104,7 +104,7 @@ namespace Gahame.GameObjects.ObjectComponents
         }
 
         // Add image to array of images
-        public void AddImage(string path)
+        public virtual void AddImage(string path)
         {
             // Loads image from current screens contentmanager
             Images.Add(gameObject.screen.content.Load<Texture2D>(path));
