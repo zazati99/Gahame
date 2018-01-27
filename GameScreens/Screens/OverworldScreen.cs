@@ -90,12 +90,12 @@ namespace Gahame.GameScreens
             sys.MinScale = new Vector2(1, 1);
             sys.MaxScale = new Vector2(1, 4);
 
-            sys.PositionOffset = new Vector2(Camera.View.X, 5);
+            sys.PositionOffset = new Vector2(Camera.View.X*.875f, 5);
             //sys.PositionOffset = new Vector2(ScreenSize.X / 2, 5);
 
-            sys.LifeSpan = 110;
+            sys.LifeSpan = 90;
 
-            sys.EmitAmount = (int)(200 * sys.PositionOffset.X * 2 / ScreenSize.X);
+            sys.EmitAmount = (int)(150 * sys.PositionOffset.X * 2 / ScreenSize.X);
             //sys.EmitAmount = 350;
 
             sys.Position = new Vector2(ScreenSize.X/2, -20);
@@ -119,6 +119,30 @@ namespace Gahame.GameScreens
 
             ParticleSystems.Add(sys);
 
+
+            // test meme 2
+            // test meme
+            ParticleSystem sys2 = new ParticleSystem(this);
+            sys2.MinStartVelocity = new Vector2(-.5f, -1);
+            sys2.MaxStartVelocity = new Vector2(.5f, -1.5f);
+            sys2.MinAcceleration = new Vector2(0, 0.1f);
+            sys2.MaxAcceleration = new Vector2(0, 0.15f);
+            sys2.MinScale = new Vector2(.3f, .3f);
+            sys2.MaxScale = new Vector2(.85f, .85f);
+
+            //sys.PositionOffset = new Vector2(ScreenSize.X / 2, 5);
+
+            sys2.LifeSpan = 25;
+
+            sys2.EmitAmount = 1;
+            //sys.EmitAmount = 350;
+
+            sys2.AddTexture(meme);
+            sys2.AddTexture(meme2);
+
+            //sys.AddTexture(content.Load<Texture2D>("Sprites/Test"));
+
+            ParticleSystems.Add(sys2);
         }
 
         // Start initialize some stuff

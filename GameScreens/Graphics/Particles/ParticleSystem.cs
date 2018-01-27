@@ -105,6 +105,33 @@ namespace Gahame.GameScreens
             }
         }
 
+        // Emit particles at certain position
+        public void Emit(Vector2 position)
+        {
+            // Emit the right amount
+            for (int i = 0; i < EmitAmount; i++)
+            {
+                // Create ransom stuff
+                Random r = new Random();
+
+                // Create the particle
+                Particle p = new Particle(this);
+
+                // initialize stuff
+                p.Texture = textures[r.Next(0, textures.Count)];
+                p.Position = position + new Vector2(MyMaths.RandomInRange(-PositionOffset.X, PositionOffset.X), MyMaths.RandomInRange(-PositionOffset.Y, PositionOffset.Y));
+                p.Velocity.X = MyMaths.RandomInRange(MinStartVelocity.X, MaxStartVelocity.X);
+                p.Velocity.Y = MyMaths.RandomInRange(MinStartVelocity.Y, MaxStartVelocity.Y);
+                p.Acceleration.X = MyMaths.RandomInRange(MinAcceleration.X, MaxAcceleration.X);
+                p.Acceleration.Y = MyMaths.RandomInRange(MinAcceleration.Y, MaxAcceleration.Y);
+                p.Scale.X = MyMaths.RandomInRange(MinScale.X, MaxScale.X);
+                p.Scale.Y = MyMaths.RandomInRange(MinScale.Y, MaxScale.Y);
+                p.LifeSpan = LifeSpan;
+
+                Particles.Add(p);
+            }
+        }
+
         // Update particles
         public void Update(GameTime gameTime)
         {
@@ -129,7 +156,12 @@ namespace Gahame.GameScreens
                                 for (int k = 0; k < hb.Colliders.Count; k++)
                                 {
                                     if (hb.Colliders[k].IsCollidingWithPoint(screen.GameObjects[j].Position, Particles[i].Position))
+                                    {
+
+                                        screen.ParticleSystems[1].Emit(Particles[i].Position);
+
                                         Particles.Remove(Particles[i]);
+                                    }
                                 }
                             }
                         }
