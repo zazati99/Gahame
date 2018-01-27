@@ -90,13 +90,13 @@ namespace Gahame.GameScreens
             sys.MinScale = new Vector2(1, 1);
             sys.MaxScale = new Vector2(1, 4);
 
-            sys.PositionOffset = new Vector2(Camera.View.X * .875f, 5);
+            sys.PositionOffset = new Vector2(Camera.View.X, 5);
             //sys.PositionOffset = new Vector2(ScreenSize.X / 2, 5);
 
-            sys.LifeSpan = 120;
+            sys.LifeSpan = 110;
 
             sys.EmitAmount = (int)(200 * sys.PositionOffset.X * 2 / ScreenSize.X);
-            //sys.EmitAmount = 200;
+            //sys.EmitAmount = 350;
 
             sys.Position = new Vector2(ScreenSize.X/2, -20);
 
@@ -115,6 +115,7 @@ namespace Gahame.GameScreens
 
             //sys.AddTexture(content.Load<Texture2D>("Sprites/Test"));
 
+            sys.DestroyOnCollision = true;
 
             ParticleSystems.Add(sys);
 

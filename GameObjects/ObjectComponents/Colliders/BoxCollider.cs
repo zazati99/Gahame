@@ -30,5 +30,13 @@ namespace Gahame.GameObjects.ObjectComponents.Colliders
             }
             return false;
         }
+
+        public override bool IsCollidingWithPoint(Vector2 pos, Vector2 point)
+        {
+            return point.X > pos.X + Offset.X &&
+                   point.X < pos.X + Size.X + Offset.X &&
+                   point.Y > pos.Y + Offset.Y &&
+                   point.Y < pos.Y + Size.Y + Offset.Y;
+        }
     }
 }

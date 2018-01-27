@@ -15,7 +15,7 @@ namespace Gahame.GameScreens
         public Texture2D Texture;
 
         // Particle system
-        ParticleSystem particleSystem;
+        public ParticleSystem particleSystem;
 
         // Position
         public Vector2 Position;
@@ -36,12 +36,6 @@ namespace Gahame.GameScreens
         public Particle(ParticleSystem particleSystem)
         {
             this.particleSystem = particleSystem;
-        }
-
-        // Collision check
-        public void CollisionCheck()
-        {
-            
         }
 
         // Update memes

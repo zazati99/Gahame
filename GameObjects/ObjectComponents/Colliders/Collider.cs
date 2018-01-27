@@ -26,5 +26,11 @@ namespace Gahame.GameObjects.ObjectComponents.Colliders
             return false;
         }
 
+        // Virtual function that checks if colliding with certain point
+        public virtual bool IsCollidingWithPoint(Vector2 pos, Vector2 point)
+        {
+            return false;
+        }
+
     }
 }

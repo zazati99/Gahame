@@ -3,6 +3,9 @@
 using System.Collections.Generic;
 
 using Gahame.GameUtils;
+using Gahame.GameObjects;
+using Gahame.GameObjects.ObjectComponents;
+using Gahame.GameObjects.ObjectComponents.Colliders;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -116,7 +119,21 @@ namespace Gahame.GameScreens
             {
                 for (int i = 0; i < Particles.Count; i++)
                 {
-                    Particles[i].CollisionCheck();
+                    for (int j = 0; j < screen.GameObjects.Count; j++)
+                    {
+                        HitBox hb = screen.GameObjects[j].GetComponent<HitBox>();
+                        if (hb != null)
+                        {
+                            if (hb.Solid)
+                            {
+                                for (int k = 0; k < hb.Colliders.Count; k++)
+                                {
+                                    if (hb.Colliders[k].IsCollidingWithPoint(screen.GameObjects[j].Position, Particles[i].Position))
+                                        Particles.Remove(Particles[i]);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

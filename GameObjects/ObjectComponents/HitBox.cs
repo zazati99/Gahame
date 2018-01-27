@@ -65,30 +65,6 @@ namespace Gahame.GameObjects.ObjectComponents
             return false;
         }
 
-        // Check if 2 hitboxes at a given position is colliding By type
-        public bool PlaceMeeting(Vector2 p, Type type)
-        {
-            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
-            {
-                GameObject o = gameObject.screen.GameObjects[i];
-                if (o == gameObject) continue;
-
-                HitBox temp = o.GetComponent<HitBox>();
-                if (o.GetType() == type && temp != null)
-                {
-                    for (int j = 0; j < Colliders.Count; j++)
-                    {
-                        for (int k = 0; k < temp.Colliders.Count; k++)
-                        {
-                            if (Colliders[j].IsColliding(temp.Colliders[k], p, o.Position))
-                                return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
         // Check if 2 hitboxes at a given position is colliding (By Tag)
         public bool PlaceMeeting(Vector2 p, string tag)
         {
