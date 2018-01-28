@@ -7,7 +7,6 @@ Background
 Path
 Backgrounds/testkek
 RepeatY
-RepeatX
 FollowCamera
 ---
 Tileset
@@ -214,4 +213,5 @@ TextSpeed
 ---
 ---
 OverworldDepthFix
+---
 ---

@@ -82,7 +82,7 @@ OverworldScreen
 			DialogueBranch
 				DialogueBoxPlain
 					Text
-						hehe
+						hehe ^TOP KEK
 				---
 				DialogueBoxAlternativePlain
 					Alternative
@@ -108,7 +108,7 @@ OverworldScreen
 				---
 				DialogueBoxPlain
 					Text
-						Y O U|M E M E D|Y O U R S E L F
+						Y O U|^MEMED^|Y O U R S E L F
 					NonSkippable
 					TextSpeed
 						0.05
@@ -123,7 +123,7 @@ OverworldScreen
 				---
 				DialogueBoxPlain
 					Text
-						ieusfhiusehfuisehfusfuhirdgf|osiejfsoiefjseoifjoiijdfgrws|eiosfjosiejfoisejfoijgdrgwdgr
+						Don't speak to me|or my ^lala hehe bois^ ever again|OK?
 					NonSkippable
 					TextSpeed
 						1
@@ -217,5 +217,17 @@ OverworldScreen
 			EmbeddedFile
 				TestScript.lua
 		---
+	---
+	ScreenLoadArea
+		X
+			100
+		Y
+			100
+		Width
+			100
+		Height
+			100
+		ScreenPath
+			TestLevel2.sml
 	---
 ---

@@ -158,8 +158,6 @@ namespace Gahame.GameScreens
                                     if (hb.Colliders[k].IsCollidingWithPoint(screen.GameObjects[j].Position, Particles[i].Position))
                                     {
 
-                                        screen.ParticleSystems[1].Emit(Particles[i].Position);
-
                                         Particles.Remove(Particles[i]);
                                     }
                                 }

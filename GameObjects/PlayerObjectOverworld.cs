@@ -3,6 +3,7 @@
 using Gahame.GameUtils;
 using Gahame.GameScreens;
 using Gahame.GameObjects.ObjectComponents;
+using Gahame.GameObjects.ObjectComponents.DialogueSystem;
 using Gahame.GameObjects.ObjectComponents.Colliders;
 
 using Microsoft.Xna.Framework;
@@ -30,7 +31,8 @@ namespace Gahame.GameObjects
         // normalized vector
         Vector2 norm;
 
-        //string TextTest;
+        // Direction vector
+        Vector2 direction;
                  
         // Constructor stufferoo for playerino
         public PlayerObjectOverworld(GameScreen screen) : base(screen)
@@ -66,9 +68,6 @@ namespace Gahame.GameObjects
             maxSpeed = 2;
             accelerationSpeed = .5f;
             slowDownSpeed = .25f;
-
-            //TextTest = "";
-            
         }
 
         // Update player
@@ -112,17 +111,17 @@ namespace Gahame.GameObjects
             if (GameInput.ActivateCD)
             {
                 // Insane
-                if (hitBox.InstancePlace<ActivatableObject>(Position) is ActivatableObject o)
+                if (hitBox.InstancePlace<ActivatableObject>(Position + direction) is ActivatableObject o)
                 {
                     o.Activate();
+                } else 
+                {
+                    Dialogue d = hitBox.DialogueMeeting(Position + direction);
+                    if (d != null) d.StartDialogue();
                 }
 
-                screen.ScreenEffects.Add(new CameraShakeEffect(screen, 5, 20));
+                screen.ScreenEffects.Add(new CameraShakeEffect(screen, 4, 20));
             }
-
-            //GameInput.AddInputToString(ref TextTest);
-
-            //Position.X = (float)(double)lua.DoString("return addpos(" + Position.X.ToString() + ")")[0];
 
             // Update component last
             base.Update(gameTime);
@@ -132,37 +131,6 @@ namespace Gahame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-
-            //string hihi = "DOP KEK MEMEM\nHEHE NICE MEME MEME BOBO";
-            //float memeX = GameFonts.GahameFont.MeasureString(hihi).X/2;
-            //GameFonts.GahameFont.DrawString(spriteBatch, hihi, new Vector2(Position.X-memeX, Position.Y - 64), Color.Black);
-
-            //Vector2 origin = GameFonts.Arial.MeasureString(TextTest) / 2;
-            //GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy(TextTest), Position - origin - new Vector2(0, 48), Color.Blue);
-            /*spriteBatch.DrawString
-            (
-                GameFonts.Arial,
-                meme,
-                Position - new Vector2(0, 48),
-                Color.DarkBlue,
-                0,
-                           Vector2.Zero,
-                1,
-                SpriteEffects.None,
-                0f
-            );*/
-
-            /*spriteBatch.DrawString(
-                    GameFonts.Arial,
-                    TextTest,
-                    Position + new Vector2(0, -48),
-                    Color.Pink,
-                    0,
-                    origin,
-                    1,
-                    SpriteEffects.None,
-                    0
-                    );*/
 
             // Speed test
             spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
@@ -177,6 +145,9 @@ namespace Gahame.GameObjects
             // Approach the speed
             physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, speed, accelerationSpeed * GahameController.GameSpeed);
             WalkingHorizontal = true;
+
+            direction.Y = 0;
+            direction.X = Math.Sign(speed);
         }
 
         // Walk vertically
@@ -185,6 +156,9 @@ namespace Gahame.GameObjects
             // Approach the speed
             physics.Velocity.Y = MyMaths.Approach(physics.Velocity.Y, speed, accelerationSpeed * GahameController.GameSpeed);
             WalkingVertical = true;
+
+            direction.X = 0;
+            direction.Y = Math.Sign(speed);
         }
 
         // Stop horizontal speed

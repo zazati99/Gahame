@@ -436,6 +436,39 @@ namespace Gahame.GameUtils
         }
         #endregion
 
+        #region Screen loading areas
+        // Load a screen loading area
+        public static ScreenLoadArea LoadScreenLoadArea(StreamReader reader)
+        {
+            ScreenLoadArea loadingArea = new ScreenLoadArea();
+
+            string line;
+            while((line = GetLine(reader)) != "---")
+            {
+                switch (line)
+                {
+                    case "X":
+                        loadingArea.Position.X = float.Parse(GetLine(reader));
+                        break;
+                    case "Y":
+                        loadingArea.Position.Y = float.Parse(GetLine(reader));
+                        break;
+                    case "Width":
+                        loadingArea.Size.X = float.Parse(GetLine(reader));
+                        break;
+                    case "Height":
+                        loadingArea.Size.Y = float.Parse(GetLine(reader));
+                        break;
+                    case "ScreenPath":
+                        loadingArea.ScreenPath = GetLine(reader);
+                        break;
+                }
+            }
+
+            return loadingArea;
+        }
+        #endregion
+
         #region Background
 
         public static ScreenBackground LoadBackground(StreamReader reader, GameScreen screen)
@@ -551,7 +584,7 @@ namespace Gahame.GameUtils
 
         #region GameScreens
         // Load common screen information
-        public static GameScreen LoadScreenInformation(GameScreen screen, StreamReader reader, string info)
+        public static void LoadScreenInformation(GameScreen screen, StreamReader reader, string info)
         {
             switch (info)
             {
@@ -582,7 +615,6 @@ namespace Gahame.GameUtils
                     screen.Tilesets.Add(LoadTileset(reader, screen));
                     break;
             }
-            return screen;
         }
 
         // Load GameScreen witth a Streamreader
@@ -599,7 +631,7 @@ namespace Gahame.GameUtils
                         screen.GameObjects.Add(LoadPlayerBattle(reader, screen));
                         break;
                     default:
-                        screen = (BattleScreen)LoadScreenInformation(screen, reader, line);
+                        LoadScreenInformation(screen, reader, line);
                         break;
                 }
             }
@@ -619,8 +651,11 @@ namespace Gahame.GameUtils
                     case "Player":
                         screen.GameObjects.Add(LoadPlayerOverworld(reader, screen));
                         break;
+                    case "ScreenLoadArea":
+                        screen.LoadingAreas.Add(LoadScreenLoadArea(reader));
+                        break;
                     default:
-                        screen = (OverworldScreen)LoadScreenInformation(screen, reader, line);
+                        LoadScreenInformation(screen, reader, line);
                         break;
                 }
             }
@@ -640,8 +675,11 @@ namespace Gahame.GameUtils
                     case "Player":
                         screen.GameObjects.Add(LoadPlayerOverworldSidePerspective(reader, screen));
                         break;
+                    case "ScreenLoadArea":
+                        screen.LoadingAreas.Add(LoadScreenLoadArea(reader));
+                        break;
                     default:
-                        screen = (OverworldScreenSidePerspective)LoadScreenInformation(screen, reader, line);
+                        LoadScreenInformation(screen, reader, line);
                         break;
                 }
             }
@@ -727,7 +765,7 @@ namespace Gahame.GameUtils
             StreamWriter writer = new StreamWriter("log.txt");
             for (int i = 0; i < log.Length; i++)
             {
-                writer.WriteLine(log[i]);
+                writer.WriteLine(log);
             }
             writer.Close();
         }

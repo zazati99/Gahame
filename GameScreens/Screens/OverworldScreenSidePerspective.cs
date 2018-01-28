@@ -11,13 +11,13 @@ namespace Gahame.GameScreens
     public class OverworldScreenSidePerspective : GameScreen
     {
         // List of loading areas for other game screens
-        List<ScreenLoadArea> loadingAreas;
+        public List<ScreenLoadArea> LoadingAreas;
 
         // Constructor
         public OverworldScreenSidePerspective() : base()
         {
             // Create List for loading areas
-            loadingAreas = new List<ScreenLoadArea>();
+            LoadingAreas = new List<ScreenLoadArea>();
 
             // Load content directly after being called
             LoadContent();
@@ -34,12 +34,6 @@ namespace Gahame.GameScreens
         {
             base.LoadContent();
             // Load stuff and add GameObjects Below 
-
-            ScreenLoadArea a = new ScreenLoadArea();
-            a.Position = new Vector2(350, 150);
-            a.Size = new Vector2(64, 64);
-            a.ScreenName = "TestLevel.sml";
-            loadingAreas.Add(a);
         }
 
         // Unloads all the trash
@@ -55,9 +49,9 @@ namespace Gahame.GameScreens
             base.Update(gameTime);
 
             // Check if player is in loading area
-            for (int i = 0; i < loadingAreas.Count; i++)
+            for (int i = 0; i < LoadingAreas.Count; i++)
             {
-                loadingAreas[i].CheckCollisionWithPlayer(Player.Position);
+                LoadingAreas[i].CheckCollisionWithPlayer(Player.Position);
             }
         }
 
@@ -67,7 +61,7 @@ namespace Gahame.GameScreens
             base.Draw(spriteBatch);
 
             // Just a little test thing
-            for (int i = 0; i < loadingAreas.Count; i++) loadingAreas[i].Draw(spriteBatch);
+            for (int i = 0; i < LoadingAreas.Count; i++) LoadingAreas[i].Draw(spriteBatch);
         }
     }
 }

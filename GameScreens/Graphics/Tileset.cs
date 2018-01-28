@@ -53,7 +53,7 @@ namespace Gahame.GameScreens
         }
 
         // Load the texture
-        public void LoadTexture(string path)
+        public virtual void LoadTexture(string path)
         {
             // Load image from path
             Image = screen.content.Load<Texture2D>(path);

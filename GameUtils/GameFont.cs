@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
 using System.Collections.Generic;
+using System;
 
 namespace Gahame.GameUtils
 {
@@ -25,6 +26,8 @@ namespace Gahame.GameUtils
 
         // vowels
         public static char[] vowels = { 'A', 'E', 'I', 'O', 'U', 'Å', 'Y', 'Ä' };
+
+        const int SPACESIZE = 4;
 
         // Point for width and height
         Point size;
@@ -141,7 +144,7 @@ namespace Gahame.GameUtils
                 } else if (s[i] == ' ')
                 {
                     // only meme relative position
-                    rp.X += 6;
+                    rp.X += SPACESIZE;
 
                 } else if (s[i] == '\n')
                 {
@@ -149,6 +152,59 @@ namespace Gahame.GameUtils
                     rp.X = 0;
                     rp.Y += LineSpacing;
                 }
+            }
+        }
+
+        public void DrawMixedString(SpriteBatch spriteBatch, SpriteFont font, bool starNormal, string s, Vector2 pos, Color c)
+        {
+            string[] ss = s.Split('^');
+            bool textType = starNormal;
+
+            Vector2 offset = new Vector2(0, 0);
+
+            // NICE
+            Vector2 GahameOffsetY = new Vector2(0, size.Y - 8);
+
+            for (int i = 0; i < ss.Length; i++)
+            {
+                if (textType)
+                {
+                    string[] lines = ss[i].Split('\n');
+
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        spriteBatch.DrawString(font, lines[j], pos + offset, c);
+
+                        if (j != lines.Length - 1)
+                        {
+                            offset.Y += LineSpacing;
+                            offset.X = 0;
+                        }
+                    }
+
+                    string lastLine = lines[lines.Length - 1];
+
+                    offset.X += font.MeasureString(lastLine).X;
+                } else
+                {
+                    string[] lines = ss[i].Split('\n');
+
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        DrawString(spriteBatch, Gahamefy(lines[j]), pos + offset + GahameOffsetY, c);
+
+                        if (j != lines.Length - 1)
+                        {
+                            offset.Y += LineSpacing;
+                            offset.X = 0;
+                        }
+                    }
+
+                    string lastLine = Gahamefy(lines[lines.Length - 1]);
+
+                    offset.X += MeasureString(lastLine).X;
+                }
+                textType = !textType;
             }
         }
 
@@ -176,7 +232,7 @@ namespace Gahame.GameUtils
                         tempSize += CharSpacing;
                     }else if (lines[i][j] == ' ')
                     {
-                        tempSize += 6;
+                        tempSize += SPACESIZE;
                     }
                 }
                 if (tempSize > bounds.X) bounds.X = tempSize;

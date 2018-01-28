@@ -28,7 +28,7 @@ namespace Gahame.GameObjects.ObjectComponents
         }
 
         // Initializes lua script
-        public void InitializeLua(string luaScript)
+        public virtual void InitializeLua(string luaScript)
         {
             // Register functions
             lua.RegisterFunction("instanceDestroy", this, GetType().GetMethod("instanceDestroy"));

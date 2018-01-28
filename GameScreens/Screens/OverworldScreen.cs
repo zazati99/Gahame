@@ -19,7 +19,7 @@ namespace Gahame.GameScreens
         public List<string> BattleScreens;
 
         // List of loading areas for other game screens
-        List<ScreenLoadArea> loadingAreas;
+        public List<ScreenLoadArea> LoadingAreas;
 
         // Random encounter
         Random randomEncounter;
@@ -38,14 +38,7 @@ namespace Gahame.GameScreens
             randomEncounter = new Random();
 
             // Loading areas
-            loadingAreas = new List<ScreenLoadArea>();
-
-            // Test loading area
-            ScreenLoadArea a = new ScreenLoadArea();
-            a.Size = new Vector2(64, 64);
-            a.Position = new Vector2(200, 100);
-            a.ScreenName = "TestLevel2.sml";
-            loadingAreas.Add(a);
+            LoadingAreas = new List<ScreenLoadArea>();
 
             // HasBattles
             HasBattles = true;
@@ -62,87 +55,6 @@ namespace Gahame.GameScreens
         {
             base.LoadContent();
             // Load stuff and add GameObjects Below 
-
-            // Test tiles
-            Tileset tset = new Tileset(this);
-            tset.TileAmount = new Vector2(4, 4);
-            tset.LoadTexture("Backgrounds/tile");
-
-            for (int y = 0; y < 4; y++)
-            {
-                for (int x = 0; x < 4; x++)
-                {
-                    Tile t = new Tile();
-                    t.Position = new Vector2(32 + 32 * x, 32 + 32 * y);
-                    t.ColumnRow = new Point(x, y);
-                    tset.Tiles.Add(t);
-                }
-            }
-
-            Tilesets.Add(tset);
-
-            // test meme
-            ParticleSystem sys = new ParticleSystem(this);
-            sys.MinStartVelocity = new Vector2(-.5f, 0);
-            sys.MaxStartVelocity = new Vector2(.5f, 0);
-            sys.MinAcceleration = new Vector2(0, 0.1f);
-            sys.MaxAcceleration = new Vector2(0, 0.15f);
-            sys.MinScale = new Vector2(1, 1);
-            sys.MaxScale = new Vector2(1, 4);
-
-            sys.PositionOffset = new Vector2(Camera.View.X*.875f, 5);
-            //sys.PositionOffset = new Vector2(ScreenSize.X / 2, 5);
-
-            sys.LifeSpan = 90;
-
-            sys.EmitAmount = (int)(150 * sys.PositionOffset.X * 2 / ScreenSize.X);
-            //sys.EmitAmount = 350;
-
-            sys.Position = new Vector2(ScreenSize.X/2, -20);
-
-            Color[] data = new Color[1];
-            data[0] = Color.DarkBlue;
-            Texture2D meme = new Texture2D(Game1.Graphics.GraphicsDevice , 1, 1);
-            meme.SetData(data);
-
-            Color[] data2 = new Color[1];
-            data2[0] = Color.Blue;
-            Texture2D meme2 = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1);
-            meme2.SetData(data2);
-
-            sys.AddTexture(meme);
-            sys.AddTexture(meme2);
-
-            //sys.AddTexture(content.Load<Texture2D>("Sprites/Test"));
-
-            sys.DestroyOnCollision = true;
-
-            ParticleSystems.Add(sys);
-
-
-            // test meme 2
-            // test meme
-            ParticleSystem sys2 = new ParticleSystem(this);
-            sys2.MinStartVelocity = new Vector2(-.5f, -1);
-            sys2.MaxStartVelocity = new Vector2(.5f, -1.5f);
-            sys2.MinAcceleration = new Vector2(0, 0.1f);
-            sys2.MaxAcceleration = new Vector2(0, 0.15f);
-            sys2.MinScale = new Vector2(.3f, .3f);
-            sys2.MaxScale = new Vector2(.85f, .85f);
-
-            //sys.PositionOffset = new Vector2(ScreenSize.X / 2, 5);
-
-            sys2.LifeSpan = 25;
-
-            sys2.EmitAmount = 1;
-            //sys.EmitAmount = 350;
-
-            sys2.AddTexture(meme);
-            sys2.AddTexture(meme2);
-
-            //sys.AddTexture(content.Load<Texture2D>("Sprites/Test"));
-
-            ParticleSystems.Add(sys2);
         }
 
         // Start initialize some stuff
@@ -185,9 +97,6 @@ namespace Gahame.GameScreens
                 ct.Stop();
             }
 
-            ParticleSystems[0].Position.X = Player.Position.X;
-            ParticleSystems[0].Emit();
-
             // Start battle if it has battles
             if (HasBattles) {
                 if (Player.GetComponent<Physics>().Velocity != Vector2.Zero)
@@ -200,9 +109,9 @@ namespace Gahame.GameScreens
             }
 
             // Check if player is in loading area
-            for (int i = 0; i < loadingAreas.Count; i++)
+            for (int i = 0; i < LoadingAreas.Count; i++)
             {
-                loadingAreas[i].CheckCollisionWithPlayer(Player.Position);
+                LoadingAreas[i].CheckCollisionWithPlayer(Player.Position);
             }
         }
 
@@ -213,7 +122,20 @@ namespace Gahame.GameScreens
             base.Draw(spriteBatch);
 
             // Just a little test thing
-            for (int i = 0; i < loadingAreas.Count; i++) loadingAreas[i].Draw(spriteBatch);
+            for (int i = 0; i < LoadingAreas.Count; i++) LoadingAreas[i].Draw(spriteBatch);
+        }
+
+        public override void DrawGUI(SpriteBatch spriteBatch)
+        {
+            base.DrawGUI(spriteBatch);
+
+            int amount = 0;
+            for (int i = 0; i < ParticleSystems.Count; i++)
+            {
+                amount += ParticleSystems[i].Particles.Count;
+            }
+
+            spriteBatch.DrawString(GameFonts.Arial, amount.ToString(), new Vector2(15, 46), Color.Black);
         }
 
         // Go to battle screen

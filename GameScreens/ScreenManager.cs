@@ -35,7 +35,7 @@ namespace Gahame.GameScreens
         public bool ScreenTransition;
 
         // Next screen (can be loaded on separate thread in background)
-        public GameScreen nextScreen;
+        public GameScreen NextScreen;
         bool nextScreenReady;
 
         // Public thing så att man kan komma åt 'at överallt
@@ -61,12 +61,13 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
+            //currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #else
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #endif
             // Load content below here
-            
+
         }
 
         // Unload those mean bois
@@ -79,7 +80,7 @@ namespace Gahame.GameScreens
         public void Update(GameTime gameTime)
         {
             //if (GameInput.F6) GoToNextScreen(new ScreenTransitionFade(.075f ,currentScreen, nextScreen, true));
-            if (GameInput.F6) GoToNextScreen(new ScreenTransitionRectangle(currentScreen, nextScreen, true));
+            if (GameInput.F6) GoToNextScreen(new ScreenTransitionRectangle(currentScreen, NextScreen, true));
             if (GameInput.F5) GameCamera.SwitchFullscreen();
             if (GameInput.Enter)
             {
@@ -164,7 +165,7 @@ namespace Gahame.GameScreens
             nextScreenReady = false;
             new Thread(() =>
             {
-                nextScreen = GameFileMaganer.LoadScreenFromEmbeddedPath(path);
+                NextScreen = GameFileMaganer.LoadScreenFromEmbeddedPath(path);
                 nextScreenReady = true;
             }).Start();
         }
@@ -174,9 +175,9 @@ namespace Gahame.GameScreens
             // Go to screen if it's ready
             if (nextScreenReady)
             {
-                ChangeScreenClear(nextScreen);
+                ChangeScreenClear(NextScreen);
                 nextScreenReady = false;
-                nextScreen = null;
+                NextScreen = null;
             }
         }
         // Go to next screen BUT WITH A COOL TRANSITION
@@ -187,7 +188,7 @@ namespace Gahame.GameScreens
             {
                 ChangeScreen(transition);
                 nextScreenReady = false;
-                nextScreen = null;
+                NextScreen = null;
             }
         }
 
