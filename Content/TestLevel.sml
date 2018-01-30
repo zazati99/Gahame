@@ -108,7 +108,7 @@ OverworldScreen
 				---
 				DialogueBoxPlain
 					Text
-						Y O U|^MEMED^|Y O U R S E L F
+						Y O U|^ME ME D^|Y O U R S E L F
 					NonSkippable
 					TextSpeed
 						0.05
@@ -123,7 +123,7 @@ OverworldScreen
 				---
 				DialogueBoxPlain
 					Text
-						Don't speak to me|or my ^lala hehe bois^ ever again|OK?
+						Don't speak to me|or my ^Bepis^ ever again|kek?
 					NonSkippable
 					TextSpeed
 						1

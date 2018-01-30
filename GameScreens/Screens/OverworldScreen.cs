@@ -55,6 +55,43 @@ namespace Gahame.GameScreens
         {
             base.LoadContent();
             // Load stuff and add GameObjects Below 
+
+            ParticleSystem sys = new ParticleSystem(this);
+
+            Color[] data = new Color[1];
+            data[0] = Color.DarkBlue;
+            Texture2D tex = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1);
+            tex.SetData(data);
+            sys.AddTexture(tex);
+
+            Color[] data2 = new Color[1];
+            data2[0] = Color.Blue;
+            Texture2D tex2 = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1);
+            tex2.SetData(data2);
+            sys.AddTexture(tex2);
+
+            Color[] data3 = new Color[1];
+            data3[0] = Color.Black;
+            Texture2D tex3 = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1);
+            tex3.SetData(data3);
+            sys.AddTexture(tex3);
+
+            sys.Position = new Vector2(0, -20);
+            sys.LifeSpan = 200;
+            sys.EmitOffset = new Vector2(Camera.View.X*.9f, 5);
+            sys.EmitAmount = 1;
+
+            sys.DestroyOnCollision = false;
+
+            sys.MinScale = new Vector2(2f, 2f);
+            sys.MaxScale = new Vector2(2.5f, 2.5f);
+
+            sys.MinAcceleration = new Vector2(-.015f, .015f);
+            sys.MaxAcceleration = new Vector2(.015f, .035f);
+            sys.MinStartVelocity = new Vector2(0, 0);
+            sys.MaxStartVelocity = new Vector2(0, 0);
+
+            ParticleSystems.Add(sys);
         }
 
         // Start initialize some stuff
@@ -96,6 +133,9 @@ namespace Gahame.GameScreens
                 GahameController.CutScene = false;
                 ct.Stop();
             }
+
+            ParticleSystems[0].Position.X = Player.Position.X;
+            ParticleSystems[0].Emit();
 
             // Start battle if it has battles
             if (HasBattles) {
