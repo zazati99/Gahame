@@ -163,7 +163,7 @@ namespace Gahame.GameUtils
             Vector2 offset = new Vector2(0, 0);
 
             // NICE
-            Vector2 GahameOffsetY = new Vector2(0, size.Y - 8);
+            Vector2 GahameOffsetY = new Vector2(1, size.Y - 8);
 
             for (int i = 0; i < ss.Length; i++)
             {
