@@ -106,6 +106,16 @@ namespace Gahame.GameObjects
 
             // Updates Components last
             base.Update(gameTime);
+
+            if (physics.Grounded)
+            {
+                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .065f, .25f * GahameController.GameSpeed);
+            }
+            else
+            {
+                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .015f, .25f * GahameController.GameSpeed);
+            }
+
         }
 
         // dDrawerino

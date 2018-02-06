@@ -18,7 +18,7 @@ namespace Gahame.GameScreens
         public Vector2 TileAmount;
 
         // tile rectangle
-        Rectangle sourceRect;
+        public Rectangle sourceRect;
 
         // depth 
         public float Depth;

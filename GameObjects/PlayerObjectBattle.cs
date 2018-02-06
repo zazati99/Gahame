@@ -56,7 +56,7 @@ namespace Gahame.GameObjects
 
             // Camera
             screen.CamController.Target = this;
-            screen.CamController.MovementAmount = new Vector2(.2f, .05f);
+            screen.CamController.MovementAmount = new Vector2(.2f, .01f);
             //screen.CamController.Static = true;
             //screen.CamController.SetPosition(new Vector2(330, 100));
 
@@ -106,6 +106,14 @@ namespace Gahame.GameObjects
 
             // Updates Components last*/
             base.Update(gameTime);
+
+            if (physics.Grounded)
+            {
+                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .075f, .1f * GahameController.GameSpeed);
+            } else
+            {
+                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .020f, .1f * GahameController.GameSpeed);
+            }
         }
 
         // dDrawerino
