@@ -11,14 +11,14 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
 
         // Position of the Box
         public Vector2 Position;
-        Vector2 origin;
+        Vector2 offset;
         Vector2 size;
 
         // COnstructor for box
         public DialogueBoxPlain(DialogueBranch group) : base(group)
         {
             // Position stuff
-            origin = new Vector2();
+            offset = new Vector2(1, 2);
             size = new Vector2(202, 50);
             Position = new Vector2(Camera.View.X / 2 - 100, Camera.View.Y - 60);
 
@@ -64,34 +64,47 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             Position.Y = Camera.View.Y - 60;
 
             // Draws the box
-            ShapeRenderer.FillRectangle(
+            ShapeRenderer.FillRectangle
+            (
                 spriteBatch,
                 Position + new Vector2(-1, 0),
                 size,
                 0.01f,
-                Color.Black);
+                Color.Black
+            );
 
-            GameFonts.GahameFont.DrawMixedString(spriteBatch,
+            /*TextRenderer.DrawMixedText
+            (
+                spriteBatch,
                 Font,
+                GameFonts.GahameFont,
                 true,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
-                Position + new Vector2(1, 2),
-                Color.White);
+                Position + offset,
+                Color.White
+            );*/
 
-            // Draws the text
-            /*spriteBatch.DrawString(
+            TextRenderer.DrawMixedShakyText
+            (
+                spriteBatch,
                 Font,
+                GameFonts.GahameFont,
+                true,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
-                Position,
-                Color.White,
-                0,
-                origin,
-                1,
-                SpriteEffects.None,
-                0);*/
+                Position + offset,
+                .3f,
+                Color.White
+            );
 
-            //GameFonts.GahameFont.DrawString(spriteBatch, GameFont.Gahamefy((CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text), Position+new Vector2(1, 4), Color.White);
-
+            /*TextRenderer.DrawShakingText
+            (
+                spriteBatch,
+                GameFonts.GahameFont,
+                (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
+                Position + offset,
+                .25f,
+                Color.White
+            );*/
         }
     }
 }

@@ -21,52 +21,47 @@ namespace Gahame.GameUtils
         // Character spacing
         public float CharSpacing;
 
-        // consonants
-        public static char[] cons = { 'M','D','B','K','N','R','P','W','F','H','S','C','L','J' };
-
-        // vowels
-        public static char[] vowels = { 'A', 'E', 'I', 'O', 'U', 'Å', 'Y', 'Ä' };
-
-        const int SPACESIZE = 4;
+        // Space sicerino
+        public int SpaceSize = 4;
 
         // Point for width and height
-        Point size;
+        public Point Size;
 
         // Loads texture and memes alot
         public void LoadFont(ContentManager content, string path)
         {
             // Loads from path and memes a bit
             fontTexture = content.Load<Texture2D>(path);
-            size.X = fontTexture.Width / 8;
-            size.Y = fontTexture.Height / 3;
+            Size.X = fontTexture.Width / 8;
+            Size.Y = fontTexture.Height / 3;
 
             // sets default spacing
-            LineSpacing = size.Y + 1;
-            CharSpacing = size.X + 2;
+            LineSpacing = Size.Y + 1;
+            CharSpacing = Size.X + 2;
 
             // Creates dictionary
             characters = new Dictionary<char, Rectangle>();
 
             // Sets consonants
             Point charPos = new Point(0,0);
-            for (int i = 0; i < cons.Length; i++)
+            for (int i = 0; i < TextRenderer.cons.Length; i++)
             {
                 // Add character
-                characters.Add(cons[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+                characters.Add(TextRenderer.cons[i], new Rectangle(charPos.X, charPos.Y, Size.X, Size.Y));
 
                 // Fix position
-                charPos.X += size.X;
-                if (i == 6) charPos = new Point(0, size.Y);
+                charPos.X += Size.X;
+                if (i == 6) charPos = new Point(0, Size.Y);
             }
             // Sets vowels
-            charPos = new Point(0, size.Y * 2);
-            for (int i = 0; i < vowels.Length; i++)
+            charPos = new Point(0, Size.Y * 2);
+            for (int i = 0; i < TextRenderer.vowels.Length; i++)
             {
                 // Add character
-                characters.Add(vowels[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+                characters.Add(TextRenderer.vowels[i], new Rectangle(charPos.X, charPos.Y, Size.X, Size.Y));
 
                 // Fix position
-                charPos.X += size.X;
+                charPos.X += Size.X;
             }
         }
 
@@ -75,36 +70,36 @@ namespace Gahame.GameUtils
         {
             // Loads from path and memes a bit
             this.fontTexture = fontTexture;
-            size.X = fontTexture.Width / 8;
-            size.Y = fontTexture.Height / 3;
+            Size.X = fontTexture.Width / 8;
+            Size.Y = fontTexture.Height / 3;
 
             // sets default spacing
-            LineSpacing = size.Y + 1;
-            CharSpacing = size.X + 2;
+            LineSpacing = Size.Y + 1;
+            CharSpacing = Size.X + 2;
 
             // Creates dictionary
             characters = new Dictionary<char, Rectangle>();
 
             // Sets consonants
             Point charPos = new Point(0, 0);
-            for (int i = 0; i < cons.Length; i++)
+            for (int i = 0; i < TextRenderer.cons.Length; i++)
             {
                 // Add character
-                characters.Add(cons[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+                characters.Add(TextRenderer.cons[i], new Rectangle(charPos.X, charPos.Y, Size.X, Size.Y));
 
                 // Fix position
-                charPos.X += size.X;
-                if (i == 6) charPos = new Point(0, size.Y);
+                charPos.X += Size.X;
+                if (i == 6) charPos = new Point(0, Size.Y);
             }
             // Sets vowels
-            charPos = new Point(0, size.Y * 2);
-            for (int i = 0; i < vowels.Length; i++)
+            charPos = new Point(0, Size.Y * 2);
+            for (int i = 0; i < TextRenderer.vowels.Length; i++)
             {
                 // Add character
-                characters.Add(vowels[i], new Rectangle(charPos.X, charPos.Y, size.X, size.Y));
+                characters.Add(TextRenderer.vowels[i], new Rectangle(charPos.X, charPos.Y, Size.X, Size.Y));
 
                 // Fix position
-                charPos.X += size.X;
+                charPos.X += Size.X;
             }
         }
 
@@ -115,7 +110,7 @@ namespace Gahame.GameUtils
             for (int i = 0; i < s.Length; i++)
             {
                 // Check what type of thing it is
-                if (isCons(s[i]))
+                if (TextRenderer.IsCons(s[i]))
                 {
                     // draws consonant
                     spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[i]], layerDepth: 0, color: color);
@@ -123,7 +118,7 @@ namespace Gahame.GameUtils
                     // possibly draw a vowel
                     if (i != s.Length - 1)
                     {
-                        if (isVowel(s[i + 1]))
+                        if (TextRenderer.IsVowel(s[i + 1]))
                         {
                             spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters[s[++i]], layerDepth: 0, color: color);
                         }
@@ -132,7 +127,7 @@ namespace Gahame.GameUtils
                     // meme relative position
                     rp.X += CharSpacing;
 
-                } else if (isVowel(s[i]))
+                } else if (TextRenderer.IsVowel(s[i]))
                 {
                     // Draw the H before the vowel
                     spriteBatch.Draw(fontTexture, pos + rp, sourceRectangle: characters['H'], layerDepth: 0, color: color);
@@ -144,7 +139,7 @@ namespace Gahame.GameUtils
                 } else if (s[i] == ' ')
                 {
                     // only meme relative position
-                    rp.X += SPACESIZE;
+                    rp.X += SpaceSize;
 
                 } else if (s[i] == '\n')
                 {
@@ -155,64 +150,14 @@ namespace Gahame.GameUtils
             }
         }
 
-        public void DrawMixedString(SpriteBatch spriteBatch, SpriteFont font, bool starNormal, string s, Vector2 pos, Color c)
-        {
-            string[] ss = s.Split('^');
-            bool textType = starNormal;
-
-            Vector2 offset = new Vector2(0, 0);
-
-            // NICE
-            Vector2 GahameOffsetY = new Vector2(1, size.Y - 8);
-
-            for (int i = 0; i < ss.Length; i++)
-            {
-                if (textType)
-                {
-                    string[] lines = ss[i].Split('\n');
-
-                    for (int j = 0; j < lines.Length; j++)
-                    {
-                        spriteBatch.DrawString(font, lines[j], pos + offset, c);
-
-                        if (j != lines.Length - 1)
-                        {
-                            offset.Y += LineSpacing;
-                            offset.X = 0;
-                        }
-                    }
-
-                    string lastLine = lines[lines.Length - 1];
-
-                    offset.X += font.MeasureString(lastLine).X;
-                } else
-                {
-                    string[] lines = ss[i].Split('\n');
-
-                    for (int j = 0; j < lines.Length; j++)
-                    {
-                        DrawString(spriteBatch, Gahamefy(lines[j]), pos + offset + GahameOffsetY, c);
-
-                        if (j != lines.Length - 1)
-                        {
-                            offset.Y += LineSpacing;
-                            offset.X = 0;
-                        }
-                    }
-
-                    string lastLine = Gahamefy(lines[lines.Length - 1]);
-
-                    offset.X += MeasureString(lastLine).X;
-                }
-                textType = !textType;
-            }
-        }
-
         // Measures a string and returns vector of width and height
         public Vector2 MeasureString(string s)
         {
             // VEctor that will be memed
             Vector2 bounds = new Vector2(0, 0);
+
+            // Gahamefy that string
+            s = TextRenderer.Gahamefy(s);
 
             string[] lines = s.Split('\n');
 
@@ -222,46 +167,26 @@ namespace Gahame.GameUtils
                 float tempSize = 0;
                 for (int j = 0; j < lines[i].Length; j++)
                 {
-                    if (isCons(lines[i][j]) )
+                    if (TextRenderer.IsCons(lines[i][j]) )
                     {
                         tempSize += CharSpacing;
                         if (j != lines[i].Length - 1)
-                            if (isVowel(lines[i][j + 1])) j++;
-                    } else if (isVowel(lines[i][j]))
+                            if (TextRenderer.IsVowel(lines[i][j + 1])) j++;
+                    } else if (TextRenderer.IsVowel(lines[i][j]))
                     {
                         tempSize += CharSpacing;
                     }else if (lines[i][j] == ' ')
                     {
-                        tempSize += SPACESIZE;
+                        tempSize += SpaceSize;
                     }
                 }
                 if (tempSize > bounds.X) bounds.X = tempSize;
             }
 
             // get y size
-            bounds.Y = lines.Length * LineSpacing + size.Y;
+            bounds.Y = lines.Length * LineSpacing + Size.Y;
 
             return bounds;
         }
-
-        // Makes normal string gahameified
-        public static string Gahamefy(string s)
-        {
-            string newString;
-            newString = s.ToUpper();
-            newString = newString.Replace('T', 'D');
-            newString = newString.Replace('G', 'K');
-            newString = newString.Replace('V', 'W');
-
-            return newString;
-        }
-
-        // Makes string out of char
-        string cts(char c)
-        {
-            return new string(c, 1);
-        }
-
-
     }
 }
