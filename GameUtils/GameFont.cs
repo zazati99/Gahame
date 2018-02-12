@@ -262,24 +262,6 @@ namespace Gahame.GameUtils
             return new string(c, 1);
         }
 
-        // Check if a character is a consonant
-        bool isCons(char c)
-        {
-            for (int i = 0; i < cons.Length; i++)
-            {
-                if (c == cons[i]) return true;
-            }
-            return false;
-        }
 
-        // Check if a character is a vowel
-        bool isVowel(char c)
-        {
-            for (int i = 0; i < vowels.Length; i++)
-            {
-                if (c == vowels[i]) return true;
-            }
-            return false;
-        }
     }
 }
