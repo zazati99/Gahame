@@ -150,6 +150,73 @@ namespace Gahame.GameUtils
             }
         }
 
+        // Draw mixed Wave text
+        public static void DrawMixedWaveText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, bool startNormal, string s, Vector2 pos, float intensity, Color color)
+        {
+            // Get list of stringw with separator
+            string[] subStrings = s.Split('^');
+
+            // The current type of font that will be used
+            bool currentTextType = startNormal;
+
+            // The offset of the text
+            Vector2 offset = new Vector2(0, 0);
+
+            // Constant offset that will be used by gahame font
+            Vector2 gahameFontOffset = new Vector2(1, font2.Size.Y - 8);
+
+            // Draw each substring
+            for (int i = 0; i < subStrings.Length; i++)
+            {
+                // Get each line in substring
+                string[] lines = subStrings[i].Split('\n');
+
+                // Draw normal text
+                if (currentTextType)
+                {
+                    // Draw each line;
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        // Draw shaky text contained in line
+                        DrawWaveText(spriteBatch, font, lines[j], pos + offset, intensity, color);
+
+                        // Change offset as long as it isn't the last line
+                        if (j != lines.Length - 1)
+                        {
+                            offset.Y += font2.LineSpacing;
+                            offset.X = 0;
+                        }
+                    }
+
+                    // Change X offset to the size of the last line
+                    offset.X += font.MeasureString(lines[lines.Length - 1]).X;
+                }
+                // Draw text using gahame font
+                else
+                {
+                    // Draw each line;
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        // Draw shaky text contained in line
+                        DrawWaveText(spriteBatch, font2, lines[j], pos + offset + gahameFontOffset, intensity, color);
+
+                        // Change offset as long as it isn't the last line
+                        if (j != lines.Length - 1)
+                        {
+                            offset.Y += font2.LineSpacing;
+                            offset.X = 0;
+                        }
+                    }
+
+                    // Change X offset to the size of the last line
+                    offset.X += font2.MeasureString(lines[lines.Length - 1]).X;
+                }
+
+                // change to other text type
+                currentTextType = !currentTextType;
+            }
+        }
+
         // Draw shaky text
         public static void DrawShakingText(SpriteBatch spriteBatch, SpriteFont font, string text, Vector2 pos, float intensity, Color c)
         {
@@ -216,6 +283,80 @@ namespace Gahame.GameUtils
                 }
             }
         }
+
+        // Draw shaky text
+        public static void DrawWaveText(SpriteBatch spriteBatch, SpriteFont font, string text, Vector2 pos, float intensity, Color c)
+        {
+            // the offset for each char
+            Vector2 offset = new Vector2(0, 0);
+
+            // Wave vector
+            Vector2 wave = new Vector2(0, 0);
+
+            // draw each char
+            for (int i = 0; i < text.Length; i++)
+            {
+                wave.Y = intensity * (float)Math.Sin((GahameController.Runtime + pos.X + offset.X)/10);
+                spriteBatch.DrawString(font, "" + text[i], pos + offset + wave, c);
+
+                offset.X += font.MeasureString("" + text[i]).X;
+
+                if (text[i] == '\n')
+                {
+                    offset.X = 0;
+                    offset.Y += font.LineSpacing;
+                }
+            }
+        }
+
+        // Draw wave gahame text
+        public static void DrawWaveText(SpriteBatch spriteBatch, GameFont font, string text, Vector2 pos, float intensity, Color c)
+        {
+            // the offset for each char
+            Vector2 offset = new Vector2(0, 0);
+
+            // Wave vector
+            Vector2 wave = new Vector2(0, 0);
+
+            // Gahamefy it
+            text = Gahamefy(text);
+
+            // draw each char
+            for (int i = 0; i < text.Length; i++)
+            {
+                wave.Y = intensity * (float)Math.Sin((GahameController.Runtime + pos.X + offset.X) / 10);
+
+                string textToDraw;
+                if (IsCons(text[i]))
+                {
+                    if (i != text.Length - 1)
+                    {
+                        if (IsVowel(text[i + 1]))
+                        {
+                            textToDraw = "" + text[i] + text[i + 1];
+                            i++;
+                        }
+                        else textToDraw = "" + text[i];
+                    }
+                    else textToDraw = "" + text[i];
+                }
+                else
+                {
+                    textToDraw = "" + text[i];
+                }
+
+                font.DrawString(spriteBatch, textToDraw, pos + offset + wave, c);
+
+                offset.X += font.MeasureString(textToDraw).X;
+
+                if (text[i] == '\n')
+                {
+                    offset.X = 0;
+                    offset.Y += font.LineSpacing;
+                }
+            }
+        }
+
 
         #endregion
 

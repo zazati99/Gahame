@@ -6,6 +6,9 @@
         public static bool CutScene = false;
         public static float GameSpeed = 1.0f;
 
+        // Runtime in frames
+        public static int Runtime = 0;
+
         // Random seed (might delet this)
         public static int Seed;
 

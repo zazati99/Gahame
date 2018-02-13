@@ -74,6 +74,9 @@ namespace Gahame
 
         protected override void Update(GameTime gameTime)
         {
+            // increase runtime number
+            GahameController.Runtime++;
+
             // Updates controlls before updating anythin else
             GameInput.Update();
 

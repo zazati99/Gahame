@@ -84,6 +84,19 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 Color.White
             );*/
 
+            /*TextRenderer.DrawMixedWaveText
+            (
+                spriteBatch,
+                Font,
+                GameFonts.GahameFont,
+                true,
+                (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
+                Position + offset,
+                .5f,
+                Color.White
+            );*/
+
+
             TextRenderer.DrawMixedShakyText
             (
                 spriteBatch,
@@ -92,9 +105,10 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 true,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
                 Position + offset,
-                .3f,
+                .275f,
                 Color.White
             );
+
 
             /*TextRenderer.DrawShakingText
             (
