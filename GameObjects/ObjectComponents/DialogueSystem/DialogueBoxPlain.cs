@@ -105,8 +105,8 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 true,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
                 Position + offset,
-                .275f,
-                Color.White
+                .4f,
+                Color.Pink
             );
 
 
