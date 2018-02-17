@@ -73,9 +73,6 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 Color.Black
             );
 
-            // 現在放下你的骨灰
-            // 现在放下你的骨灰
-
             /*TextRenderer.DrawMixedText
             (
                 spriteBatch,
