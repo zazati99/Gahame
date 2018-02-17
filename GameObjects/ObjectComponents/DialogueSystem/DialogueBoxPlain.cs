@@ -73,6 +73,9 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 Color.Black
             );
 
+            // 現在放下你的骨灰
+            // 现在放下你的骨灰
+
             /*TextRenderer.DrawMixedText
             (
                 spriteBatch,
@@ -97,7 +100,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             );*/
 
 
-            TextRenderer.DrawMixedShakyText
+            TextRenderer.DrawMixedWaveText
             (
                 spriteBatch,
                 Font,
@@ -106,7 +109,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
                 Position + offset,
                 .4f,
-                Color.Pink
+                Color.White
             );
 
 
