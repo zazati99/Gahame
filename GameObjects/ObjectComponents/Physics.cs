@@ -9,7 +9,7 @@ namespace Gahame.GameObjects.ObjectComponents
     public class Physics : ObjectComponent
     {
         // gravity
-        public static float Gravity = 0.25f;
+        public static Vector2 Gravity =  new Vector2(0, 0.25f);
 
         // Gravity enabled
         public bool GravityEnabled; 
@@ -49,10 +49,10 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
-                    if (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Math.Sign(Gravity)))
+                    if (!hb.SolidMeeting(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y))
                     {
                         Grounded = false;
-                        Velocity.Y += Gravity * GahameController.GameSpeed;
+                        Velocity += Gravity * GahameController.GameSpeed;
                     }
                     else Grounded = true;
                 }
@@ -82,7 +82,7 @@ namespace Gahame.GameObjects.ObjectComponents
                 gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed; // Update Y position
             } else // Just do velocity stuff without checking for collisions
             {
-                if (GravityEnabled) Velocity.Y += Gravity * GahameController.GameSpeed;
+                if (GravityEnabled) Velocity += Gravity * GahameController.GameSpeed;
                 gameObject.Position += Velocity * GahameController.GameSpeed;
             }
         }

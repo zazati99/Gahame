@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/Backgrounds/BackgroundTest.png</SourceFile>
-  <SourceTime>2017-12-24T04:23:01.4614738+01:00</SourceTime>
+  <SourceTime>2018-02-20T21:12:41.0042934+01:00</SourceTime>
   <DestFile>E:/Documents/Visual Studio 2017/Projects/Gahame/Gahame/Gahame/Gahame/Content/bin/DesktopGL/Backgrounds/BackgroundTest.xnb</DestFile>
-  <DestTime>2018-01-12T21:40:31.0760615+01:00</DestTime>
+  <DestTime>2018-02-20T21:35:13.9861363+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

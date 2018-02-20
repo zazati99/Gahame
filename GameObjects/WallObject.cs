@@ -54,7 +54,7 @@ namespace Gahame.GameObjects
                 BoxCollider col = (BoxCollider)GetComponent<HitBox>().Colliders[0];
                 rectangle = new Sprite(this);
 
-                Texture2D tex = CreateRect(spriteBatch, col.Size);
+                Texture2D tex = CreateRect(col.Size);
                 rectangle.AddImage(tex);
 
                 rectangle.Depth = .8f;

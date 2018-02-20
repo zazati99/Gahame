@@ -36,6 +36,7 @@ namespace Gahame.GameScreens
 
         // Next screen (can be loaded on separate thread in background)
         public GameScreen NextScreen;
+        public bool LoadingScreen;
         bool nextScreenReady;
 
         // Public thing så att man kan komma åt 'at överallt
@@ -54,6 +55,7 @@ namespace Gahame.GameScreens
         {
             // screentransition is false by default
             ScreenTransition = false;
+            LoadingScreen = false;
         }
 
         // Load content boy
@@ -61,8 +63,8 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
-            currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
-            //currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
+            //currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
+            currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #else
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #endif
@@ -162,12 +164,17 @@ namespace Gahame.GameScreens
         // Load next screen 
         public void LoadNextScreen(string path)
         {
-            nextScreenReady = false;
-            new Thread(() =>
+            if (!LoadingScreen)
             {
-                NextScreen = GameFileMaganer.LoadScreenFromEmbeddedPath(path);
-                nextScreenReady = true;
-            }).Start();
+                LoadingScreen = true;
+                nextScreenReady = false;
+                new Thread(() =>
+                {
+                    NextScreen = GameFileMaganer.LoadScreenFromEmbeddedPath(path);
+                    nextScreenReady = true;
+                    LoadingScreen = false;
+                }).Start();
+            }
         }
         // Go to next screen
         public void GoToNextScreen()
