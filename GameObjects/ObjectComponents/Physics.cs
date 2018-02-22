@@ -27,9 +27,6 @@ namespace Gahame.GameObjects.ObjectComponents
         public Physics(GameObject gameObject) : base(gameObject)
         {
             // Fixes important things
-            Updatable = true;
-            Drawable = false;
-            DrawableGUI = false;
             this.gameObject = gameObject;
 
             // variables that only affect physics stuff

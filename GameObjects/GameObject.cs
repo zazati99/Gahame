@@ -62,8 +62,7 @@ namespace Gahame.GameObjects
             // Updates the components of the object (if it even can)
             for (int i = 0; i < Components.Count; i++)
             {
-                if (Components[i].Updatable)
-                    Components[i].Update(gameTime);
+                Components[i].Update(gameTime);
             }
         }
 
@@ -73,8 +72,7 @@ namespace Gahame.GameObjects
             // Draws the components (if posiiblö)
             for (int i = 0; i < Components.Count; i++)
             {
-                if (Components[i].Drawable)
-                    Components[i].Draw(spriteBatch);
+                Components[i].Draw(spriteBatch);
             }
         }
 
@@ -84,8 +82,7 @@ namespace Gahame.GameObjects
             // Draws the GUI (if posiiblö)
             for (int i = 0; i < Components.Count; i++)
             {
-                if (Components[i].DrawableGUI)
-                    Components[i].DrawGUI(spriteBatch);
+                Components[i].DrawGUI(spriteBatch);
             }
         }
 

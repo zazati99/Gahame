@@ -15,7 +15,7 @@ namespace Gahame.GameScreens
     public class GameScreen
     {
         // ContentManager used by them GameScreens
-        public ContentManager content { get; protected set; }
+        public ContentManager Content { get; protected set; }
 
         // List of Gameobjects in the screen
         public List<GameObject> GameObjects;
@@ -83,7 +83,7 @@ namespace Gahame.GameScreens
         public virtual void LoadContent()
         {
             // Getting ContentManager from ScreenManager
-            content = new ContentManager(ScreenManager.Instance.Content.ServiceProvider, "Content");
+            Content = new ContentManager(ScreenManager.Instance.Content.ServiceProvider, "Content");
         }
 
         // Unloading content (must also have base thing)
@@ -102,7 +102,7 @@ namespace Gahame.GameScreens
             }
 
             // Unload content
-            content.Unload();
+            Content.Unload();
         }
 
         // Update thing in GameScreen

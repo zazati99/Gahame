@@ -18,13 +18,7 @@ namespace Gahame.GameObjects.ObjectComponents
         // needed constructor
         public LuaScript(GameObject gameObject) : base(gameObject)
         {
-            // HOHOHH
-            Updatable = true;
-            //lua = new Lua();
             lua = new Lua();
-            
-
-            //lua.LoadCLRPackage();
         }
 
         // Initializes lua script

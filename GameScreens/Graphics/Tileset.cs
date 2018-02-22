@@ -56,7 +56,7 @@ namespace Gahame.GameScreens
         public virtual void LoadTexture(string path)
         {
             // Load image from path
-            Image = screen.content.Load<Texture2D>(path);
+            Image = screen.Content.Load<Texture2D>(path);
 
             // make rectangle for that texture and size
             sourceRect = new Rectangle(0, 0, (int)(Image.Width / TileAmount.X), (int)(Image.Height / TileAmount.Y));

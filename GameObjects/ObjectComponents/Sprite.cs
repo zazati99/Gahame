@@ -40,12 +40,7 @@ namespace Gahame.GameObjects.ObjectComponents
 
         // Constructor boiis
         public Sprite(GameObject gameObject) : base(gameObject)
-        {
-            // Fixes drawable and updatable thing
-            Drawable = true;
-            Updatable = true;
-            DrawableGUI = false;
-
+        { 
             // Creates array of images
             Images = new List<Texture2D>();
             CurrentImage = 0;
@@ -107,7 +102,7 @@ namespace Gahame.GameObjects.ObjectComponents
         public virtual void AddImage(string path)
         {
             // Loads image from current screens contentmanager
-            Images.Add(gameObject.screen.content.Load<Texture2D>(path));
+            Images.Add(gameObject.screen.Content.Load<Texture2D>(path));
         }
         // Add Texture to array of images
         public void AddImage(Texture2D texture)
@@ -122,6 +117,5 @@ namespace Gahame.GameObjects.ObjectComponents
             vec.Y = Math.Abs(vec.Y);
             return vec;
         }
-
     }
 }

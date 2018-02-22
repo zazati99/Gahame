@@ -10,10 +10,7 @@ namespace Gahame.GameObjects.ObjectComponents
         // Constructor
         public OverworldDepthFix(GameObject gameObject) : base(gameObject)
         {
-            // Cool stuff
-            Updatable = true;
-            Drawable = false;
-            DrawableGUI = false;
+
         }
 
         // Update

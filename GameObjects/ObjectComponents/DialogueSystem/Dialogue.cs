@@ -22,15 +22,16 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Accesible?
         public bool Accesible;
 
+        // is talking?
+        public bool IsTalking;
+
         // Dialogue constructor
         public Dialogue(GameObject o) : base(o)
         {
             // Box variables
             DialogueBranches = new Dictionary<string, DialogueBranch>();
 
-            // Important component variables
-            DrawableGUI = false; // becomes true when active
-            Updatable = false; // becomes true when active
+            IsTalking = false;
 
             // Key starts with "" by default
             Key = "";
@@ -42,21 +43,19 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
         // Updates text
         public override void Update(GameTime gameTime)
         {
-            DialogueBranches[Key].Update(gameTime);
+            if (IsTalking) DialogueBranches[Key].Update(gameTime);
         }
 
         // Draw all of the stuffs
         public override void DrawGUI(SpriteBatch spriteBatch)
         {
-            DialogueBranches[Key].Draw(spriteBatch);
+            if (IsTalking) DialogueBranches[Key].Draw(spriteBatch);
         }
 
         // Starts the dialoguie
         public void StartDialogue()
         {
-            DrawableGUI = true;
-            Updatable = true;
-
+            IsTalking = true;
             GahameController.CutScene = true;
         }
 
@@ -70,9 +69,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 entry.Value.ClearGroup();
             }
 
-            // sets drawable and updatable to false
-            DrawableGUI = false;
-            Updatable = false;
+            IsTalking = false;
 
             // go back to default stuff
             GahameController.CutScene = false;

@@ -32,10 +32,6 @@ namespace Gahame.GameObjects.ObjectComponents
         // Initialize Should be called in constructor
         void initialize()
         {
-            //updatable and drawable things
-            Updatable = false;
-            Drawable = false;
-            DrawableGUI = false;
             // Creating collider stuff
             Colliders = new List<Collider>();
             Solid = false;
