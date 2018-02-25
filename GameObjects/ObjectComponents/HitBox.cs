@@ -177,6 +177,35 @@ namespace Gahame.GameObjects.ObjectComponents
             return null;
         }
 
+        // Gets the solid object at a specific place
+        public HitBox SolidPlace(Vector2 pos)
+        {
+            GameObject obj;
+            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
+            {
+                obj = gameObject.screen.GameObjects[i];
+                if (obj == gameObject) continue;
+
+                HitBox s = obj.GetComponent<HitBox>();
+                if (s != null)
+                {
+                    if (s.Solid)
+                    {
+                        for (int j = 0; j < Colliders.Count; j++)
+                        {
+                            for (int k = 0; k < s.Colliders.Count; k++)
+                            {
+                                if (Colliders[j].IsColliding(s.Colliders[k], pos, obj.Position))
+                                    return s;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         // Gets the object that is colliding at a specific place
         public GameObject InstancePlace<T>(Vector2 pos)
         {

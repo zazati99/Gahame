@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 
 using Gahame.GameUtils;
+using Gahame.GameObjects.ObjectComponents.Colliders;
 
 namespace Gahame.GameObjects.ObjectComponents
 {
