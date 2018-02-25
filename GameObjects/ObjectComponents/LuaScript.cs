@@ -1,12 +1,6 @@
 ﻿using NLua;
 
-using Gahame.GameUtils;
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gahame.GameObjects.ObjectComponents
 {
@@ -15,10 +9,14 @@ namespace Gahame.GameObjects.ObjectComponents
         // Lua thing
         Lua lua;
 
+        // Delete dis
+        bool willDelete;
+
         // needed constructor
         public LuaScript(GameObject gameObject) : base(gameObject)
         {
             lua = new Lua();
+            willDelete = false;
         }
 
         // Initializes lua script
@@ -27,8 +25,13 @@ namespace Gahame.GameObjects.ObjectComponents
             // Register functions
             lua.RegisterFunction("instanceDestroy", this, GetType().GetMethod("instanceDestroy"));
 
+            setFloat("x", gameObject.Position.X);
+            setFloat("y", gameObject.Position.Y);
+            setFloat("xSpeed", gameObject.GetComponent<Physics>().Velocity.X);
+            setFloat("ySpeed", gameObject.GetComponent<Physics>().Velocity.Y);
+
             lua.DoString(luaScript);
-            lua.DoString("Start()");
+            lua.GetFunction("Start").Call();
         }
 
         // Runs update function in script
@@ -46,7 +49,10 @@ namespace Gahame.GameObjects.ObjectComponents
             gameObject.GetComponent<Physics>().Velocity.X = getFloat("xSpeed");
             gameObject.GetComponent<Physics>().Velocity.Y = getFloat("ySpeed");
 
-            if (isGameObjectDelete()) gameObject.UnloadContent();
+            if (willDelete)
+            {
+                gameObject.DestroyObject();
+            }
         }
 
         // Lua set variable
@@ -72,18 +78,7 @@ namespace Gahame.GameObjects.ObjectComponents
         // DEstroy gameObject
         public void instanceDestroy()
         {
-            gameObject.screen.GameObjects.Remove(gameObject);
+            willDelete = true;
         }
-
-        bool isGameObjectDelete()
-        {
-            for (int i = 0; i < gameObject.screen.GameObjects.Count; i++)
-            {
-                if (gameObject.screen.GameObjects[i] == gameObject)
-                    return false;
-            }
-            return true;
-        }
-
     }
 }

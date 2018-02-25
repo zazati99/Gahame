@@ -103,7 +103,7 @@ namespace Gahame.GameObjects
             return (T)instance;
         }
 
-        // Change the current Sprite
+        // Change the current Sprite (Horrible, use sprteManager instead)
         protected void ChangeSprite(Sprite newSprite)
         {
             Components.Remove(GetComponent<Sprite>());

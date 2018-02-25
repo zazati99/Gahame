@@ -206,6 +206,5 @@ namespace Gahame.GameObjects
             }
         }
         #endregion
-
     }
 }

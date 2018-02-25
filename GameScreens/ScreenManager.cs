@@ -63,8 +63,8 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
-            //currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
-            currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
+            currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
+            //currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #else
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #endif

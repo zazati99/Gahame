@@ -54,6 +54,35 @@ namespace Gahame.GameObjects.ObjectComponents
                     else Grounded = true;
                 }
 
+                // fix collision if inside object
+                if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
+                {
+                    if (Velocity.X > 0)
+                    {
+                        gameObject.Position.X = (int)gameObject.Position.X;
+                        while (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
+                        {
+                            gameObject.Position.X--;
+                        }
+                    }
+                    if (Velocity.X < 0)
+                    {
+                        gameObject.Position.X = (int)gameObject.Position.X;
+                        while (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
+                        {
+                            gameObject.Position.X++;
+                        }
+                    }
+                    if (Velocity.X == 0)
+                    {
+                        gameObject.Position.X = (int)gameObject.Position.X;
+                        while (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
+                        {
+                            gameObject.Position.X++;
+                        }
+                    }
+                }
+
                 // Horizontal collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y))
                 {
