@@ -2,6 +2,8 @@
 
 using System;
 
+using Gahame.GameUtils;
+
 namespace Gahame.GameObjects.ObjectComponents
 {
     public class LuaScript : ObjectComponent, IDisposable
@@ -41,6 +43,8 @@ namespace Gahame.GameObjects.ObjectComponents
             setFloat("y", gameObject.Position.Y);
             setFloat("xSpeed", gameObject.GetComponent<Physics>().Velocity.X);
             setFloat("ySpeed", gameObject.GetComponent<Physics>().Velocity.Y);
+
+            setFloat("t", GahameController.Runtime);
 
             lua.GetFunction("Update").Call();
 

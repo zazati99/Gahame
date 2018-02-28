@@ -17,6 +17,9 @@ namespace Gahame.GameObjects.ObjectComponents
         // List of Colliders containing in the hitbox
         public List<Collider> Colliders;
 
+        // Priority thing
+        public short Priority;
+
         // constructor that doesnt create finnished collider
         public HitBox(GameObject gameObject) : base(gameObject)
         {
@@ -35,6 +38,8 @@ namespace Gahame.GameObjects.ObjectComponents
             // Creating collider stuff
             Colliders = new List<Collider>();
             Solid = false;
+
+            Priority = 1;
         }
 
         // Check if 2 hitboxes at a given position is colliding (By type)

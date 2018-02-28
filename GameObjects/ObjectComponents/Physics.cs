@@ -18,6 +18,9 @@ namespace Gahame.GameObjects.ObjectComponents
         // Check if object will colide with wall
         public bool Solid;
 
+        // will it inherit velocity hmmm?
+        public bool InheritVelocity;
+
         // Velocity vector
         public Vector2 Velocity;
 
@@ -52,34 +55,13 @@ namespace Gahame.GameObjects.ObjectComponents
                         Grounded = false;
                         Velocity += Gravity * GahameController.GameSpeed;
                     }
-                    else Grounded = true;
-                }
-
-                // fix collision if inside object
-                if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
-                {
-                    if (Velocity.X > 0)
+                    else
                     {
-                        gameObject.Position.X = (int)gameObject.Position.X;
-                        while (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
+                        Grounded = true;
+                        HitBox solid = hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y));
+                        if (solid.gameObject.GetComponent<Physics>() is Physics p)
                         {
-                            gameObject.Position.X--;
-                        }
-                    }
-                    if (Velocity.X < 0)
-                    {
-                        gameObject.Position.X = (int)gameObject.Position.X;
-                        while (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
-                        {
-                            gameObject.Position.X++;
-                        }
-                    }
-                    if (Velocity.X == 0)
-                    {
-                        gameObject.Position.X = (int)gameObject.Position.X;
-                        while (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y))
-                        {
-                            gameObject.Position.X++;
+                            Velocity = p.Velocity;
                         }
                     }
                 }
@@ -87,27 +69,44 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Horizontal collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y))
                 {
-                    gameObject.Position.X = (Velocity.X > 0) ? (int)gameObject.Position.X : (int)gameObject.Position.X + 1; 
-                    while (!hb.SolidMeeting(gameObject.Position.X + Math.Sign(Velocity.X), gameObject.Position.Y))
+                    HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y));
+                    if (hb.Priority > otherSolid.Priority)
                     {
-                        gameObject.Position.X += Math.Sign(Velocity.X);
+                        otherSolid.gameObject.Position.X += Velocity.X;
                     }
-                    Velocity.X = 0;
+                    else
+                    {
+                        gameObject.Position.X = (Velocity.X > 0) ? (int)gameObject.Position.X : (int)gameObject.Position.X + 1;
+                        while (!hb.SolidMeeting(gameObject.Position.X + Math.Sign(Velocity.X), gameObject.Position.Y))
+                        {
+                            gameObject.Position.X += Math.Sign(Velocity.X);
+                        }
+                        Velocity.X = 0;
+                    }
                 }
                 gameObject.Position.X += Velocity.X * GahameController.GameSpeed; // Updates x position
 
                 // Vertical collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed))
                 {
-                    gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : (int)gameObject.Position.Y + 1;
-                    while (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Math.Sign(Velocity.Y)))
+                    HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed));
+                    if (hb.Priority > otherSolid.Priority)
                     {
-                        gameObject.Position.Y += Math.Sign(Velocity.Y);
+                        otherSolid.gameObject.Position.Y += Velocity.Y;
                     }
-                    Velocity.Y = 0;
+                    else
+                    {
+                        gameObject.Position.Y = (Velocity.Y > 0) ? (int)gameObject.Position.Y : (int)gameObject.Position.Y + 1;
+                        while (!hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Math.Sign(Velocity.Y)))
+                        {
+                            gameObject.Position.Y += Math.Sign(Velocity.Y);
+                        }
+                        Velocity.Y = 0;
+                    }
                 }
                 gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed; // Update Y position
-            } else // Just do velocity stuff without checking for collisions
+            }
+            else // Just do velocity stuff without checking for collisions
             {
                 if (GravityEnabled) Velocity += Gravity * GahameController.GameSpeed;
                 gameObject.Position += Velocity * GahameController.GameSpeed;

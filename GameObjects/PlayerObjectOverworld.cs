@@ -49,6 +49,8 @@ namespace Gahame.GameObjects
             hitBox.Colliders.Add(new BoxCollider(new Vector2(14, 13)));
             hitBox.Colliders[0].Offset.X = -7;
             hitBox.Colliders[0].Offset.Y = 11;
+            hitBox.Priority = 0;
+            hitBox.Solid = true;
             Components.Add(hitBox);
 
             // Physics
