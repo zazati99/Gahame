@@ -97,7 +97,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
             );*/
 
 
-            TextRenderer.DrawMixedShakyText
+            TextRenderer.DrawMixedWaveText
             (
                 spriteBatch,
                 Font,
@@ -105,7 +105,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                 true,
                 (CharIndex < Text.Length) ? Text.Remove((int)CharIndex) : Text,
                 Position + offset,
-                .3f,
+                .35f,
                 Color.White
             );
 

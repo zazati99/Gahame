@@ -38,6 +38,7 @@ namespace Gahame.GameObjects.ObjectComponents
             GravityEnabled = false;
             Velocity = new Vector2(0, 0);
             Grounded = false;
+            InheritVelocity = false;
         }
 
         // Updates physics
@@ -58,10 +59,12 @@ namespace Gahame.GameObjects.ObjectComponents
                     else
                     {
                         Grounded = true;
-                        HitBox solid = hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y));
-                        if (solid.gameObject.GetComponent<Physics>() is Physics p)
-                        {
-                            Velocity = p.Velocity;
+                        if (InheritVelocity){
+                            HitBox solid = hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y));
+                            if (solid.gameObject.GetComponent<Physics>() is Physics p)
+                            {
+                                Velocity = p.Velocity;
+                            }   
                         }
                     }
                 }
@@ -72,7 +75,9 @@ namespace Gahame.GameObjects.ObjectComponents
                     HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y));
                     if (hb.Priority > otherSolid.Priority)
                     {
-                        otherSolid.gameObject.Position.X += Velocity.X;
+                        //otherSolid.gameObject.Position.X += Velocity.X;
+                        float newPos = (gameObject.Position.X + Velocity.X - otherSolid.gameObject.Position.X) - gameObject.Position.X + otherSolid.gameObject.Position.X;
+                        otherSolid.gameObject.Position.X += newPos;
                     }
                     else
                     {
@@ -92,7 +97,8 @@ namespace Gahame.GameObjects.ObjectComponents
                     HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed));
                     if (hb.Priority > otherSolid.Priority)
                     {
-                        otherSolid.gameObject.Position.Y += Velocity.Y;
+                        float newPos = (gameObject.Position.Y + Velocity.Y - otherSolid.gameObject.Position.Y) - gameObject.Position.Y + otherSolid.gameObject.Position.Y;
+                        otherSolid.gameObject.Position.Y += newPos;
                     }
                     else
                     {

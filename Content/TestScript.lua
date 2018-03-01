@@ -3,10 +3,10 @@
 end
 
 function Update()
-    
-	--xSpeed = 1
+
+	--xSpeed = -0.5;
 	--y = 5*math.sin(x/5) + yStart;
 
-	xSpeed = 2*math.sin(t/6);
+	ySpeed = 2*math.sin(t/50);
 	
 end
