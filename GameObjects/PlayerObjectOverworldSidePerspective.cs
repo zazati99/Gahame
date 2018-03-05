@@ -67,6 +67,8 @@ namespace Gahame.GameObjects
             hitBox.Colliders.Add(new BoxCollider(new Vector2(14, 43)));
             hitBox.Colliders[0].Offset.X = -7;
             hitBox.Colliders[0].Offset.Y = -19;
+            hitBox.Solid = true;
+            hitBox.Priority = 0;
             Components.Add(hitBox);
 
             // Physics
@@ -101,7 +103,7 @@ namespace Gahame.GameObjects
             // Start updateing
             StartUpdate();
 
-            // Do controlls for player if it's not a cutscene
+            // Im sorry my child
             if (!GahameController.CutScene)
             {
                 // Walking left and right
@@ -125,9 +127,10 @@ namespace Gahame.GameObjects
                 }
             }
 
-            // Updates Components last
+            // I dont even know anymore
             base.Update(gameTime);
 
+            // Idk
             if (physics.Grounded)
             {
                 screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .065f, .25f * GahameController.GameSpeed);
@@ -149,7 +152,8 @@ namespace Gahame.GameObjects
             base.Draw(spriteBatch);
 
             // Speed test
-            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 42), Color.Black);
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.Y.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.Y.ToString()).X / 2, 32), Color.Black);
         }
 
         #region Movement
@@ -192,7 +196,7 @@ namespace Gahame.GameObjects
         {
             if (physics.Grounded)
             {
-                physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity.Y);
+                physics.Velocity.Y -= jumpHeight / 2 * Math.Sign(Physics.Gravity.Y);
                 Jumping = true;
             }
         }

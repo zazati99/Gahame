@@ -19,7 +19,7 @@ namespace Gahame.GameObjects.ObjectComponents
         public bool Solid;
 
         // will it inherit velocity hmmm?
-        public bool InheritVelocity;
+        Vector2 inheritedVelocity;
 
         // Velocity vector
         public Vector2 Velocity;
@@ -38,7 +38,7 @@ namespace Gahame.GameObjects.ObjectComponents
             GravityEnabled = false;
             Velocity = new Vector2(0, 0);
             Grounded = false;
-            InheritVelocity = false;
+            inheritedVelocity = new Vector2(0, 0);
         }
 
         // Updates physics
@@ -55,16 +55,19 @@ namespace Gahame.GameObjects.ObjectComponents
                     {
                         Grounded = false;
                         Velocity += Gravity * GahameController.GameSpeed;
+
+                        if (inheritedVelocity.X != 0) Velocity.X += inheritedVelocity.X;
+                        if (inheritedVelocity.Y != 0) Velocity.Y += inheritedVelocity.Y;
+
+                        inheritedVelocity = Vector2.Zero;
                     }
                     else
                     {
                         Grounded = true;
-                        if (InheritVelocity){
-                            HitBox solid = hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y));
-                            if (solid.gameObject.GetComponent<Physics>() is Physics p)
-                            {
-                                Velocity = p.Velocity;
-                            }   
+                        if (hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y)).gameObject.GetComponent<Physics>() is Physics p)
+                        {
+                            inheritedVelocity = p.Velocity;
+                            if (inheritedVelocity.Y >= 0) inheritedVelocity.X = 0;
                         }
                     }
                 }
@@ -75,8 +78,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y));
                     if (hb.Priority > otherSolid.Priority)
                     {
-                        //otherSolid.gameObject.Position.X += Velocity.X;
-                        float newPos = (gameObject.Position.X + Velocity.X - otherSolid.gameObject.Position.X) - gameObject.Position.X + otherSolid.gameObject.Position.X;
+                        float newPos = Velocity.X;
                         otherSolid.gameObject.Position.X += newPos;
                     }
                     else
@@ -89,7 +91,7 @@ namespace Gahame.GameObjects.ObjectComponents
                         Velocity.X = 0;
                     }
                 }
-                gameObject.Position.X += Velocity.X * GahameController.GameSpeed; // Updates x position
+                gameObject.Position.X += (Velocity.X + inheritedVelocity.X) * GahameController.GameSpeed; // Updates x position
 
                 // Vertical collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed))
@@ -97,7 +99,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed));
                     if (hb.Priority > otherSolid.Priority)
                     {
-                        float newPos = (gameObject.Position.Y + Velocity.Y - otherSolid.gameObject.Position.Y) - gameObject.Position.Y + otherSolid.gameObject.Position.Y;
+                        float newPos = Velocity.Y;
                         otherSolid.gameObject.Position.Y += newPos;
                     }
                     else
@@ -110,7 +112,7 @@ namespace Gahame.GameObjects.ObjectComponents
                         Velocity.Y = 0;
                     }
                 }
-                gameObject.Position.Y += Velocity.Y * GahameController.GameSpeed; // Update Y position
+                gameObject.Position.Y += (Velocity.Y + inheritedVelocity.Y) * GahameController.GameSpeed; // Update Y position
             }
             else // Just do velocity stuff without checking for collisions
             {
