@@ -56,9 +56,7 @@ namespace Gahame.GameObjects.ObjectComponents
                         Grounded = false;
                         Velocity += Gravity * GahameController.GameSpeed;
 
-                        if (inheritedVelocity.X != 0) Velocity.X += inheritedVelocity.X;
-                        if (inheritedVelocity.Y != 0) Velocity.Y += inheritedVelocity.Y;
-
+                        Velocity += inheritedVelocity;
                         inheritedVelocity = Vector2.Zero;
                     }
                     else

@@ -130,16 +130,7 @@ namespace Gahame.GameObjects
             // I dont even know anymore
             base.Update(gameTime);
 
-            // Idk
-            if (physics.Grounded)
-            {
-                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .065f, .25f * GahameController.GameSpeed);
-            }
-            else
-            {
-                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .015f, .25f * GahameController.GameSpeed);
-                spriteManager.ChangeSprite("Jumping");
-            }
+            if (!physics.Grounded) spriteManager.ChangeSprite("Jumping");
 
             spriteManager.GetSprite("Jumping").SpriteScale.X = imageScale;
             spriteManager.GetSprite("Moving").SpriteScale.X = imageScale;
