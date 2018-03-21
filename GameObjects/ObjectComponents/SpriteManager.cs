@@ -43,6 +43,15 @@ namespace Gahame.GameObjects.ObjectComponents
             return sprites[key];
         }
 
+        // Does what you think xd
+        public void ChangeScaleOnAllSprites(Vector2 scale)
+        {
+            foreach (KeyValuePair<string, Sprite> sprite in sprites)
+            {
+                sprite.Value.SpriteScale = scale;
+            }
+        }
+
         // Add a sprite
         public void AddSprite(string key, Sprite sprite)
         {

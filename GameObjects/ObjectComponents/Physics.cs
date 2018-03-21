@@ -51,7 +51,12 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
-                    if (!hb.SolidMeeting(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y))
+                    Vector2 posSpeedKek = gameObject.Position;
+                    posSpeedKek += Gravity * Velocity;
+                    posSpeedKek += Gravity;
+
+                    HitBox solid = hb.SolidPlace(posSpeedKek);
+                    if (solid == null)
                     {
                         Grounded = false;
                         Velocity += Gravity * GahameController.GameSpeed;
@@ -62,7 +67,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     else
                     {
                         Grounded = true;
-                        if (hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y)).gameObject.GetComponent<Physics>() is Physics p)
+                        if (solid.gameObject.GetComponent<Physics>() is Physics p)
                         {
                             inheritedVelocity = p.Velocity;
                             if (inheritedVelocity.Y >= 0) inheritedVelocity.X = 0;

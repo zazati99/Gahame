@@ -132,9 +132,7 @@ namespace Gahame.GameObjects
 
             if (!physics.Grounded) spriteManager.ChangeSprite("Jumping");
 
-            spriteManager.GetSprite("Jumping").SpriteScale.X = imageScale;
-            spriteManager.GetSprite("Moving").SpriteScale.X = imageScale;
-            spriteManager.GetSprite("Still").SpriteScale.X = imageScale;
+            spriteManager.ChangeScaleOnAllSprites(new Vector2(imageScale, 1));
         }
 
         // dDrawerino
@@ -187,7 +185,7 @@ namespace Gahame.GameObjects
         {
             if (physics.Grounded)
             {
-                physics.Velocity.Y -= jumpHeight / 2 * Math.Sign(Physics.Gravity.Y);
+                physics.Velocity.Y -= jumpHeight * Math.Sign(Physics.Gravity.Y);
                 Jumping = true;
             }
         }
