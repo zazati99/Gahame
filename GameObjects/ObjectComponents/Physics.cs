@@ -51,11 +51,19 @@ namespace Gahame.GameObjects.ObjectComponents
                 // Cool gravity memes
                 if (GravityEnabled)
                 {
-                    Vector2 posSpeedKek = gameObject.Position;
-                    posSpeedKek += Gravity * Velocity;
-                    posSpeedKek += Gravity;
+                    Vector2 speedDir = gameObject.Position;
+                    speedDir += Gravity;
 
-                    HitBox solid = hb.SolidPlace(posSpeedKek);
+                    if (Math.Sign(Velocity.Y) == Math.Sign(Gravity.Y))
+                    {
+                        speedDir.Y += Velocity.Y;
+                    }
+                    if (Math.Sign(Velocity.X) == Math.Sign(Gravity.X))
+                    {
+                        speedDir.X += Velocity.X;
+                    }
+
+                    HitBox solid = hb.SolidPlace(speedDir);
                     if (solid == null)
                     {
                         Grounded = false;
@@ -81,8 +89,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y));
                     if (hb.Priority > otherSolid.Priority)
                     {
-                        float newPos = Velocity.X;
-                        otherSolid.gameObject.Position.X += newPos;
+                        otherSolid.gameObject.Position.X += Velocity.X;
                     }
                     else
                     {
@@ -102,8 +109,7 @@ namespace Gahame.GameObjects.ObjectComponents
                     HitBox otherSolid = hb.SolidPlace(new Vector2(gameObject.Position.X, gameObject.Position.Y + Velocity.Y * GahameController.GameSpeed));
                     if (hb.Priority > otherSolid.Priority)
                     {
-                        float newPos = Velocity.Y;
-                        otherSolid.gameObject.Position.Y += newPos;
+                        otherSolid.gameObject.Position.Y += Velocity.Y;
                     }
                     else
                     {

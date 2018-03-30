@@ -129,7 +129,7 @@ namespace Gahame.GameScreens
 
         // GameScreen Functions
 
-        // DIFERENT WAYS OF LOADING SCREEN BELOW
+        // DIFERENT WAYS OF LOADING SCREEN BELOWojo
 
         // Change the current gamescreen and clears the old one but does not load content
         public void ChangeScreenClear(GameScreen screen)
