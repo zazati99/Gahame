@@ -8,8 +8,8 @@ function Update()
 	--xSpeed = -0.5;
 	--y = 5*math.sin(x/5) + yStart;
 
-	ySpeed = 2.5*math.sign(math.sin(t/10));
-	xSpeed = math.sin(t/10);
+	ySpeed = math.sign(math.sin(t/10));
+	xSpeed = 2*math.sin(t/10 + 30);
 	
 end
 

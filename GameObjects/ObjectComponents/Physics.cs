@@ -48,40 +48,35 @@ namespace Gahame.GameObjects.ObjectComponents
             HitBox hb = gameObject.GetComponent<HitBox>();
             if (Solid && hb != null)
             {
-                // Cool gravity memes
+
+                // Cool gravity meme
                 if (GravityEnabled)
                 {
-                    Vector2 speedDir = gameObject.Position;
-                    speedDir += Gravity;
-
-                    if (Math.Sign(Velocity.Y) == Math.Sign(Gravity.Y))
+                    if (hb.SolidPlace(new Vector2(gameObject.Position.X + Gravity.X*10, gameObject.Position.Y + Gravity.Y*10)) is HitBox otherHb)
                     {
-                        speedDir.Y += Velocity.Y;
-                    }
-                    if (Math.Sign(Velocity.X) == Math.Sign(Gravity.X))
-                    {
-                        speedDir.X += Velocity.X;
-                    }
+                        Grounded = true;
+                        if (otherHb.gameObject.GetComponent<Physics>() is Physics p)
+                        {
+                            inheritedVelocity = p.Velocity;
+                            if (inheritedVelocity.Y > 0) inheritedVelocity.X = 0;
 
-                    HitBox solid = hb.SolidPlace(speedDir);
-                    if (solid == null)
+                            if (!hb.SolidMeeting(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y))
+                            {
+                                Velocity += Gravity * GahameController.GameSpeed;
+                            }
+
+                        }
+                    } else
                     {
                         Grounded = false;
-                        Velocity += Gravity * GahameController.GameSpeed;
 
                         Velocity += inheritedVelocity;
                         inheritedVelocity = Vector2.Zero;
-                    }
-                    else
-                    {
-                        Grounded = true;
-                        if (solid.gameObject.GetComponent<Physics>() is Physics p)
-                        {
-                            inheritedVelocity = p.Velocity;
-                            if (inheritedVelocity.Y >= 0) inheritedVelocity.X = 0;
-                        }
+
+                        Velocity += Gravity * GahameController.GameSpeed;
                     }
                 }
+
 
                 // Horizontal collision (Advanced stuff)
                 if (hb.SolidMeeting(gameObject.Position.X + Velocity.X * GahameController.GameSpeed, gameObject.Position.Y))

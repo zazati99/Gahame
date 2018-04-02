@@ -9,8 +9,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 using Gahame.GameUtils;
+using Gahame.GameAudio;
 
 namespace Gahame.GameScreens
 {
@@ -33,6 +35,10 @@ namespace Gahame.GameScreens
 
         // are we transitioning screens
         public bool ScreenTransition;
+
+        //TEST
+        Music TestMusic;
+        // REMOVE
 
         // Next screen (can be loaded on separate thread in background)
         public GameScreen NextScreen;
@@ -63,12 +69,19 @@ namespace Gahame.GameScreens
         {
             Content = new ContentManager(content.ServiceProvider, "Content");
 #if DEBUG
-            currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
-            //currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
+            //currentScreen = GameFileMaganer.LoadScreenFromPath("Content/DEBUG_LEVEL.sml");
+            currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #else
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #endif
             // Load content below here
+
+            TestMusic = new Music();
+            TestMusic.LoadTrack(Content, "music1", "Yeet");
+            TestMusic.LoadTrack(Content, "music2", "Oi");
+            TestMusic.PlayAllTracks();
+
+            //TestMusic.SetVolume("Yeet", 0f);
 
         }
 
@@ -89,7 +102,12 @@ namespace Gahame.GameScreens
                 Random r = new Random();
                 GahameController.Seed = r.Next();
                 ChangeScreenClear(GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml"));
+
+                TestMusic.UnloadContent();
             }
+
+           //TestMusic.FadeTrack("Yeet", 1, .001f);
+           //TestMusic.FadeTrack("Oi", 0, .0005f);
 
             // Updates the current Screen
             currentScreen.Update(gameTime);

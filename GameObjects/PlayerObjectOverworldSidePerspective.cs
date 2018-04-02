@@ -185,7 +185,7 @@ namespace Gahame.GameObjects
         {
             if (physics.Grounded)
             {
-                physics.Velocity.Y -= jumpHeight * Math.Sign(Physics.Gravity.Y);
+                physics.Velocity.Y = -jumpHeight * Math.Sign(Physics.Gravity.Y);
                 Jumping = true;
             }
         }
