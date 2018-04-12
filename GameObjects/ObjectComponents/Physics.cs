@@ -58,13 +58,12 @@ namespace Gahame.GameObjects.ObjectComponents
                         if (otherHb.gameObject.GetComponent<Physics>() is Physics p)
                         {
                             inheritedVelocity = p.Velocity;
-                            if (inheritedVelocity.Y > 0) inheritedVelocity.X = 0;
+                            if (inheritedVelocity.Y > 0f) inheritedVelocity.X = 0;
 
                             if (!hb.SolidMeeting(gameObject.Position.X + Gravity.X, gameObject.Position.Y + Gravity.Y))
                             {
                                 Velocity += Gravity * GahameController.GameSpeed;
                             }
-
                         }
                     } else
                     {

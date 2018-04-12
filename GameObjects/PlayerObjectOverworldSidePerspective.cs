@@ -88,7 +88,7 @@ namespace Gahame.GameObjects
             accelerationSpeed = .5f;
             airAccelerationSpeed = accelerationSpeed * 0.75f;
 
-            slowDownSpeed = .25f;
+            slowDownSpeed = 0.25f;
             airSlowDownSpeed = slowDownSpeed * 0.5f;
 
             jumpHeight = 4.5f;
