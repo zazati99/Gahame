@@ -36,8 +36,6 @@ namespace Gahame.GameScreens
         // are we transitioning screens
         public bool ScreenTransition;
 
-        Music teest;
-
         // Next screen (can be loaded on separate thread in background)
         public GameScreen NextScreen;
         public bool LoadingScreen;
@@ -73,10 +71,6 @@ namespace Gahame.GameScreens
             currentScreen = GameFileMaganer.LoadScreenFromEmbeddedPath("TestLevel.sml");
 #endif
             // Load content below here
-            teest = new Music();
-            teest.LoadTrack(content, "music1", "track1");
-            teest.LoadTrack(content, "music2", "track2");
-            teest.PlayAllTracks();
 
         }
 
