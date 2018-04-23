@@ -17,13 +17,13 @@ namespace Gahame.GameUtils
         #region Text drawing methods
 
         // Draw mixed text
-        public static void DrawMixedText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, bool startNormal, string s, Vector2 pos, Color color)
+        public static void DrawMixedText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, string s, Vector2 pos, Color color)
         {
             // Get list of stringw with separator
             string[] subStrings = s.Split('^');
 
             // The current type of font that will be used
-            bool currentTextType = startNormal;
+            bool currentTextType = true;
 
             // The offset of the text
             Vector2 offset = new Vector2(0, 0);
@@ -64,7 +64,7 @@ namespace Gahame.GameUtils
                     for (int j = 0; j < lines.Length; j++)
                     {
                         // Draw text contained in line
-                        font2.DrawString(spriteBatch, lines[j], pos + offset + gahameFontOffset, color);
+                        DrawText(spriteBatch, font2, lines[j], pos + offset + gahameFontOffset, color);
 
                         // Change offset as long as it isn't the last line
                         if (j != lines.Length - 1)
@@ -84,13 +84,13 @@ namespace Gahame.GameUtils
         }
 
         // Draw mixed text
-        public static void DrawMixedShakyText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, bool startNormal, string s, Vector2 pos, float intensity, Color color)
+        public static void DrawMixedShakingText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, string s, Vector2 pos, float intensity, Color color)
         {
             // Get list of stringw with separator
             string[] subStrings = s.Split('^');
 
             // The current type of font that will be used
-            bool currentTextType = startNormal;
+            bool currentTextType = true;
 
             // The offset of the text
             Vector2 offset = new Vector2(0, 0);
@@ -151,13 +151,13 @@ namespace Gahame.GameUtils
         }
 
         // Draw mixed Wave text
-        public static void DrawMixedWaveText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, bool startNormal, string s, Vector2 pos, float intensity, Color color)
+        public static void DrawMixedWaveText(SpriteBatch spriteBatch, SpriteFont font, GameFont font2, string s, Vector2 pos, float intensity, Color color)
         {
             // Get list of stringw with separator
             string[] subStrings = s.Split('^');
 
             // The current type of font that will be used
-            bool currentTextType = startNormal;
+            bool currentTextType = true;
 
             // The offset of the text
             Vector2 offset = new Vector2(0, 0);
@@ -245,7 +245,6 @@ namespace Gahame.GameUtils
             // the offset for each char
             Vector2 offset = new Vector2(0, 0);
 
-            // Gahamefy it
             text = Gahamefy(text);
 
             // draw each char
@@ -318,7 +317,6 @@ namespace Gahame.GameUtils
             // Wave vector
             Vector2 wave = new Vector2(0, 0);
 
-            // Gahamefy it
             text = Gahamefy(text);
 
             // draw each char
@@ -355,6 +353,13 @@ namespace Gahame.GameUtils
                     offset.Y += font.LineSpacing;
                 }
             }
+        }
+
+        // Draw normal Gahame text
+        public static void DrawText(SpriteBatch spriteBatch, GameFont font, string text, Vector2 pos, Color c)
+        {
+            text = Gahamefy(text);
+            font.DrawString(spriteBatch, text, pos, c);
         }
 
 

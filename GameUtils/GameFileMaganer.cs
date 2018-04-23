@@ -10,6 +10,8 @@ using System.IO;
 using System.Reflection;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace Gahame.GameUtils
 {
@@ -235,6 +237,9 @@ namespace Gahame.GameUtils
                         break;
                     case "NonSkippable":
                         box.Skippable = false;
+                        break;
+                    case "TextType":
+                        box.textType = (DialogueBoxPlain.TextType)Enum.Parse(typeof(DialogueBoxPlain.TextType), GetLine(reader));
                         break;
                 }
             }
@@ -823,6 +828,26 @@ namespace Gahame.GameUtils
             Type t = Type.GetType(type);
             return (T)Activator.CreateInstance(t);
         }
+
+        //AYYYYYYYYYYYY
+        public static GameObject LoadBinary(string path)
+        {
+
+            GameObject instance;
+            instance = null;
+
+            FileStream fs = new FileStream(path, FileMode.Open);
+            BinaryFormatter bf = new BinaryFormatter();
+            try
+            {
+
+                instance = (GameObject)bf.Deserialize(fs);
+
+            } catch (SerializationException e) { }
+
+            return instance;
+        }
+
         #endregion
     }
 }

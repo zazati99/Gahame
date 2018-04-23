@@ -112,6 +112,8 @@ OverworldScreen
 					NonSkippable
 					TextSpeed
 						0.05
+					TextType
+						SHAKING
 				---
 			---
 			DialogueBranch
@@ -127,6 +129,8 @@ OverworldScreen
 					NonSkippable
 					TextSpeed
 						1
+					TextType
+						WAVING
 				---
 			---
 		---
