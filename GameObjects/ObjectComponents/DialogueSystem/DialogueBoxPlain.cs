@@ -123,6 +123,7 @@ namespace Gahame.GameObjects.ObjectComponents.DialogueSystem
                         .35f,
                         Color.White
                     );
+
                     break;
             }
         }
