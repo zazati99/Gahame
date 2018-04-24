@@ -14,9 +14,12 @@ namespace Gahame.GameObjects
     public class PlayerObjectBattle : PlayerObject
     {
         // Componenst
-        Sprite sprite;
         HitBox hitBox;
         Physics physics;
+
+        // Sprites
+        SpriteManager spriteManager;
+        float imageScale;
 
         // Controlls variablees
         float jumpHeight;
@@ -31,21 +34,44 @@ namespace Gahame.GameObjects
 
         public bool Jumping;
 
+        // TEST
+        PlayerWeapon weapon;
+
         // Constructor stufferoo for playerino
         public PlayerObjectBattle(GameScreen screen) : base(screen)
         {
             // Cool sprite stuff
-            sprite = new Sprite(this);
-            sprite.Depth = .1f;
-            sprite.AddImage("Sprites/Player/playerBattleScreenStill");
-            sprite.SpriteOrigin = new Vector2(24, 24);
-            Components.Add(sprite);
+            imageScale = 1;
+            Sprite sprStill = new Sprite(this);
+            sprStill.Depth = .1f;
+            sprStill.AddImage("Sprites/Player/playerBattleScreenStill");
+            sprStill.SpriteOrigin = new Vector2(24, 24);
+
+            Sprite sprMoving = new Sprite(this);
+            sprMoving.Depth = .1f;
+            sprMoving.AddImage("Sprites/Player/playerBattleScreenStill");
+            sprMoving.AddImage("Sprites/Player/playerBattleMoving");
+            sprMoving.ImageSpeed = .1f;
+            sprMoving.SpriteOrigin = new Vector2(24, 24);
+
+            Sprite sprJumping = new Sprite(this);
+            sprJumping.Depth = .1f;
+            sprJumping.AddImage("Sprites/Player/playerBattleMoving");
+            sprJumping.SpriteOrigin = new Vector2(24, 24);
+
+            spriteManager = new SpriteManager(this);
+            spriteManager.AddSprite("Still", sprStill);
+            spriteManager.AddSprite("Moving", sprMoving);
+            spriteManager.AddSprite("Jumping", sprJumping);
+            Components.Add(spriteManager);
 
             // HitBox COmponent 
             hitBox = new HitBox(this);
             hitBox.Colliders.Add(new BoxCollider(new Vector2(14, 43)));
             hitBox.Colliders[0].Offset.X = -7;
             hitBox.Colliders[0].Offset.Y = -19;
+            hitBox.Solid = true;
+            hitBox.Priority = 0;
             Components.Add(hitBox);
 
             // Physics
@@ -56,7 +82,7 @@ namespace Gahame.GameObjects
 
             // Camera
             screen.CamController.Target = this;
-            screen.CamController.MovementAmount = new Vector2(.2f, .01f);
+            screen.CamController.MovementAmount = new Vector2(.2f, .05f);
             //screen.CamController.Static = true;
             //screen.CamController.SetPosition(new Vector2(330, 100));
 
@@ -65,22 +91,25 @@ namespace Gahame.GameObjects
             accelerationSpeed = .5f;
             airAccelerationSpeed = accelerationSpeed * 0.75f;
 
-            slowDownSpeed = .25f;
+            slowDownSpeed = 0.25f;
             airSlowDownSpeed = slowDownSpeed * 0.5f;
 
             jumpHeight = 4.5f;
             minJumpHeight = jumpHeight / 2;
 
             Jumping = false;
+
+            // TEST
+            weapon = new BasicGun();
         }
 
         // Update stufferino
         public override void Update(GameTime gameTime)
         {
-            // Start thing
+            // Start updateing
             StartUpdate();
 
-            // Do controlls for player if it's not a cutscene
+            // Im sorry my child
             if (!GahameController.CutScene)
             {
                 // Walking left and right
@@ -99,21 +128,23 @@ namespace Gahame.GameObjects
                 // Interact with object
                 if (GameInput.ActivateCD)
                 {
-                    Dialogue d = hitBox.DialogueMeeting(Position + sprite.SpriteScale);
+                    Dialogue d = hitBox.DialogueMeeting(Position + new Vector2(imageScale, 0));
                     if (d != null) d.StartDialogue();
+
+
+                    Vector2 speedVec = new Vector2(Math.Sign(GameInput.LeftStickX), Math.Sign(GameInput.LeftStickY));
+                    if (speedVec == Vector2.Zero) speedVec = new Vector2(Math.Sign(imageScale), 0);
+
+                    weapon.Shoot(screen, speedVec);
                 }
             }
 
-            // Updates Components last*/
+            // I dont even know anymore
             base.Update(gameTime);
 
-            if (physics.Grounded)
-            {
-                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .075f, .1f * GahameController.GameSpeed);
-            } else
-            {
-                screen.CamController.MovementAmount.Y = MyMaths.Lerp(screen.CamController.MovementAmount.Y, .020f, .1f * GahameController.GameSpeed);
-            }
+            if (!physics.Grounded) spriteManager.ChangeSprite("Jumping");
+
+            spriteManager.ChangeScaleOnAllSprites(new Vector2(imageScale, 1));
         }
 
         // dDrawerino
@@ -122,7 +153,8 @@ namespace Gahame.GameObjects
             base.Draw(spriteBatch);
 
             // Speed test
-            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 32), Color.Black);
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.X.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.X.ToString()).X / 2, 42), Color.Black);
+            spriteBatch.DrawString(GameFonts.Arial, physics.Velocity.Y.ToString(), Position - new Vector2(GameFonts.Arial.MeasureString(physics.Velocity.Y.ToString()).X / 2, 32), Color.Black);
         }
 
         #region Movement
@@ -130,7 +162,7 @@ namespace Gahame.GameObjects
         public override void WalkHorizontal(float targetSpeed)
         {
             // lerp the sprite scale (prob wont keep)
-            sprite.SpriteScale.X = MyMaths.Lerp(sprite.SpriteScale.X,
+            imageScale = MyMaths.Lerp(imageScale,
                 Math.Sign(targetSpeed),
                 .25f * GahameController.GameSpeed * (GameInput.ControllerMode && !GahameController.CutScene ? Math.Abs(GameInput.AbsLeftStickX) : 1));
 
@@ -141,6 +173,14 @@ namespace Gahame.GameObjects
             physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, targetSpeed,
                 GahameController.GameSpeed * (physics.Grounded ? accelerationSpeed : airAccelerationSpeed));
 
+            // Sprite things
+            if (spriteManager.CurrentSprite != "Moving")
+            {
+                spriteManager.ChangeSprite("Moving");
+                spriteManager.GetSprite("Moving").CurrentImage = 0;
+            }
+            spriteManager.GetSprite("Moving").ImageSpeed = .1f * Math.Abs(physics.Velocity.X / maxSpeed);
+
             // You be walking
             WalkingHorizontal = true;
         }
@@ -149,6 +189,7 @@ namespace Gahame.GameObjects
         public override void StopHorizontal()
         {
             physics.Velocity.X = MyMaths.Approach(physics.Velocity.X, 0, GahameController.GameSpeed * (physics.Grounded ? slowDownSpeed : airSlowDownSpeed));
+            spriteManager.ChangeSprite("Still");
         }
 
         // Jump
@@ -170,6 +211,5 @@ namespace Gahame.GameObjects
             }
         }
         #endregion
-
     }
 }

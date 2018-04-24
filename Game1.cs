@@ -38,8 +38,10 @@ namespace Gahame
             // Exit game Timer
             exitGameTimer = new Timer();
 
+            // (KANSKE känner för att använda detta)
             //IsFixedTimeStep = false;
-            //graphics.SynchronizeWithVerticalRetrace = false;
+            //Graphics.SynchronizeWithVerticalRetrace = false;
+
             //TimeSpan span = new TimeSpan(0, 0, 0, 0, 1);
             //TargetElapsedTime = span;
         }
@@ -76,6 +78,9 @@ namespace Gahame
         {
             // increase runtime number
             GahameController.Runtime++;
+
+            // set time meme (VEEENNE asså)
+            //GahameController.GameSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds*60;
 
             // Updates controlls before updating anythin else
             GameInput.Update();
