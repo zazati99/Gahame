@@ -19,6 +19,8 @@ namespace Gahame.GameObjects
 
             screen.GameObjects.Add(bullet);
 
+            screen.ScreenEffects.Add(new CameraShakeEffect(screen, 2, 4));
+
         }
 
     }
