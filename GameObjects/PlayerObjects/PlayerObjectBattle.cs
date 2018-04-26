@@ -132,8 +132,20 @@ namespace Gahame.GameObjects
                     if (d != null) d.StartDialogue();
 
 
-                    Vector2 speedVec = new Vector2(Math.Sign(GameInput.LeftStickX), Math.Sign(GameInput.LeftStickY));
+                    // INSANE
+                    Vector2 speedVec = Vector2.Zero;
+
+                    if (GameInput.ControllerMode)
+                    {
+                        speedVec = new Vector2(Math.Sign(GameInput.LeftStickX), Math.Sign(GameInput.LeftStickY));
+                    } else
+                    {
+                        speedVec = new Vector2((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0), (GameInput.DownCD ? 1 : 0) - (GameInput.UpCD ? 1 : 0));
+                    }
+
                     if (speedVec == Vector2.Zero) speedVec = new Vector2(Math.Sign(imageScale), 0);
+
+
 
                     weapon.Shoot(screen, speedVec);
                 }

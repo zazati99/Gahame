@@ -12,9 +12,9 @@ namespace Gahame.GameObjects
         public BasicPlayerBullet(GameScreen screen, Vector2 speed) : base(screen)
         {
 
-            Texture2D rect = new Texture2D(Game1.Graphics.GraphicsDevice, 2, 1);
+            Texture2D rect = new Texture2D(Game1.Graphics.GraphicsDevice, 2, 2);
 
-            Color[] data = new Color[1 * 2];
+            Color[] data = new Color[2 * 2];
             for (int i = 0; i < data.Length; ++i) data[i] = Color.Black;
             rect.SetData(data);
 

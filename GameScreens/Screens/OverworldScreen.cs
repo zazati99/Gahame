@@ -101,7 +101,7 @@ namespace Gahame.GameScreens
             if (HasBattles) {
                 if (Player.GetComponent<Physics>().Velocity != Vector2.Zero)
                 {
-                    if (randomEncounter.Next(5000) == 1)
+                    if (randomEncounter.Next(60) == 1)
                     {
                         GotoBattleScreen();
                     }
