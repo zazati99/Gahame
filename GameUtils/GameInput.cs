@@ -59,6 +59,18 @@ namespace Gahame.GameUtils
         public static float LeftStickX { get; private set; }
         public static float LeftStickY { get; private set; }
 
+        // KEYS
+        public static Keys LeftKey = Keys.Left;
+        public static Keys RightKey = Keys.Right;
+        public static Keys UpKey = Keys.Up;
+        public static Keys DownKey = Keys.Down;
+        public static Keys JumpKey = Keys.Space;
+        public static Keys ShootKey = Keys.X;
+
+        // Inputs
+        public static Input JumpInput = new Input(Keys.Z, Buttons.A);
+        public static Input ShootInput = new Input(Keys.X, Buttons.X);
+
         // check if last used controlls was controller if false it is keyboard
         public static bool ControllerMode { get; private set; }
 
@@ -96,15 +108,15 @@ namespace Gahame.GameUtils
             // Left controller stick on Y axis
             LeftStickY = -MyMaths.Clamp(gamePadState.ThumbSticks.Left.Y + Math.Sign(gamePadState.ThumbSticks.Left.Y) * .05f, -1, 1);
 
-            Right = keyboardState.IsKeyDown(Keys.D) || gamePadState.ThumbSticks.Left.X > stickDeadZone;
-            Left = keyboardState.IsKeyDown(Keys.A) || gamePadState.ThumbSticks.Left.X < -stickDeadZone;
-            Up = keyboardState.IsKeyDown(Keys.W) || gamePadState.ThumbSticks.Left.Y > stickDeadZone;
-            Down = keyboardState.IsKeyDown(Keys.S) || gamePadState.ThumbSticks.Left.Y < -stickDeadZone;
+            Right = keyboardState.IsKeyDown(RightKey) || gamePadState.ThumbSticks.Left.X > stickDeadZone;
+            Left = keyboardState.IsKeyDown(LeftKey) || gamePadState.ThumbSticks.Left.X < -stickDeadZone;
+            Up = keyboardState.IsKeyDown(UpKey) || gamePadState.ThumbSticks.Left.Y > stickDeadZone;
+            Down = keyboardState.IsKeyDown(DownKey) || gamePadState.ThumbSticks.Left.Y < -stickDeadZone;
 
-            RightPressed = (keyboardState.IsKeyDown(Keys.D) && !previousKeyboardState.IsKeyDown(Keys.D)) || (gamePadState.ThumbSticks.Left.X > stickDeadZone && !(previousGamePadState.ThumbSticks.Left.X > stickDeadZone));
-            LeftPressed = (keyboardState.IsKeyDown(Keys.A) && !previousKeyboardState.IsKeyDown(Keys.A)) || (gamePadState.ThumbSticks.Left.X < -stickDeadZone && !(previousGamePadState.ThumbSticks.Left.X < -stickDeadZone));
-            UpPressed = (keyboardState.IsKeyDown(Keys.W) && !previousKeyboardState.IsKeyDown(Keys.W)) || (gamePadState.ThumbSticks.Left.Y > stickDeadZone && !(previousGamePadState.ThumbSticks.Left.Y > stickDeadZone));
-            DownPressed = (keyboardState.IsKeyDown(Keys.S) && !previousKeyboardState.IsKeyDown(Keys.S)) || (gamePadState.ThumbSticks.Left.Y < -stickDeadZone && !(previousGamePadState.ThumbSticks.Left.Y < -stickDeadZone));
+            RightPressed = (keyboardState.IsKeyDown(RightKey) && !previousKeyboardState.IsKeyDown(RightKey)) || (gamePadState.ThumbSticks.Left.X > stickDeadZone && !(previousGamePadState.ThumbSticks.Left.X > stickDeadZone));
+            LeftPressed = (keyboardState.IsKeyDown(LeftKey) && !previousKeyboardState.IsKeyDown(LeftKey)) || (gamePadState.ThumbSticks.Left.X < -stickDeadZone && !(previousGamePadState.ThumbSticks.Left.X < -stickDeadZone));
+            UpPressed = (keyboardState.IsKeyDown(UpKey) && !previousKeyboardState.IsKeyDown(UpKey)) || (gamePadState.ThumbSticks.Left.Y > stickDeadZone && !(previousGamePadState.ThumbSticks.Left.Y > stickDeadZone));
+            DownPressed = (keyboardState.IsKeyDown(DownKey) && !previousKeyboardState.IsKeyDown(DownKey)) || (gamePadState.ThumbSticks.Left.Y < -stickDeadZone && !(previousGamePadState.ThumbSticks.Left.Y < -stickDeadZone));
 
             Jump = (keyboardState.IsKeyDown(Keys.Space) && !previousKeyboardState.IsKeyDown(Keys.Space)) || (gamePadState.IsButtonDown(Buttons.A) && !previousGamePadState.IsButtonDown(Buttons.A));
             JumpHeld = keyboardState.IsKeyDown(Keys.Space) || gamePadState.IsButtonDown(Buttons.A);
@@ -143,6 +155,50 @@ namespace Gahame.GameUtils
         {
             previousKeyboardState = keyboardState;
             previousGamePadState = gamePadState;
+        }
+
+        // INput pressed OMEGALUL
+        public static bool InputPressed(Input input)
+        {
+            return keyboardState.IsKeyDown(input.key) && !previousKeyboardState.IsKeyDown(input.key) || 
+                   gamePadState.IsButtonDown(input.button) && !previousGamePadState.IsButtonDown(input.button);
+        }
+        // INput pressed OMEGALUL
+        public static bool InputPressedCD(Input input)
+        {
+            return InputPressed(input) && !GahameController.CutScene;
+        }
+
+        // INput DOOOOWN
+        public static bool InputDown(Input input)
+        {
+            return keyboardState.IsKeyDown(input.key) ||
+                   gamePadState.IsButtonDown(input.button);
+        }
+        // INput DOOOOWN
+        public static bool InputDownCD(Input input)
+        {
+            return InputDown(input) && !GahameController.CutScene;
+        }
+
+        // IS KEY PRESSED !!?!?!?!??!?
+        public static bool KeyPressed(Keys key)
+        {
+            return keyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key);
+        }
+        public static bool KeyPressedCD(Keys key)
+        {
+            return keyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key) && !GahameController.CutScene;
+        }
+
+        // KEY DOWN WTF !?!?!??
+        public static bool KeyDown(Keys key)
+        {
+            return keyboardState.IsKeyDown(key);
+        }
+        public static bool KeyDownCD(Keys key)
+        {
+            return keyboardState.IsKeyDown(key) && !GahameController.CutScene;
         }
 
         // Get keyboard input and return a char

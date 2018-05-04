@@ -117,7 +117,7 @@ namespace Gahame.GameObjects
                     WalkHorizontal((GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)) * maxSpeed);
 
                 // Jumping
-                if (GameInput.JumpBufferCD) Jump();
+                if (GameInput.InputPressedCD(GameInput.JumpInput)) Jump();
 
                 // Stop Jump things
                 Jumping = GameInput.JumpHeld;
@@ -130,25 +130,27 @@ namespace Gahame.GameObjects
                 {
                     Dialogue d = hitBox.DialogueMeeting(Position + new Vector2(imageScale, 0));
                     if (d != null) d.StartDialogue();
+                }
 
-
+                if (GameInput.InputPressedCD(GameInput.ShootInput))
+                {
                     // INSANE
                     Vector2 speedVec = Vector2.Zero;
 
                     if (GameInput.ControllerMode)
                     {
                         speedVec = new Vector2(Math.Sign(GameInput.LeftStickX), Math.Sign(GameInput.LeftStickY));
-                    } else
+                    }
+                    else
                     {
                         speedVec = new Vector2((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0), (GameInput.DownCD ? 1 : 0) - (GameInput.UpCD ? 1 : 0));
                     }
 
                     if (speedVec == Vector2.Zero) speedVec = new Vector2(Math.Sign(imageScale), 0);
 
-
-
                     weapon.Shoot(screen, speedVec);
                 }
+
             }
 
             // I dont even know anymore
