@@ -59,6 +59,11 @@ namespace Gahame.GameUtils
         public static float LeftStickX { get; private set; }
         public static float LeftStickY { get; private set; }
 
+        public static float shootStickX;
+        public static float shootStickY;
+
+       // public static
+
         // KEYS
         public static Keys LeftKey = Keys.Left;
         public static Keys RightKey = Keys.Right;
@@ -70,6 +75,7 @@ namespace Gahame.GameUtils
         // Inputs
         public static Input JumpInput = new Input(Keys.Z, Buttons.A);
         public static Input ShootInput = new Input(Keys.X, Buttons.X);
+        public static Input stopInput = new Input(Keys.C, Buttons.RightShoulder);
 
         // check if last used controlls was controller if false it is keyboard
         public static bool ControllerMode { get; private set; }
@@ -107,6 +113,20 @@ namespace Gahame.GameUtils
             LeftStickX = MyMaths.Clamp(gamePadState.ThumbSticks.Left.X + Math.Sign(gamePadState.ThumbSticks.Left.X) * .05f, -1, 1);
             // Left controller stick on Y axis
             LeftStickY = -MyMaths.Clamp(gamePadState.ThumbSticks.Left.Y + Math.Sign(gamePadState.ThumbSticks.Left.Y) * .05f, -1, 1);
+
+
+            shootStickX = gamePadState.ThumbSticks.Left.X;
+            shootStickY = gamePadState.ThumbSticks.Left.Y;
+
+            if(Math.Abs(shootStickX)<1/(2*Math.Sqrt(2)))
+            {
+                shootStickX = 0;
+            }
+
+            if (Math.Abs(shootStickY) < 1 / (2 * Math.Sqrt(2)))
+            {
+                shootStickY = 0;
+            }
 
             Right = keyboardState.IsKeyDown(RightKey) || gamePadState.ThumbSticks.Left.X > stickDeadZone;
             Left = keyboardState.IsKeyDown(LeftKey) || gamePadState.ThumbSticks.Left.X < -stickDeadZone;
@@ -147,8 +167,9 @@ namespace Gahame.GameUtils
 
             // Space buffer for jumping
             if (jumpBuffer > 0) jumpBuffer--;
-            if (JumpCD) jumpBuffer = 3;
+            if (InputDownCD(JumpInput)) jumpBuffer = 3;
             JumpBufferCD = (jumpBuffer > 0);
+
         }
 
         public static void EndUpdate()
@@ -156,6 +177,8 @@ namespace Gahame.GameUtils
             previousKeyboardState = keyboardState;
             previousGamePadState = gamePadState;
         }
+
+#region Check Input
 
         // INput pressed OMEGALUL
         public static bool InputPressed(Input input)
@@ -200,6 +223,8 @@ namespace Gahame.GameUtils
         {
             return keyboardState.IsKeyDown(key) && !GahameController.CutScene;
         }
+
+#endregion
 
         // Get keyboard input and return a char
         public static void AddInputToString(ref String str)

@@ -33,6 +33,7 @@ namespace Gahame.GameObjects
         float airSlowDownSpeed;
 
         public bool Jumping;
+        int jumpBuffer;
 
         // TEST
         PlayerWeapon weapon;
@@ -98,6 +99,7 @@ namespace Gahame.GameObjects
             minJumpHeight = jumpHeight / 2;
 
             Jumping = false;
+            jumpBuffer = 0;
 
             // TEST
             weapon = new BasicGun();
@@ -113,17 +115,20 @@ namespace Gahame.GameObjects
             if (!GahameController.CutScene)
             {
                 // Walking left and right
-                if (GameInput.RightCD || GameInput.LeftCD)
+                if (!GameInput.InputDown(GameInput.stopInput) && (GameInput.RightCD || GameInput.LeftCD))
                     WalkHorizontal((GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)) * maxSpeed);
 
                 // Jumping
-                if (GameInput.InputPressedCD(GameInput.JumpInput)) Jump();
+                jumpBuffer--;
+                if (GameInput.InputPressedCD(GameInput.JumpInput)) jumpBuffer = 3;
+                if (jumpBuffer > 0) Jump();
 
                 // Stop Jump things
-                Jumping = GameInput.JumpHeld;
+                //Jumping = GameInput.JumpHeld;
+                Jumping = GameInput.InputDown(GameInput.JumpInput);
 
                 // Stop jump
-                if (!GameInput.JumpHeld) StopJump();
+                if (!GameInput.InputDown(GameInput.JumpInput)) StopJump();
 
                 // Interact with object
                 if (GameInput.ActivateCD)
@@ -139,7 +144,7 @@ namespace Gahame.GameObjects
 
                     if (GameInput.ControllerMode)
                     {
-                        speedVec = new Vector2(Math.Sign(GameInput.LeftStickX), Math.Sign(GameInput.LeftStickY));
+                        speedVec = new Vector2(Math.Sign(GameInput.shootStickX), -Math.Sign(GameInput.shootStickY));
                     }
                     else
                     {
