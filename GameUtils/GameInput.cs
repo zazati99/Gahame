@@ -165,11 +165,6 @@ namespace Gahame.GameUtils
             JumpCD = Jump && !GahameController.CutScene;
             ActivateCD = Activate && !GahameController.CutScene;
 
-            // Space buffer for jumping
-            if (jumpBuffer > 0) jumpBuffer--;
-            if (InputDownCD(JumpInput)) jumpBuffer = 3;
-            JumpBufferCD = (jumpBuffer > 0);
-
         }
 
         public static void EndUpdate()
