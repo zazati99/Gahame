@@ -88,7 +88,7 @@ namespace Gahame
             // Exit game timer stuff
             if (GameInput.EscHeld)
             {
-                if (exitGameTimer.Check()) Exit();
+                if (exitGameTimer.CheckAndTick()) Exit();
             }
             else exitGameTimer.SetSeconds(2);
 

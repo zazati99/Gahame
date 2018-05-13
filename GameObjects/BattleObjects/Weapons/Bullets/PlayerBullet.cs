@@ -21,7 +21,7 @@ namespace Gahame.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (deleteTimer.Check())
+            if (deleteTimer.CheckAndTick())
             {
                 DestroyObject();
             }

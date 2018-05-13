@@ -40,7 +40,7 @@ namespace Gahame.GameScreens
         // Update, does all of the shaking
         public override void Update(GameTime gameTime)
         {
-            if (!timer.Check())
+            if (!timer.CheckAndTick())
             {
                 // random position
                 Vector2 randomPos = new Vector2(r.Next(-(int)(intensity * intensity) / 2, (int)(intensity * intensity) / 2), r.Next(-(int)(intensity * intensity) / 2, (int)(intensity * intensity) / 2));

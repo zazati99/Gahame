@@ -115,12 +115,28 @@ namespace Gahame.GameObjects
             if (!GahameController.CutScene)
             {
                 // Walking left and right
-                if (!GameInput.InputDown(GameInput.stopInput) && (GameInput.RightCD || GameInput.LeftCD))
-                    WalkHorizontal((GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)) * maxSpeed);
+                if (!GameInput.InputDown(GameInput.stopInput))
+                {
+                    if (GameInput.ControllerMode)
+                    {
+
+                        if (GameInput.PlatformerMovementStickX != 0)
+                            WalkHorizontal(Math.Sign(GameInput.PlatformerMovementStickX) * maxSpeed);
+
+                    } else
+                    {
+
+                        bool rightKey = GameInput.InputDown(GameInput.RightKey);
+                        bool leftKey = GameInput.InputDown(GameInput.LeftKey);
+                        if (rightKey || leftKey)
+                            WalkHorizontal(((rightKey ? 1 : 0) - (leftKey ? 1 : 0)) * maxSpeed);
+
+                    }
+                }
 
                 // Jumping
                 jumpBuffer--;
-                if (GameInput.InputPressedCD(GameInput.JumpInput)) jumpBuffer = 3;
+                if (GameInput.InputPressed(GameInput.JumpInput)) jumpBuffer = 3;
                 if (jumpBuffer > 0) Jump();
 
                 // Stop Jump things
@@ -137,14 +153,22 @@ namespace Gahame.GameObjects
                     if (d != null) d.StartDialogue();
                 }
 
-                if (GameInput.InputPressedCD(GameInput.ShootInput))
+                if (GameInput.InputDown(GameInput.ShootInput))
                 {
                     // INSANE
                     Vector2 speedVec = Vector2.Zero;
 
                     if (GameInput.ControllerMode)
                     {
-                        speedVec = new Vector2(Math.Sign(GameInput.shootStickX), -Math.Sign(GameInput.shootStickY));
+
+                        if (GameInput.PlatformerMovementStickX != 0)
+                        {
+                            speedVec = new Vector2(Math.Sign(GameInput.PlatformerMovementStickX), -Math.Sign(GameInput.shootStickY));
+                        } else
+                        {
+                            speedVec = new Vector2(Math.Sign(GameInput.shootStickX), -Math.Sign(GameInput.shootStickY));
+                        }
+
                     }
                     else
                     {
@@ -183,7 +207,7 @@ namespace Gahame.GameObjects
             // lerp the sprite scale (prob wont keep)
             imageScale = MyMaths.Lerp(imageScale,
                 Math.Sign(targetSpeed),
-                .25f * GahameController.GameSpeed * (GameInput.ControllerMode && !GahameController.CutScene ? Math.Abs(GameInput.AbsLeftStickX) : 1));
+                .25f * GahameController.GameSpeed);
 
             // keeps it from memeing maxSpeed
             targetSpeed = MyMaths.Clamp(targetSpeed, -maxSpeed, maxSpeed);

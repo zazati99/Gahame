@@ -31,14 +31,19 @@
             IgnoreGameSpeed = ignoreGameSpeed;
         }
 
-        // Updated timer and checks if it's 0
+        // Check and tick the timer
         public bool Check()
         {
-            if (timeInFrames >= 0)
-            {
-                return ((timeInFrames -= (IgnoreGameSpeed ? 1 : GahameController.GameSpeed)) <= 0);
-            }
-            else return false;
+            return timeInFrames <= 0;
+        }
+        public void Tick()
+        {
+            timeInFrames -= (IgnoreGameSpeed ? 1 : GahameController.GameSpeed);
+        }
+        public bool CheckAndTick()
+        {
+            Tick();
+            return Check();
         }
 
         // Set timer functions

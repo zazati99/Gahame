@@ -58,11 +58,13 @@ namespace Gahame.GameUtils
         public static float AbsLeftStickY { get; private set; }
         public static float LeftStickX { get; private set; }
         public static float LeftStickY { get; private set; }
-
+        
+        // STick controlls
         public static float shootStickX;
         public static float shootStickY;
 
-       // public static
+        public static float PlatformerMovementStickX;
+        public static float PlatformerMovementStickY;
 
         // KEYS
         public static Keys LeftKey = Keys.Left;
@@ -75,7 +77,7 @@ namespace Gahame.GameUtils
         // Inputs
         public static Input JumpInput = new Input(Keys.Z, Buttons.A);
         public static Input ShootInput = new Input(Keys.X, Buttons.X);
-        public static Input stopInput = new Input(Keys.C, Buttons.RightShoulder);
+        public static Input stopInput = new Input(Keys.C, Buttons.RightTrigger);
 
         // check if last used controlls was controller if false it is keyboard
         public static bool ControllerMode { get; private set; }
@@ -114,10 +116,20 @@ namespace Gahame.GameUtils
             // Left controller stick on Y axis
             LeftStickY = -MyMaths.Clamp(gamePadState.ThumbSticks.Left.Y + Math.Sign(gamePadState.ThumbSticks.Left.Y) * .05f, -1, 1);
 
+            // stick controlls
+            PlatformerMovementStickX = MyMaths.Clamp(gamePadState.ThumbSticks.Left.X + Math.Sign(gamePadState.ThumbSticks.Left.X) * .05f, -1, 1);
+            PlatformerMovementStickY = MyMaths.Clamp(gamePadState.ThumbSticks.Left.Y + Math.Sign(gamePadState.ThumbSticks.Left.Y) * .05f, -1, 1);
+            if (Math.Abs(PlatformerMovementStickX) < .40f)
+            {
+                PlatformerMovementStickX = 0;
+            }
+            if (Math.Abs(PlatformerMovementStickY) < .40f)
+            {
+                PlatformerMovementStickY = 0;
+            }
 
             shootStickX = gamePadState.ThumbSticks.Left.X;
             shootStickY = gamePadState.ThumbSticks.Left.Y;
-
             if(Math.Abs(shootStickX)<1/(2*Math.Sqrt(2)))
             {
                 shootStickX = 0;
@@ -175,51 +187,37 @@ namespace Gahame.GameUtils
 
 #region Check Input
 
-        // INput pressed OMEGALUL
-        public static bool InputPressed(Input input)
-        {
-            return keyboardState.IsKeyDown(input.key) && !previousKeyboardState.IsKeyDown(input.key) || 
-                   gamePadState.IsButtonDown(input.button) && !previousGamePadState.IsButtonDown(input.button);
-        }
-        // INput pressed OMEGALUL
-        public static bool InputPressedCD(Input input)
-        {
-            return InputPressed(input) && !GahameController.CutScene;
-        }
-
-        // INput DOOOOWN
-        public static bool InputDown(Input input)
-        {
-            return keyboardState.IsKeyDown(input.key) ||
-                   gamePadState.IsButtonDown(input.button);
-        }
-        // INput DOOOOWN
-        public static bool InputDownCD(Input input)
-        {
-            return InputDown(input) && !GahameController.CutScene;
-        }
-
-        // IS KEY PRESSED !!?!?!?!??!?
-        public static bool KeyPressed(Keys key)
+        // Keyboard key input meme
+        public static bool InputPressed(Keys key)
         {
             return keyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key);
         }
-        public static bool KeyPressedCD(Keys key)
-        {
-            return keyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key) && !GahameController.CutScene;
-        }
-
-        // KEY DOWN WTF !?!?!??
-        public static bool KeyDown(Keys key)
+        public static bool InputDown(Keys key)
         {
             return keyboardState.IsKeyDown(key);
         }
-        public static bool KeyDownCD(Keys key)
+        
+        // GamePad button input meme
+        public static bool InputPressed(Buttons button)
         {
-            return keyboardState.IsKeyDown(key) && !GahameController.CutScene;
+            return gamePadState.IsButtonDown(button) && !previousGamePadState.IsButtonDown(button);
+        }
+        public static bool InputDown(Buttons button)
+        {
+            return gamePadState.IsButtonDown(button);
         }
 
-#endregion
+        // Input button and key meme
+        public static bool InputPressed(Input input)
+        {
+            return InputPressed(input.key) || InputPressed(input.button);
+        }
+        public static bool InputDown(Input input)
+        {
+            return InputDown(input.key) || InputDown(input.button);
+        }
+
+        #endregion
 
         // Get keyboard input and return a char
         public static void AddInputToString(ref String str)
