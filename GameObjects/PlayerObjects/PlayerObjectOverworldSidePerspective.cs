@@ -33,6 +33,7 @@ namespace Gahame.GameObjects
         float airSlowDownSpeed;
 
         public bool Jumping;
+        int jumpBuffer;
 
         // Constructor stufferoo for playerino
         public PlayerObjectOverworldSidePerspective(GameScreen screen) : base(screen)
@@ -95,6 +96,7 @@ namespace Gahame.GameObjects
             minJumpHeight = jumpHeight / 2;
 
             Jumping = false;
+            jumpBuffer = 0;
         }
 
         // Update stufferino
@@ -107,17 +109,37 @@ namespace Gahame.GameObjects
             if (!GahameController.CutScene)
             {
                 // Walking left and right
-                if (GameInput.RightCD || GameInput.LeftCD)
-                    WalkHorizontal((GameInput.ControllerMode ? GameInput.AbsLeftStickX : 1) * ((GameInput.RightCD ? 1 : 0) - (GameInput.LeftCD ? 1 : 0)) * maxSpeed);
+                if (!GameInput.InputDown(GameInput.stopInput))
+                {
+                    if (GameInput.ControllerMode)
+                    {
+
+                        if (GameInput.PlatformerMovementStickX != 0)
+                            WalkHorizontal(GameInput.PlatformerMovementStickX * maxSpeed);
+
+                    }
+                    else
+                    {
+
+                        bool rightKey = GameInput.InputDown(GameInput.RightKey);
+                        bool leftKey = GameInput.InputDown(GameInput.LeftKey);
+                        if (rightKey || leftKey)
+                            WalkHorizontal(((rightKey ? 1 : 0) - (leftKey ? 1 : 0)) * maxSpeed);
+
+                    }
+                }
 
                 // Jumping
-                if (GameInput.JumpBufferCD) Jump();
+                jumpBuffer--;
+                if (GameInput.InputPressed(GameInput.JumpInput)) jumpBuffer = 3;
+                if (jumpBuffer > 0) Jump();
 
                 // Stop Jump things
-                Jumping = GameInput.JumpHeld;
+                //Jumping = GameInput.JumpHeld;
+                Jumping = GameInput.InputDown(GameInput.JumpInput);
 
                 // Stop jump
-                if (!GameInput.JumpHeld) StopJump();
+                if (!GameInput.InputDown(GameInput.JumpInput)) StopJump();
 
                 // Interact with object
                 if (GameInput.ActivateCD)
