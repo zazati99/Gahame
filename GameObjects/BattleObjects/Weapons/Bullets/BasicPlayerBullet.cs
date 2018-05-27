@@ -1,5 +1,6 @@
 ﻿using Gahame.GameObjects.ObjectComponents;
 using Gahame.GameScreens;
+using Gahame.GameUtils;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +9,8 @@ namespace Gahame.GameObjects
 {
     public class BasicPlayerBullet : PlayerBullet
     {
+
+        Timer deleteTimer;
 
         public BasicPlayerBullet(GameScreen screen, Vector2 speed) : base(screen)
         {
@@ -29,6 +32,16 @@ namespace Gahame.GameObjects
             physics.Velocity = speed;
             Components.Add(physics);
 
+            deleteTimer = new Timer(20, false);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (deleteTimer.CheckAndTick())
+            {
+                DestroyObject();
+            }
+            base.Update(gameTime);
         }
 
     }

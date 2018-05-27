@@ -102,7 +102,7 @@ namespace Gahame.GameObjects
             jumpBuffer = 0;
 
             // TEST
-            weapon = new BasicGun();
+            weapon = new LaserGunTest();
         }
 
         // Update stufferino

@@ -431,6 +431,26 @@ namespace Gahame.GameUtils
             DrawLine(spriteBatch, point1, distance, angle, color, .7f, thickness);
         }
 
+        /// <summary>
+        /// Draws a line from point1 to point2 with an offset
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="point1">The first point</param>
+        /// <param name="point2">The second point</param>
+        /// <param name="color">The color to use</param>
+        /// <param name="thickness">The thickness of the line</param>
+        ///<param name="depth">The thickness of the line</param>
+        public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point1, Vector2 point2, Color color, float thickness, float depth)
+        {
+            // calculate the distance between the two vectors
+            float distance = Vector2.Distance(point1, point2);
+
+            // calculate the angle between the two vectors
+            float angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
+
+            DrawLine(spriteBatch, point1, distance, angle, color, depth, thickness);
+        }
+
 
         /// <summary>
         /// Draws a line from point1 to point2 with an offset
