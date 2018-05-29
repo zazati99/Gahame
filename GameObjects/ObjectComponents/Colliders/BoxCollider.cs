@@ -19,15 +19,17 @@ namespace Gahame.GameObjects.ObjectComponents.Colliders
         }
 
         // Checks if this collider is within another collider
-        public override bool IsColliding(Collider otherCol, Vector2 p1, Vector2 p2)
+        public override bool IsColliding(Collider otherCollider, Vector2 p1, Vector2 p2)
         {
-            if (otherCol is BoxCollider o)
+              
+            if (otherCollider is BoxCollider b)
             {
-                return (p1.X + Offset.X < p2.X + o.Offset.X + o.Size.X &&
-                    p1.X + Offset.X + Size.X > p2.X + o.Offset.X &&
-                    p1.Y + Offset.Y < p2.Y + o.Offset.Y + o.Size.Y &&
-                    p1.Y + Offset.Y + Size.Y > p2.Y + o.Offset.Y);
+                return (p1.X + Offset.X < p2.X + b.Offset.X + b.Size.X &&
+                p1.X + Offset.X + Size.X > p2.X + b.Offset.X &&
+                p1.Y + Offset.Y < p2.Y + b.Offset.Y + b.Size.Y &&
+                p1.Y + Offset.Y + Size.Y > p2.Y + b.Offset.Y);
             }
+
             return false;
         }
 

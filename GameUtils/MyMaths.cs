@@ -47,6 +47,12 @@ namespace Gahame.GameUtils
             return min + (float)(random.NextDouble() * (max - min));
         }
 
+        // this is distance times distance
+        public static float DistanceCubed(Vector2 p1, Vector2 p2)
+        {
+            return (p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y);
+        }
+
         // Normalize sick
         public static Vector2 Normalize(float x, float y)
         {

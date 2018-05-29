@@ -13,7 +13,7 @@ namespace Gahame.GameObjects
     public class PlayerLaser : PlayerBullet
     {
 
-        HitBox hb;
+        LineCollider lc;
         Vector2 speed;
         Vector2 startPosition;
 
@@ -25,11 +25,19 @@ namespace Gahame.GameObjects
         public PlayerLaser(GameScreen screen, Vector2 speed, Vector2 startPosition) : base(screen)
         {
 
-            hb = new HitBox(new Vector2(4, 4), this);
+            lc = new LineCollider(Vector2.Zero);
             this.speed = speed;
 
-            Position = startPosition;
             this.startPosition = startPosition;
+            Position = startPosition + speed * 20;
+
+            foreach (GameObject o in screen.GameObjects)
+            {
+                if (o is WallObject w)
+                {
+
+                }
+            }
 
             thickness = 8;
 
